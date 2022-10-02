@@ -1,0 +1,17 @@
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item a,
+.nav-item:hover a {
+  text-decoration: none;
+}
+
+.nav-item.white a {
+  color: #fff;
+}
+
+.nav-item.white svg {
+  fill: #fff;
+}

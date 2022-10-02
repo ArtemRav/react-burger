@@ -1,38 +1,35 @@
 .App {
-  text-align: center;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+main {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
 }
 
-.App-link {
-  color: #61dafb;
+.main-section {
+  width: 600px;
+  float: left;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Cusrom scrollbar */
+.main-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.main-scrollbar::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+/* Handle */
+.main-scrollbar::-webkit-scrollbar-thumb {
+  background: #8585ad;
 }

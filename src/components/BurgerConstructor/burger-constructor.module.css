@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 60vh;
+  overflow-y: auto;
+}
+
+.li {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.sum {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}

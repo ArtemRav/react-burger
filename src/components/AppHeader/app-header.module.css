@@ -1,10 +1,12 @@
 .header {
   display: flex;
-  width: 100%;
+  margin: 0 auto;
+  background: #1c1c21;
 }
 
 .header nav {
-  width: 100%;
+  width: 1240px;
+  margin: 0 auto;
 }
 
 .header ul {

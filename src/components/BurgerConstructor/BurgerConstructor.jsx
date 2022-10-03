@@ -9,46 +9,57 @@ import {
 import dragIcon from './../../images/constructor/Vector.png'
 
 export const BurgerConstructor = props => {
+  const countSum = () => {
+    return data.reduce((acc, el) => acc + el.price, 0)
+  }
+
   return (
     <div className={burgerConstructor.wrapper}>
-      <ul className={`main-scrollbar mb-10 pr-2 ${burgerConstructor.list}`}>
-        {data.map((item, idx, arr) => {
-          if (idx === 0 || idx === arr.length - 1) {
+      <div className="ml-6 mb-4">
+        <ConstructorElement
+          type={'top'}
+          isLocked={true}
+          text={data[0].name}
+          price={data[0].price}
+          thumbnail={data[0].image}
+        />
+      </div>
+      <ul className={`app-scroll pr-2 ${burgerConstructor.list}`}>
+        {data
+          .filter((el, i, arr) => i !== 0 && i !== arr.length - 1)
+          .map((item, idx, arr) => {
             return (
-              <li className="pl-6" key={idx}>
+              <li className={burgerConstructor.li} key={idx}>
+                <img
+                  className="mr-3"
+                  src={dragIcon}
+                  alt="drag&drop"
+                  style={{ cursor: 'pointer' }}
+                />
                 <ConstructorElement
-                  type={idx === 0 ? 'top' : 'bottom'}
-                  isLocked={true}
+                  isLocked={false}
                   text={item.name}
                   price={item.price}
                   thumbnail={item.image}
                 />
               </li>
             )
-          }
-          return (
-            <li className={burgerConstructor.li} key={idx}>
-              <img
-                className="mr-3"
-                src={dragIcon}
-                alt="drag&drop"
-                style={{ cursor: 'pointer' }}
-              />
-              <ConstructorElement
-                isLocked={false}
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-              />
-            </li>
-          )
-        })}
+          })}
       </ul>
+
+      <div className="ml-6 mt-4 mb-10">
+        <ConstructorElement
+          type={'bottom'}
+          isLocked={true}
+          text={data[data.length - 1].name}
+          price={data[data.length - 1].price}
+          thumbnail={data[data.length - 1].image}
+        />
+      </div>
+
       <div className={burgerConstructor.sum}>
         <div style={{ display: 'flex' }} className="mr-10">
-          <p className="mr-2 text text_type_digits-default">
-            {data.reduce((acc, el) => acc + el.price, 0)}
-          </p>
+          <p className="mr-2 text text_type_digits-default">{countSum()}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button htmlType="button" type="primary" size="large">
@@ -62,9 +73,9 @@ export const BurgerConstructor = props => {
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      image: PropTypes.string,
-      name: PropTypes.string,
-      price: PropTypes.number
+      image: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired
     })
   )
 }

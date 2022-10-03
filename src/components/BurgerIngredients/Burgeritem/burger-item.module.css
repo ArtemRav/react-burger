@@ -5,6 +5,7 @@
   justify-content: center;
   max-width: 272px;
   flex-grow: 0.5;
+  box-sizing: border-box;
 }
 
 .price,

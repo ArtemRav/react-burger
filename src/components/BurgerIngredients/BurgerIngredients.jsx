@@ -4,8 +4,9 @@ import { data } from './../../utils/data.js'
 import { BurgerType } from './BurgerType/BurgerType'
 import burgerIngredients from './burger-ingredients.module.css'
 import PropTypes from 'prop-types'
+import { burgerListItemPropTypes } from '../../utils/prop-types.js'
 
-export const BurgerIngredients = props => {
+export const BurgerIngredients = () => {
   const [current, setCurrent] = useState('Булки')
   const tabsList = ['Булки', 'Соусы', 'Начинки']
 
@@ -19,7 +20,7 @@ export const BurgerIngredients = props => {
 
   return (
     <>
-      <div style={{ display: 'flex' }}>
+      <div className="flex-wrap">
         {tabsList.map(item => (
           <Tab
             value={item}
@@ -41,12 +42,5 @@ export const BurgerIngredients = props => {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired
-    })
-  )
+  data: PropTypes.arrayOf(burgerListItemPropTypes())
 }

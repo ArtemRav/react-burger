@@ -7,10 +7,15 @@ import {
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import dragIcon from './../../images/constructor/Vector.png'
+import { burgerListItemPropTypes } from '../../utils/prop-types'
 
-export const BurgerConstructor = props => {
+export const BurgerConstructor = () => {
   const countSum = () => {
     return data.reduce((acc, el) => acc + el.price, 0)
+  }
+
+  const getBurgersList = () => {
+    return data.filter((el, i, arr) => i !== 0 && i !== arr.length - 1)
   }
 
   return (
@@ -25,26 +30,24 @@ export const BurgerConstructor = props => {
         />
       </div>
       <ul className={`app-scroll pr-2 ${burgerConstructor.list}`}>
-        {data
-          .filter((el, i, arr) => i !== 0 && i !== arr.length - 1)
-          .map((item, idx, arr) => {
-            return (
-              <li className={burgerConstructor.li} key={idx}>
-                <img
-                  className="mr-3"
-                  src={dragIcon}
-                  alt="drag&drop"
-                  style={{ cursor: 'pointer' }}
-                />
-                <ConstructorElement
-                  isLocked={false}
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                />
-              </li>
-            )
-          })}
+        {getBurgersList().map((item, idx, arr) => {
+          return (
+            <li className={burgerConstructor.li} key={idx}>
+              <img
+                className="mr-3"
+                src={dragIcon}
+                alt="drag&drop"
+                style={{ cursor: 'pointer' }}
+              />
+              <ConstructorElement
+                isLocked={false}
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image}
+              />
+            </li>
+          )
+        })}
       </ul>
 
       <div className="ml-6 mt-4 mb-10">
@@ -58,7 +61,7 @@ export const BurgerConstructor = props => {
       </div>
 
       <div className={burgerConstructor.sum}>
-        <div style={{ display: 'flex' }} className="mr-10">
+        <div className="flex-wrap mr-10">
           <p className="mr-2 text text_type_digits-default">{countSum()}</p>
           <CurrencyIcon type="primary" />
         </div>
@@ -71,11 +74,5 @@ export const BurgerConstructor = props => {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired
-    })
-  )
+  data: PropTypes.arrayOf(burgerListItemPropTypes())
 }

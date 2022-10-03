@@ -4,12 +4,10 @@ import PropTypes from 'prop-types'
 export const NavItem = props => {
   return (
     <div className={navItem.item}>
-      <div style={{ display: 'flex' }} className="icon-wrapper mr-2">
-        {props.children}
-      </div>
+      <div className="icon-wrapper mr-2">{props.children}</div>
       <a
         href={props.link || '#'}
-        className={`${navItem.link} text_color_inactive`}
+        className={`${navItem.link} flex-wrap text_color_inactive`}
         style={{ color: props.color }}
       >
         {props.name}

@@ -7,7 +7,7 @@ import {
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import appHeader from './app-header.module.css'
 
-export const AppHeader = props => {
+export const AppHeader = () => {
   return (
     <header className={appHeader.header}>
       <nav className="pt-4 pb-4">

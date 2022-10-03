@@ -1,6 +1,7 @@
 import { BurgerItem } from '../Burgeritem/BurgerItem'
 import burgerType from './burger-type.module.css'
 import PropTypes from 'prop-types'
+import { burgerListItemPropTypes } from '../../../utils/prop-types'
 
 export const BurgerType = props => {
   return (
@@ -17,12 +18,5 @@ export const BurgerType = props => {
 
 BurgerType.propTypes = {
   title: PropTypes.string.isRequired,
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired
-    })
-  )
+  list: PropTypes.arrayOf(burgerListItemPropTypes)
 }

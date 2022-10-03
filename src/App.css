@@ -11,6 +11,10 @@ main {
   margin: 0 auto;
 }
 
+.flex-wrap {
+  display: flex;
+}
+
 .main-section {
   width: 600px;
   float: left;

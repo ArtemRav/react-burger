@@ -3,7 +3,7 @@ import {
   Counter
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerStyle from './burger-item.module.css'
-import PropTypes from 'prop-types'
+import { burgerListItemPropTypes } from '../../../utils/prop-types'
 
 export const BurgerItem = props => {
   return (
@@ -30,10 +30,5 @@ export const BurgerItem = props => {
 }
 
 BurgerItem.propTypes = {
-  menuItem: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
-  })
+  menuItem: burgerListItemPropTypes()
 }

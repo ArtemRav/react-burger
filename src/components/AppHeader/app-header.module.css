@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  margin: 0 auto;
+  background: #1c1c21;
+}
+
+.header nav {
+  width: 1240px;
+  margin: 0 auto;
+}
+
+.header ul {
+  position: relative;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.header ul li {
+  display: flex;
+  align-items: center;
+}
+
+.header ul li:last-child {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.logo {
+  margin-left: 112px;
+}

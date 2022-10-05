@@ -1,0 +1,17 @@
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item.white {
+  color: #fff;
+}
+
+.item.white svg {
+  fill: #fff;
+}
+
+.link,
+.link:hover {
+  text-decoration: none;
+}

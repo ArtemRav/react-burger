@@ -7,9 +7,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import dragIcon from './../../images/constructor/Vector.png'
 import { burgerListItemPropTypes } from '../../utils/prop-types'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { Modal } from '../Modal/Modal'
+import { OrderDetails } from '../OrderDetails/OrderDetails'
 
 export const BurgerConstructor = ({ ingredients }) => {
+  const [modalOpened, setModalOpened] = useState(false)
+
   const countSum = useMemo(() => {
     return ingredients.reduce((acc, el) => acc + el.price, 0)
   }, [ingredients])
@@ -17,6 +21,10 @@ export const BurgerConstructor = ({ ingredients }) => {
   const burgersList = useMemo(() => {
     return ingredients.filter((_, i, arr) => i !== 0 && i !== arr.length - 1)
   }, [ingredients])
+
+  const openModal = item => {
+    setModalOpened(true)
+  }
 
   return (
     ingredients.length && (
@@ -67,10 +75,21 @@ export const BurgerConstructor = ({ ingredients }) => {
             <p className="mr-2 text text_type_digits-default">{countSum}</p>
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="large">
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={openModal}
+          >
             Оформить заказ
           </Button>
         </div>
+
+        {modalOpened && (
+          <Modal title="" closeModal={() => setModalOpened(false)}>
+            <OrderDetails />
+          </Modal>
+        )}
       </div>
     )
   )

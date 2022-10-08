@@ -21,7 +21,7 @@ function App() {
     }
 
     fetchIngredients()
-  }, [])
+  }, [apiUrl])
 
   return (
     <div className="App">

@@ -3,25 +3,19 @@ import { AppHeader } from './components/AppHeader/AppHeader.jsx'
 import { BurgerConstructor } from './components/BurgerConstructor/BurgerConstructor'
 import { BurgerIngredients } from './components/BurgerIngredients/BurgerIngredients'
 import { useState, useEffect } from 'react'
+import { getIngredients } from './utils/burger-api'
 
 function App() {
-  const apiUrl = 'https://norma.nomoreparties.space/api/ingredients'
-
   const [ingredientsList, setIngridientsList] = useState([])
 
   useEffect(() => {
     const fetchIngredients = async () => {
-      try {
-        const resp = await fetch(apiUrl)
-        const { data } = await resp.json()
-        setIngridientsList(data)
-      } catch (err) {
-        console.error(err)
-      }
+      const data = await getIngredients('ingredients')
+      setIngridientsList(data)
     }
 
     fetchIngredients()
-  }, [apiUrl])
+  }, [])
 
   return (
     <div className="App">

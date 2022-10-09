@@ -11,7 +11,8 @@ export const Modal = ({ title, children, closeModal }) => {
 
   const onTapEsc = useCallback(
     event => {
-      if (event.keyCode === 27) {
+      const ESC_KEYCODE = 27
+      if (event.keyCode === ESC_KEYCODE) {
         closeModal()
       }
     },

@@ -24,6 +24,10 @@ main {
   color: #ffffff;
 }
 
+.crsr-pointer {
+  cursor: pointer;
+}
+
 /* Cusrom scrollbar */
 .app-scroll::-webkit-scrollbar {
   width: 8px;

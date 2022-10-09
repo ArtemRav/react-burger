@@ -42,6 +42,10 @@ export const BurgerIngredients = ({ ingredients }) => {
     setModalOpened(true)
   }, [])
 
+  const closeModal = () => {
+    setModalOpened(false)
+  }
+
   return (
     ingredients.length && (
       <>
@@ -51,7 +55,7 @@ export const BurgerIngredients = ({ ingredients }) => {
               value={tab.name}
               active={activeTab === tab.name}
               key={tab.name}
-              onClick={() => toggleTab(tab)}
+              onClick={toggleTab}
             >
               {tab.name}
             </Tab>
@@ -79,10 +83,7 @@ export const BurgerIngredients = ({ ingredients }) => {
         </div>
 
         {modalOpened && (
-          <Modal
-            title="Детали ингридиента"
-            closeModal={() => setModalOpened(false)}
-          >
+          <Modal title="Детали ингридиента" closeModal={closeModal}>
             <IngredientDetails {...itemSelected} />
           </Modal>
         )}

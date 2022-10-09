@@ -1,4 +1,4 @@
-import burgerConstructor from './burger-constructor.module.css'
+import burgerConstructorCss from './burger-constructor.module.css'
 import PropTypes from 'prop-types'
 import {
   Button,
@@ -12,42 +12,50 @@ import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
 
 export const BurgerConstructor = ({ ingredients }) => {
+  const { wrapper, list, li, sum } = burgerConstructorCss
   const [modalOpened, setModalOpened] = useState(false)
 
   const countSum = useMemo(() => {
     return ingredients.reduce((acc, el) => acc + el.price, 0)
   }, [ingredients])
 
-  const burgersList = useMemo(() => {
-    return ingredients.filter((_, i, arr) => i !== 0 && i !== arr.length - 1)
+  const ingredientsList = useMemo(() => {
+    return ingredients.filter(item => item.type !== 'bun')
   }, [ingredients])
 
-  const openModal = item => {
+  const bunsList = useMemo(() => {
+    return ingredients.filter(item => item.type === 'bun')
+  }, [ingredients])
+
+  const openModal = () => {
     setModalOpened(true)
+  }
+
+  const closeModal = () => {
+    setModalOpened(false)
   }
 
   return (
     ingredients.length && (
-      <div className={burgerConstructor.wrapper}>
+      <div className={wrapper}>
         <div className="ml-6 mb-4">
           <ConstructorElement
             type={'top'}
             isLocked={true}
-            text={ingredients[0].name}
-            price={ingredients[0].price}
-            thumbnail={ingredients[0].image}
+            text={bunsList[0].name}
+            price={bunsList[0].price}
+            thumbnail={bunsList[0].image}
           />
         </div>
 
-        <ul className={`app-scroll pr-2 ${burgerConstructor.list}`}>
-          {burgersList.map((item, idx, arr) => {
+        <ul className={`app-scroll pr-2 ${list}`}>
+          {ingredientsList.map(item => {
             return (
-              <li className={burgerConstructor.li} key={idx}>
+              <li className={li} key={item._id}>
                 <img
-                  className="mr-3"
+                  className="mr-3 crsr-pointer"
                   src={dragIcon}
                   alt="drag&drop"
-                  style={{ cursor: 'pointer' }}
                 />
                 <ConstructorElement
                   isLocked={false}
@@ -64,13 +72,13 @@ export const BurgerConstructor = ({ ingredients }) => {
           <ConstructorElement
             type={'bottom'}
             isLocked={true}
-            text={ingredients[ingredients.length - 1].name}
-            price={ingredients[ingredients.length - 1].price}
-            thumbnail={ingredients[ingredients.length - 1].image}
+            text={bunsList[bunsList.length - 1].name}
+            price={bunsList[bunsList.length - 1].price}
+            thumbnail={bunsList[bunsList.length - 1].image}
           />
         </div>
 
-        <div className={burgerConstructor.sum}>
+        <div className={sum}>
           <div className="flex-wrap mr-10">
             <p className="mr-2 text text_type_digits-default">{countSum}</p>
             <CurrencyIcon type="primary" />
@@ -86,7 +94,7 @@ export const BurgerConstructor = ({ ingredients }) => {
         </div>
 
         {modalOpened && (
-          <Modal title="" closeModal={() => setModalOpened(false)}>
+          <Modal title="" closeModal={closeModal}>
             <OrderDetails />
           </Modal>
         )}

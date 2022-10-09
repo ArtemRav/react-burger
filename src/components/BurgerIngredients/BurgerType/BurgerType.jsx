@@ -14,7 +14,7 @@ export const BurgerType = ({ title, list, openModal, id }) => {
             menuItem={item}
             key={item._id}
             amount={1}
-          ></BurgerItem>
+          />
         ))}
       </ul>
     </div>

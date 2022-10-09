@@ -6,11 +6,15 @@ import burgerStyle from './burger-item.module.css'
 import { burgerListItemPropTypes } from '../../../utils/prop-types'
 
 export const BurgerItem = ({ menuItem, openModal, amount }) => {
+  const showModal = () => {
+    openModal(menuItem)
+  }
+
   return (
     <li
       className={`pl-4 pr-4 ${burgerStyle.card}`}
       key={menuItem._id}
-      onClick={() => openModal(menuItem)}
+      onClick={showModal}
     >
       <img src={menuItem.image} alt={menuItem.name} />
       <div className={burgerStyle.price}>

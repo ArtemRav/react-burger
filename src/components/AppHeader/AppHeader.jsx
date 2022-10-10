@@ -13,7 +13,7 @@ export const AppHeader = () => {
       <nav className="pt-4 pb-4">
         <ul>
           <li className="pt-4 pb-4 pr-5 pl-5 mr-2">
-            <NavItem name="Конструктор" isActive={true} color="white">
+            <NavItem name="Конструктор" isActive={true}>
               <BurgerIcon type="primary" />
             </NavItem>
           </li>
@@ -26,7 +26,7 @@ export const AppHeader = () => {
             <Logo />
           </li>
           <li className="pt-4 pb-4 pr-5 pl-5">
-            <NavItem name="Конструктор" isActive={false}>
+            <NavItem name="Личный кабинет" isActive={false}>
               <ProfileIcon type="secondary" />
             </NavItem>
           </li>

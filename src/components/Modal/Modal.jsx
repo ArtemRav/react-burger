@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import modalCss from './modal.module.css'
 import { useEffect } from 'react'
 
+const ESC_KEYCODE = 27
 const modalRoot = document.getElementById('root')
 
 export const Modal = ({ title, children, closeModal }) => {
@@ -11,7 +12,6 @@ export const Modal = ({ title, children, closeModal }) => {
 
   useEffect(() => {
     const onTapEsc = event => {
-      const ESC_KEYCODE = 27
       if (event.keyCode === ESC_KEYCODE) {
         closeModal()
       }

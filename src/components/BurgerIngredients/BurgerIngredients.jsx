@@ -55,7 +55,7 @@ export const BurgerIngredients = ({ ingredients }) => {
               value={tab.name}
               active={activeTab === tab.name}
               key={tab.name}
-              onClick={toggleTab}
+              onClick={() => toggleTab(tab)}
             >
               {tab.name}
             </Tab>

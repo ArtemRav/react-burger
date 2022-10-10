@@ -15,5 +15,5 @@ const wrapperGetRequest = async url => {
 }
 
 export const getIngredients = async url => {
-  return wrapperGetRequest(`${BURGER_API_URL}/${url}`)
+  return wrapperGetRequest(`${BURGER_API_URL}/ingredients`)
 }

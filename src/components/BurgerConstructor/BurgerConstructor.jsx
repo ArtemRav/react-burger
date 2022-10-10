@@ -23,9 +23,10 @@ export const BurgerConstructor = ({ ingredients }) => {
     return ingredients.filter(item => item.type !== 'bun')
   }, [ingredients])
 
-  const bunsList = useMemo(() => {
-    return ingredients.filter(item => item.type === 'bun')
-  }, [ingredients])
+  const bun = useMemo(
+    () => ingredients.find(ingredient => ingredient.type === 'bun'),
+    [ingredients]
+  )
 
   const openModal = () => {
     setModalOpened(true)
@@ -42,9 +43,9 @@ export const BurgerConstructor = ({ ingredients }) => {
           <ConstructorElement
             type={'top'}
             isLocked={true}
-            text={bunsList[0].name}
-            price={bunsList[0].price}
-            thumbnail={bunsList[0].image}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
 
@@ -72,9 +73,9 @@ export const BurgerConstructor = ({ ingredients }) => {
           <ConstructorElement
             type={'bottom'}
             isLocked={true}
-            text={bunsList[bunsList.length - 1].name}
-            price={bunsList[bunsList.length - 1].price}
-            thumbnail={bunsList[bunsList.length - 1].image}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
 

@@ -23,5 +23,7 @@ export const BurgerType = ({ title, list, openModal, id }) => {
 
 BurgerType.propTypes = {
   title: PropTypes.string.isRequired,
-  list: PropTypes.arrayOf(burgerListItemPropTypes)
+  list: PropTypes.arrayOf(burgerListItemPropTypes),
+  openModal: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired
 }

@@ -4,6 +4,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerStyle from './burger-item.module.css'
 import { burgerListItemPropTypes } from '../../../utils/prop-types'
+import PropTypes from 'prop-types'
 
 export const BurgerItem = ({ menuItem, openModal, amount }) => {
   const showModal = () => {
@@ -32,5 +33,7 @@ export const BurgerItem = ({ menuItem, openModal, amount }) => {
 }
 
 BurgerItem.propTypes = {
-  menuItem: burgerListItemPropTypes()
+  menuItem: burgerListItemPropTypes(),
+  openModal: PropTypes.func.isRequired,
+  amount: PropTypes.number.isRequired
 }

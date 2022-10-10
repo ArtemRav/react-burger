@@ -31,7 +31,7 @@ export const BurgerIngredients = ({ ingredients }) => {
   )
 
   const toggleTab = useCallback(tab => {
-    setActiveTab(tab.name)
+    setActiveTab(tab)
     document.querySelector(`#${tab.id}`).scrollIntoView({
       behavior: 'smooth'
     })
@@ -53,7 +53,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           {tabsList.map(tab => (
             <Tab
               value={tab.name}
-              active={activeTab === tab.name}
+              active={activeTab.id === tab.id}
               key={tab.name}
               onClick={() => toggleTab(tab)}
             >

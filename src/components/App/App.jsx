@@ -1,9 +1,9 @@
 import './App.css'
-import { AppHeader } from './AppHeader/AppHeader.jsx'
-import { BurgerConstructor } from './BurgerConstructor/BurgerConstructor'
-import { BurgerIngredients } from './BurgerIngredients/BurgerIngredients'
+import { AppHeader } from '../AppHeader/AppHeader.jsx'
+import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor'
+import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients'
 import { useState, useEffect } from 'react'
-import { getIngredients } from '../utils/burger-api'
+import { getIngredients } from '../../utils/burger-api'
 
 function App() {
   const [ingredientsList, setIngridientsList] = useState([])

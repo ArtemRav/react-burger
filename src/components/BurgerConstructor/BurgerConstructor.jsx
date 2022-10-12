@@ -7,25 +7,27 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import dragIcon from './../../images/constructor/Vector.png'
 import { burgerListItemPropTypes } from '../../utils/prop-types'
-import { useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
+import { IngredientsContext } from '../../services/appContext'
+
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
 
-export const BurgerConstructor = ({ ingredients }) => {
-  const { wrapper, list, li, sum } = burgerConstructorCss
+export const BurgerConstructor = () => {
+  const { ingredientsList } = useContext(IngredientsContext)
   const [modalOpened, setModalOpened] = useState(false)
 
   const countSum = useMemo(() => {
-    return ingredients.reduce((acc, el) => acc + el.price, 0)
-  }, [ingredients])
+    return ingredientsList.reduce((acc, el) => acc + el.price, 0)
+  }, [ingredientsList])
 
-  const ingredientsList = useMemo(() => {
-    return ingredients.filter(item => item.type !== 'bun')
-  }, [ingredients])
+  const ingredientsBun = useMemo(() => {
+    return ingredientsList.filter(item => item.type !== 'bun')
+  }, [ingredientsList])
 
   const bun = useMemo(
-    () => ingredients.find(ingredient => ingredient.type === 'bun'),
-    [ingredients]
+    () => ingredientsList.find(ingredient => ingredient.type === 'bun'),
+    [ingredientsList]
   )
 
   const openModal = () => {
@@ -37,8 +39,8 @@ export const BurgerConstructor = ({ ingredients }) => {
   }
 
   return (
-    ingredients.length && (
-      <div className={wrapper}>
+    ingredientsList.length && (
+      <div className={burgerConstructorCss.wrapper}>
         <div className="ml-6 mb-4">
           <ConstructorElement
             type={'top'}
@@ -49,10 +51,10 @@ export const BurgerConstructor = ({ ingredients }) => {
           />
         </div>
 
-        <ul className={`app-scroll pr-2 ${list}`}>
-          {ingredientsList.map(item => {
+        <ul className={`app-scroll pr-2 ${burgerConstructorCss.list}`}>
+          {ingredientsBun.map(item => {
             return (
-              <li className={li} key={item._id}>
+              <li className={burgerConstructorCss.li} key={item._id}>
                 <img
                   className="mr-3 crsr-pointer"
                   src={dragIcon}
@@ -79,7 +81,7 @@ export const BurgerConstructor = ({ ingredients }) => {
           />
         </div>
 
-        <div className={sum}>
+        <div className={burgerConstructorCss.sum}>
           <div className="flex-wrap mr-10">
             <p className="mr-2 text text_type_digits-default">{countSum}</p>
             <CurrencyIcon type="primary" />
@@ -105,5 +107,5 @@ export const BurgerConstructor = ({ ingredients }) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(burgerListItemPropTypes())
+  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes())
 }

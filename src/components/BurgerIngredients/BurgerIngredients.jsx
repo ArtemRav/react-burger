@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useContext } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerType } from './BurgerType/BurgerType'
 import { Modal } from '../Modal/Modal'
@@ -6,8 +6,10 @@ import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
 import burgerIngredientsCss from './burger-ingredients.module.css'
 import PropTypes from 'prop-types'
 import { burgerListItemPropTypes } from '../../utils/prop-types.js'
+import { IngredientsContext } from '../../services/appContext'
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
+  const { ingredientsList } = useContext(IngredientsContext)
   const [activeTab, setActiveTab] = useState({ id: 'bun', name: 'Булки' })
   const [modalOpened, setModalOpened] = useState(false)
   const [itemSelected, setItemSelected] = useState()
@@ -18,16 +20,16 @@ export const BurgerIngredients = ({ ingredients }) => {
   ]
 
   const burgersBun = useMemo(
-    () => ingredients.filter(item => item.type === 'bun'),
-    [ingredients]
+    () => ingredientsList.filter(item => item.type === 'bun'),
+    [ingredientsList]
   )
   const burgersMain = useMemo(
-    () => ingredients.filter(item => item.type === 'main'),
-    [ingredients]
+    () => ingredientsList.filter(item => item.type === 'main'),
+    [ingredientsList]
   )
   const burgersSauce = useMemo(
-    () => ingredients.filter(item => item.type === 'sauce'),
-    [ingredients]
+    () => ingredientsList.filter(item => item.type === 'sauce'),
+    [ingredientsList]
   )
 
   const toggleTab = useCallback(tab => {
@@ -47,7 +49,7 @@ export const BurgerIngredients = ({ ingredients }) => {
   }
 
   return (
-    ingredients.length && (
+    ingredientsList.length && (
       <>
         <div className="flex-wrap">
           {tabsList.map(tab => (
@@ -93,5 +95,5 @@ export const BurgerIngredients = ({ ingredients }) => {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerListItemPropTypes())
+  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes())
 }

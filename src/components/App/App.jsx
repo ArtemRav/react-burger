@@ -4,14 +4,15 @@ import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor'
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients'
 import { useState, useEffect } from 'react'
 import { getIngredients } from '../../utils/burger-api'
+import { IngredientsContext } from '../../services/appContext'
 
 function App() {
-  const [ingredientsList, setIngridientsList] = useState([])
+  const [ingredientsList, setIngredientsList] = useState([])
 
   useEffect(() => {
     const fetchIngredients = async () => {
       const data = await getIngredients()
-      setIngridientsList(data)
+      setIngredientsList(data)
     }
 
     fetchIngredients()
@@ -21,13 +22,15 @@ function App() {
     <div className="App">
       <AppHeader />
       <main>
-        <section className="main-section">
-          <h2>Соберите бургер</h2>
-          <BurgerIngredients ingredients={ingredientsList} />
-        </section>
-        <section>
-          <BurgerConstructor ingredients={ingredientsList} />
-        </section>
+        <IngredientsContext.Provider value={{ ingredientsList }}>
+          <section className="main-section">
+            <h2>Соберите бургер</h2>
+            <BurgerIngredients ingredients={ingredientsList} />
+          </section>
+          <section>
+            <BurgerConstructor />
+          </section>
+        </IngredientsContext.Provider>
       </main>
     </div>
   )

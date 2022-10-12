@@ -1,5 +1,6 @@
 import orderDetailsCss from './order-details.module.css'
 import orderAccepted from '../../images/ingridients/order-accepted.jpg'
+import PropTypes from 'prop-types'
 
 export const OrderDetails = ({ orderNum }) => {
   return (
@@ -31,4 +32,8 @@ export const OrderDetails = ({ orderNum }) => {
       </p>
     </div>
   )
+}
+
+OrderDetails.propTypes = {
+  orderNum: PropTypes.number.isRequired
 }

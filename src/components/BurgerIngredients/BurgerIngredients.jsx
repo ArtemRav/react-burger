@@ -7,8 +7,9 @@ import burgerIngredientsCss from './burger-ingredients.module.css'
 import PropTypes from 'prop-types'
 import { burgerListItemPropTypes } from '../../utils/prop-types.js'
 import { IngredientsContext } from '../../services/appContext'
+import { BurgerItemContext } from '../../services/burgerItemContext'
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients = ({ handleAddIngredient }) => {
   const { ingredientsList } = useContext(IngredientsContext)
   const [activeTab, setActiveTab] = useState({ id: 'bun', name: 'Булки' })
   const [modalOpened, setModalOpened] = useState(false)
@@ -40,8 +41,12 @@ export const BurgerIngredients = () => {
   }, [])
 
   const openModal = useCallback(item => {
-    setItemSelected(item)
-    setModalOpened(true)
+    // Тест добавления ингридиентов в заказ
+    handleAddIngredient(item)
+
+    // Отключаем временно показ модалки
+    // setItemSelected(item)
+    // setModalOpened(true)
   }, [])
 
   const closeModal = () => {
@@ -49,51 +54,37 @@ export const BurgerIngredients = () => {
   }
 
   return (
-    ingredientsList.length && (
-      <>
-        <div className="flex-wrap">
-          {tabsList.map(tab => (
-            <Tab
-              value={tab.name}
-              active={activeTab.id === tab.id}
-              key={tab.name}
-              onClick={() => toggleTab(tab)}
-            >
-              {tab.name}
-            </Tab>
-          ))}
-        </div>
-        <div className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}>
-          <BurgerType
-            id="bun"
-            openModal={openModal}
-            list={burgersBun}
-            title="Булки"
-          />
-          <BurgerType
-            id="sauce"
-            openModal={openModal}
-            list={burgersSauce}
-            title="Соусы"
-          />
-          <BurgerType
-            id="main"
-            openModal={openModal}
-            list={burgersMain}
-            title="Начинки"
-          />
-        </div>
+    <>
+      <div className="flex-wrap">
+        {tabsList.map(tab => (
+          <Tab
+            value={tab.name}
+            active={activeTab.id === tab.id}
+            key={tab.name}
+            onClick={() => toggleTab(tab)}
+          >
+            {tab.name}
+          </Tab>
+        ))}
+      </div>
+      <div className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}>
+        <BurgerItemContext.Provider value={{ openModal }}>
+          <BurgerType id="bun" list={burgersBun} title="Булки" />
+          <BurgerType id="sauce" list={burgersSauce} title="Соусы" />
+          <BurgerType id="main" list={burgersMain} title="Начинки" />
+        </BurgerItemContext.Provider>
+      </div>
 
-        {modalOpened && (
-          <Modal title="Детали ингридиента" closeModal={closeModal}>
-            <IngredientDetails {...itemSelected} />
-          </Modal>
-        )}
-      </>
-    )
+      {modalOpened && (
+        <Modal title="Детали ингридиента" closeModal={closeModal}>
+          <IngredientDetails {...itemSelected} />
+        </Modal>
+      )}
+    </>
   )
 }
 
 BurgerIngredients.propTypes = {
-  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes())
+  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes()),
+  handleAddIngredient: PropTypes.func.isRequired
 }

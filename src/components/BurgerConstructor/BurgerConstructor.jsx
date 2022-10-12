@@ -14,8 +14,10 @@ import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { postData } from '../../utils/burger-api'
 
-export const BurgerConstructor = () => {
-  const { ingredientsList } = useContext(IngredientsContext)
+export const BurgerConstructor = ({ ingredientsList }) => {
+  // const { ingredientsList } = useContext(IngredientsContext)
+  const { handleDelIngredient } = useContext(IngredientsContext)
+
   const [modalOpened, setModalOpened] = useState(false)
   const [orderNum, setOrderSum] = useState()
 
@@ -50,18 +52,24 @@ export const BurgerConstructor = () => {
     setModalOpened(false)
   }
 
+  const deleteIngredient = item => {
+    handleDelIngredient(item)
+  }
+
   return (
     ingredientsList.length && (
       <div className={burgerConstructorCss.wrapper}>
-        <div className="ml-6 mb-4">
-          <ConstructorElement
-            type={'top'}
-            isLocked={true}
-            text={bun.name}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
+        {bun && (
+          <div className="ml-6 mb-4">
+            <ConstructorElement
+              type={'top'}
+              isLocked={true}
+              text={bun.name}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        )}
 
         <ul className={`app-scroll pr-2 ${burgerConstructorCss.list}`}>
           {bunIngredients.map(item => {
@@ -77,23 +85,26 @@ export const BurgerConstructor = () => {
                   text={item.name}
                   price={item.price}
                   thumbnail={item.image}
+                  handleClose={() => deleteIngredient(item)}
                 />
               </li>
             )
           })}
         </ul>
 
-        <div className="ml-6 mt-4 mb-10">
-          <ConstructorElement
-            type={'bottom'}
-            isLocked={true}
-            text={bun.name}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
+        {bun && (
+          <div className="ml-6 mt-4">
+            <ConstructorElement
+              type={'bottom'}
+              isLocked={true}
+              text={bun.name}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        )}
 
-        <div className={burgerConstructorCss.sum}>
+        <div className={`${burgerConstructorCss.sum} mt-10`}>
           <div className="flex-wrap mr-10">
             <p className="mr-2 text text_type_digits-default">{countSum}</p>
             <CurrencyIcon type="primary" />

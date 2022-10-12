@@ -12,25 +12,37 @@ import { IngredientsContext } from '../../services/appContext'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
+import { postData } from '../../utils/burger-api'
 
 export const BurgerConstructor = () => {
   const { ingredientsList } = useContext(IngredientsContext)
   const [modalOpened, setModalOpened] = useState(false)
+  const [orderNum, setOrderSum] = useState()
 
   const countSum = useMemo(() => {
     return ingredientsList.reduce((acc, el) => acc + el.price, 0)
   }, [ingredientsList])
 
-  const ingredientsBun = useMemo(() => {
+  const bunIngredients = useMemo(() => {
     return ingredientsList.filter(item => item.type !== 'bun')
   }, [ingredientsList])
+
+  const bunIngredientIds = useMemo(() => {
+    return bunIngredients.map(item => item._id)
+  }, [bunIngredients])
 
   const bun = useMemo(
     () => ingredientsList.find(ingredient => ingredient.type === 'bun'),
     [ingredientsList]
   )
 
-  const openModal = () => {
+  const openModal = async () => {
+    const data = { ingredients: bunIngredientIds }
+    const {
+      order: { number }
+    } = await postData('orders', data)
+    setOrderSum(number)
+
     setModalOpened(true)
   }
 
@@ -52,7 +64,7 @@ export const BurgerConstructor = () => {
         </div>
 
         <ul className={`app-scroll pr-2 ${burgerConstructorCss.list}`}>
-          {ingredientsBun.map(item => {
+          {bunIngredients.map(item => {
             return (
               <li className={burgerConstructorCss.li} key={item._id}>
                 <img
@@ -98,7 +110,7 @@ export const BurgerConstructor = () => {
 
         {modalOpened && (
           <Modal title="" closeModal={closeModal}>
-            <OrderDetails />
+            <OrderDetails orderNum={orderNum} />
           </Modal>
         )}
       </div>

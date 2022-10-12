@@ -3,7 +3,7 @@ import { AppHeader } from '../AppHeader/AppHeader.jsx'
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor'
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients'
 import { useState, useEffect } from 'react'
-import { getIngredients } from '../../utils/burger-api'
+import { getData } from '../../utils/burger-api'
 import { IngredientsContext } from '../../services/appContext'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const fetchIngredients = async () => {
-      const data = await getIngredients()
+      const data = await getData('ingredients')
       setIngredientsList(data)
     }
 

@@ -1,13 +1,13 @@
 import orderDetailsCss from './order-details.module.css'
 import orderAccepted from '../../images/ingridients/order-accepted.jpg'
 
-export const OrderDetails = () => {
+export const OrderDetails = ({ orderNum }) => {
   return (
     <div className={`${orderDetailsCss.wrapper} pb-30`}>
       <p
         className={`${orderDetailsCss.number} text text_type_digits-large mb-8`}
       >
-        034536
+        {orderNum || 'Заказ не создан'}
       </p>
       <p
         className={`${orderDetailsCss.identifier} text text_type_main-medium mb-15`}

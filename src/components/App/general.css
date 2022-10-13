@@ -1,9 +1,3 @@
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 main {
   display: flex;
   justify-content: space-between;
@@ -11,13 +5,15 @@ main {
   margin: 0 auto;
 }
 
-.flex-wrap {
-  display: flex;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.main-section {
-  width: 600px;
-  float: left;
+/* Helper classes */
+.flex-wrap {
+  display: flex;
 }
 
 .font-white {

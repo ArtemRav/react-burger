@@ -1,4 +1,5 @@
-import './App.css'
+import './general.css'
+import appCss from './app.module.css'
 import { AppHeader } from '../AppHeader/AppHeader.jsx'
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor'
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients'
@@ -65,7 +66,7 @@ function App() {
         <IngredientsContext.Provider
           value={{ ingredientsList, handleDelIngredient }}
         >
-          <section className="main-section">
+          <section className={appCss['main-section']}>
             <h2>Соберите бургер</h2>
             <BurgerIngredients handleAddIngredient={handleAddIngredient} />
           </section>

@@ -40,14 +40,17 @@ export const BurgerIngredients = ({ handleAddIngredient }) => {
     })
   }, [])
 
-  const openModal = useCallback(item => {
-    // Тест добавления ингридиентов в заказ
-    handleAddIngredient(item)
+  const openModal = useCallback(
+    item => {
+      // Тест добавления ингридиентов в заказ
+      handleAddIngredient(item)
 
-    // Отключаем временно показ модалки
-    // setItemSelected(item)
-    // setModalOpened(true)
-  }, [])
+      // Отключаем временно показ модалки
+      setItemSelected(item)
+      setModalOpened(true)
+    },
+    [handleAddIngredient]
+  )
 
   const closeModal = () => {
     setModalOpened(false)

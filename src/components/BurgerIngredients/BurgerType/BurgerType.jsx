@@ -18,6 +18,6 @@ export const BurgerType = ({ title, list, id }) => {
 
 BurgerType.propTypes = {
   title: PropTypes.string.isRequired,
-  list: PropTypes.arrayOf(burgerListItemPropTypes),
+  list: PropTypes.arrayOf(burgerListItemPropTypes).isRequired,
   id: PropTypes.string.isRequired
 }

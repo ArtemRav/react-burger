@@ -5,7 +5,7 @@ import modalCss from './modal.module.css'
 import { useEffect } from 'react'
 
 const ESC_KEYCODE = 27
-const modalRoot = document.getElementById('root')
+const modalRoot = document.getElementById('modals')
 
 export const Modal = ({ title, children, closeModal }) => {
   const { wrapper, modal, header, body } = modalCss

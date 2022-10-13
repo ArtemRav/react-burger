@@ -15,7 +15,6 @@ import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { postData } from '../../utils/burger-api'
 
 export const BurgerConstructor = ({ ingredientsList }) => {
-  // const { ingredientsList } = useContext(IngredientsContext)
   const { handleDelIngredient } = useContext(IngredientsContext)
 
   const [modalOpened, setModalOpened] = useState(false)
@@ -29,9 +28,9 @@ export const BurgerConstructor = ({ ingredientsList }) => {
     return ingredientsList.filter(item => item.type !== 'bun')
   }, [ingredientsList])
 
-  const bunIngredientIds = useMemo(() => {
-    return bunIngredients.map(item => item._id)
-  }, [bunIngredients])
+  const ingredientIds = useMemo(() => {
+    return ingredientsList.map(item => item._id)
+  }, [ingredientsList])
 
   const bun = useMemo(
     () => ingredientsList.find(ingredient => ingredient.type === 'bun'),
@@ -39,11 +38,21 @@ export const BurgerConstructor = ({ ingredientsList }) => {
   )
 
   const openModal = async () => {
-    const data = { ingredients: bunIngredientIds }
-    const {
-      order: { number }
-    } = await postData('orders', data)
-    setOrderSum(number)
+    const data = { ingredients: ingredientIds }
+    try {
+      const {
+        order: { number }
+      } = await postData('orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      setOrderSum(number)
+    } catch (error) {
+      console.error(error)
+    }
 
     setModalOpened(true)
   }
@@ -64,7 +73,7 @@ export const BurgerConstructor = ({ ingredientsList }) => {
             <ConstructorElement
               type={'top'}
               isLocked={true}
-              text={bun.name}
+              text={`${bun.name} (верх)`}
               price={bun.price}
               thumbnail={bun.image}
             />
@@ -97,7 +106,7 @@ export const BurgerConstructor = ({ ingredientsList }) => {
             <ConstructorElement
               type={'bottom'}
               isLocked={true}
-              text={bun.name}
+              text={`${bun.name} (низ)`}
               price={bun.price}
               thumbnail={bun.image}
             />

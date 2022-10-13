@@ -47,8 +47,12 @@ function App() {
 
   useEffect(() => {
     const fetchIngredients = async () => {
-      const data = await getData('ingredients')
-      setIngredientsList(data)
+      try {
+        const { data } = await getData('ingredients')
+        setIngredientsList(data)
+      } catch (error) {
+        console.error(error)
+      }
     }
 
     fetchIngredients()

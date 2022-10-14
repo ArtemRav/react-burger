@@ -5,8 +5,12 @@ import {
 import burgerStyle from './burger-item.module.css'
 import { burgerListItemPropTypes } from '../../../utils/prop-types'
 import PropTypes from 'prop-types'
+import { BurgerItemContext } from '../../../services/burgerItemContext'
+import { useContext } from 'react'
 
-export const BurgerItem = ({ menuItem, openModal, amount }) => {
+export const BurgerItem = ({ menuItem, amount }) => {
+  const { openModal } = useContext(BurgerItemContext)
+
   const showModal = () => {
     openModal(menuItem)
   }
@@ -34,6 +38,5 @@ export const BurgerItem = ({ menuItem, openModal, amount }) => {
 
 BurgerItem.propTypes = {
   menuItem: burgerListItemPropTypes(),
-  openModal: PropTypes.func.isRequired,
   amount: PropTypes.number.isRequired
 }

@@ -1,19 +1,21 @@
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
 
-const wrapperGetRequest = async url => {
-  try {
-    const response = await fetch(url)
-    if (response.ok) {
-      const { data } = await response.json()
-      return data
-    } else {
-      throw new Error(`Ошибка HTTP: ${response.status}`)
-    }
-  } catch (err) {
-    console.error(err)
+const checkResponse = res => {
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error(`Ошибка HTTP: ${res.status}`)
   }
 }
 
-export const getIngredients = async url => {
-  return wrapperGetRequest(`${BURGER_API_URL}/ingredients`)
+function sendRequest(url, options = {}) {
+  return fetch(url, options).then(checkResponse)
+}
+
+export const getData = async url => {
+  return sendRequest(`${BURGER_API_URL}/${url}`)
+}
+
+export const postData = async (url, data) => {
+  return sendRequest(`${BURGER_API_URL}/${url}`, data)
 }

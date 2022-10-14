@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useContext } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerType } from './BurgerType/BurgerType'
 import { Modal } from '../Modal/Modal'
@@ -6,8 +6,11 @@ import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
 import burgerIngredientsCss from './burger-ingredients.module.css'
 import PropTypes from 'prop-types'
 import { burgerListItemPropTypes } from '../../utils/prop-types.js'
+import { IngredientsContext } from '../../services/appContext'
+import { BurgerItemContext } from '../../services/burgerItemContext'
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = ({ handleAddIngredient }) => {
+  const { ingredientsList } = useContext(IngredientsContext)
   const [activeTab, setActiveTab] = useState({ id: 'bun', name: 'Булки' })
   const [modalOpened, setModalOpened] = useState(false)
   const [itemSelected, setItemSelected] = useState()
@@ -18,16 +21,16 @@ export const BurgerIngredients = ({ ingredients }) => {
   ]
 
   const burgersBun = useMemo(
-    () => ingredients.filter(item => item.type === 'bun'),
-    [ingredients]
+    () => ingredientsList.filter(item => item.type === 'bun'),
+    [ingredientsList]
   )
   const burgersMain = useMemo(
-    () => ingredients.filter(item => item.type === 'main'),
-    [ingredients]
+    () => ingredientsList.filter(item => item.type === 'main'),
+    [ingredientsList]
   )
   const burgersSauce = useMemo(
-    () => ingredients.filter(item => item.type === 'sauce'),
-    [ingredients]
+    () => ingredientsList.filter(item => item.type === 'sauce'),
+    [ingredientsList]
   )
 
   const toggleTab = useCallback(tab => {
@@ -37,61 +40,54 @@ export const BurgerIngredients = ({ ingredients }) => {
     })
   }, [])
 
-  const openModal = useCallback(item => {
-    setItemSelected(item)
-    setModalOpened(true)
-  }, [])
+  const openModal = useCallback(
+    item => {
+      // Тест добавления ингридиентов в заказ
+      handleAddIngredient(item)
+
+      // Отключаем временно показ модалки
+      setItemSelected(item)
+      setModalOpened(true)
+    },
+    [handleAddIngredient]
+  )
 
   const closeModal = () => {
     setModalOpened(false)
   }
 
   return (
-    ingredients.length && (
-      <>
-        <div className="flex-wrap">
-          {tabsList.map(tab => (
-            <Tab
-              value={tab.name}
-              active={activeTab.id === tab.id}
-              key={tab.name}
-              onClick={() => toggleTab(tab)}
-            >
-              {tab.name}
-            </Tab>
-          ))}
-        </div>
-        <div className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}>
-          <BurgerType
-            id="bun"
-            openModal={openModal}
-            list={burgersBun}
-            title="Булки"
-          />
-          <BurgerType
-            id="sauce"
-            openModal={openModal}
-            list={burgersSauce}
-            title="Соусы"
-          />
-          <BurgerType
-            id="main"
-            openModal={openModal}
-            list={burgersMain}
-            title="Начинки"
-          />
-        </div>
+    <>
+      <div className="flex-wrap">
+        {tabsList.map(tab => (
+          <Tab
+            value={tab.name}
+            active={activeTab.id === tab.id}
+            key={tab.name}
+            onClick={() => toggleTab(tab)}
+          >
+            {tab.name}
+          </Tab>
+        ))}
+      </div>
+      <div className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}>
+        <BurgerItemContext.Provider value={{ openModal }}>
+          <BurgerType id="bun" list={burgersBun} title="Булки" />
+          <BurgerType id="sauce" list={burgersSauce} title="Соусы" />
+          <BurgerType id="main" list={burgersMain} title="Начинки" />
+        </BurgerItemContext.Provider>
+      </div>
 
-        {modalOpened && (
-          <Modal title="Детали ингридиента" closeModal={closeModal}>
-            <IngredientDetails {...itemSelected} />
-          </Modal>
-        )}
-      </>
-    )
+      {modalOpened && (
+        <Modal title="Детали ингридиента" closeModal={closeModal}>
+          <IngredientDetails {...itemSelected} />
+        </Modal>
+      )}
+    </>
   )
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerListItemPropTypes())
+  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes()),
+  handleAddIngredient: PropTypes.func.isRequired
 }

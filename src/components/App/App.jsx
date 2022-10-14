@@ -10,8 +10,6 @@ import { IngredientsContext } from '../../services/appContext'
 const initialState = { orderItems: [] }
 
 function reducer(state, action) {
-  // Вопрос к ревьюверу: код сюда заходит два раза, хотя вызов reducer происходит из handleAddIngredient
-  // в который код заходит только один раз, почему handleAddIngredient вызывается один раз, а reducer вызывается два ???
   switch (action.type) {
     case 'add':
       const bunIdx = state.orderItems.findIndex(

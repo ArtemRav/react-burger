@@ -21,7 +21,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsRequest: false
       }
     case GET_INGREDIENTS_FAILED:
-      return { ...state, ingredientsFailed: true }
+      return { ...state, ingredientsFailed: true, ingredientsRequest: false }
     default:
       return state
   }

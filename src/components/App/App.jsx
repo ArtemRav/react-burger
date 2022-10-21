@@ -25,7 +25,7 @@ function App() {
           <BurgerIngredients />
         </section>
         <section>
-          {orderIngredients.length && (
+          {orderIngredients.length > 0 && (
             <BurgerConstructor ingredientsList={orderIngredients} />
           )}
         </section>

@@ -9,9 +9,9 @@ import { useMemo, useState } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
-import { postData } from '../../utils/burger-api'
 import { useDispatch, useSelector } from 'react-redux'
-import { CREATE_ORDER, DEL_INGREDIENT_FROM_ORDER } from '../../services/actions'
+import { DEL_INGREDIENT_FROM_ORDER } from '../../services/actions'
+import { getOrder } from '../../services/actions/order'
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch()
@@ -37,24 +37,7 @@ export const BurgerConstructor = () => {
 
   const openModal = async () => {
     const data = { ingredients: ingredientIds }
-    try {
-      const {
-        order: { number }
-      } = await postData('orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      dispatch({
-        type: CREATE_ORDER,
-        orderNum: number
-      })
-    } catch (error) {
-      console.error(error)
-    }
-
+    dispatch(getOrder(data))
     setModalOpened(true)
   }
 

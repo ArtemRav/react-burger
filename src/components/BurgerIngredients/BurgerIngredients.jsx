@@ -8,6 +8,7 @@ import { BurgerItemContext } from '../../services/burgerItemContext'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   ADD_INGREDIENT_TO_ORDER,
+  CLEAR_CURRENT_INGREDIENT,
   SET_CURRENT_INGREDIENT
 } from '../../services/actions'
 
@@ -18,7 +19,6 @@ export const BurgerIngredients = () => {
   )
   const [activeTab, setActiveTab] = useState({ id: 'bun', name: 'Булки' })
   const [modalOpened, setModalOpened] = useState(false)
-  // const [itemSelected, setItemSelected] = useState()
   const tabsList = [
     { id: 'bun', name: 'Булки' },
     { id: 'sauce', name: 'Соусы' },
@@ -54,7 +54,6 @@ export const BurgerIngredients = () => {
       })
 
       // Показать модальное окно по ингридиенту
-      // setItemSelected(item)
       dispatch({
         type: SET_CURRENT_INGREDIENT,
         item
@@ -66,6 +65,11 @@ export const BurgerIngredients = () => {
 
   const closeModal = () => {
     setModalOpened(false)
+
+    // Удаление данных о просматриваемом ингридиенте
+    dispatch({
+      type: CLEAR_CURRENT_INGREDIENT
+    })
   }
 
   return (
@@ -82,6 +86,7 @@ export const BurgerIngredients = () => {
           </Tab>
         ))}
       </div>
+
       <div className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}>
         <BurgerItemContext.Provider value={{ openModal }}>
           <BurgerType id="bun" list={burgersBun} title="Булки" />

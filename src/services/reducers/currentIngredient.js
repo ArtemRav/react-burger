@@ -1,13 +1,16 @@
-import { SET_CURRENT_INGREDIENT } from '../actions/index'
+import {
+  CLEAR_CURRENT_INGREDIENT,
+  SET_CURRENT_INGREDIENT
+} from '../actions/index'
 
-const initialState = {
-  item: {}
-}
+const initialState = {}
 
 export const currentIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_INGREDIENT:
-      return { ...state, item: { ...state.item, ...action.item } }
+      return { ...state, ...action.item }
+    case CLEAR_CURRENT_INGREDIENT:
+      return {}
     default:
       return state
   }

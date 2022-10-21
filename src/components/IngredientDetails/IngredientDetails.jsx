@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 export const IngredientDetails = () => {
   const { name, calories, proteins, fat, carbohydrates, image } = useSelector(
-    state => state.curIngredient.item
+    state => state.curIngredient
   )
 
   return (

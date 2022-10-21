@@ -4,35 +4,16 @@ import { AppHeader } from '../AppHeader/AppHeader.jsx'
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor'
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients'
 import { useEffect } from 'react'
-import { getData } from '../../utils/burger-api'
 
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  GET_INGREDIENTS_REQUEST,
-  GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED
-} from '../../services/actions'
+import { fetchIngredients } from '../../services/actions/ingredients'
 
 function App() {
   const dispatch = useDispatch()
   const orderIngredients = useSelector(state => state.orderIngredients.items)
 
   useEffect(() => {
-    const fetchIngredients = async () => {
-      dispatch({ type: GET_INGREDIENTS_REQUEST })
-      try {
-        const { data } = await getData('ingredients')
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          data
-        })
-      } catch (error) {
-        dispatch({ type: GET_INGREDIENTS_FAILED })
-        console.error(error)
-      }
-    }
-
-    fetchIngredients()
+    dispatch(fetchIngredients())
   }, [dispatch])
 
   return (

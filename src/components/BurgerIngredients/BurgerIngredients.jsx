@@ -1,19 +1,24 @@
-import { useState, useMemo, useCallback, useContext } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerType } from './BurgerType/BurgerType'
 import { Modal } from '../Modal/Modal'
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
 import burgerIngredientsCss from './burger-ingredients.module.css'
-import PropTypes from 'prop-types'
-import { burgerListItemPropTypes } from '../../utils/prop-types.js'
-import { IngredientsContext } from '../../services/appContext'
 import { BurgerItemContext } from '../../services/burgerItemContext'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  ADD_INGREDIENT_TO_ORDER,
+  SET_CURRENT_INGREDIENT
+} from '../../services/actions'
 
-export const BurgerIngredients = ({ handleAddIngredient }) => {
-  const { ingredientsList } = useContext(IngredientsContext)
+export const BurgerIngredients = () => {
+  const dispatch = useDispatch()
+  const ingredientsList = useSelector(
+    state => state.allIngredients.ingredientsList
+  )
   const [activeTab, setActiveTab] = useState({ id: 'bun', name: 'Булки' })
   const [modalOpened, setModalOpened] = useState(false)
-  const [itemSelected, setItemSelected] = useState()
+  // const [itemSelected, setItemSelected] = useState()
   const tabsList = [
     { id: 'bun', name: 'Булки' },
     { id: 'sauce', name: 'Соусы' },
@@ -42,14 +47,21 @@ export const BurgerIngredients = ({ handleAddIngredient }) => {
 
   const openModal = useCallback(
     item => {
-      // Тест добавления ингридиентов в заказ
-      handleAddIngredient(item)
+      // Добавить ингридиент в заказа
+      dispatch({
+        type: ADD_INGREDIENT_TO_ORDER,
+        item
+      })
 
-      // Отключаем временно показ модалки
-      setItemSelected(item)
+      // Показать модальное окно по ингридиенту
+      // setItemSelected(item)
+      dispatch({
+        type: SET_CURRENT_INGREDIENT,
+        item
+      })
       setModalOpened(true)
     },
-    [handleAddIngredient]
+    [dispatch]
   )
 
   const closeModal = () => {
@@ -80,14 +92,9 @@ export const BurgerIngredients = ({ handleAddIngredient }) => {
 
       {modalOpened && (
         <Modal title="Детали ингридиента" closeModal={closeModal}>
-          <IngredientDetails {...itemSelected} />
+          <IngredientDetails />
         </Modal>
       )}
     </>
   )
-}
-
-BurgerIngredients.propTypes = {
-  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes()),
-  handleAddIngredient: PropTypes.func.isRequired
 }

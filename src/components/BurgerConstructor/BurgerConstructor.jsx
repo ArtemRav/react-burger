@@ -1,40 +1,38 @@
 import burgerConstructorCss from './burger-constructor.module.css'
-import PropTypes from 'prop-types'
 import {
   Button,
   ConstructorElement,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import dragIcon from './../../images/constructor/Vector.png'
-import { burgerListItemPropTypes } from '../../utils/prop-types'
-import { useContext, useMemo, useState } from 'react'
-import { IngredientsContext } from '../../services/appContext'
+import { useMemo, useState } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { postData } from '../../utils/burger-api'
+import { useDispatch, useSelector } from 'react-redux'
+import { CREATE_ORDER, DEL_INGREDIENT_FROM_ORDER } from '../../services/actions'
 
-export const BurgerConstructor = ({ ingredientsList }) => {
-  const { handleDelIngredient } = useContext(IngredientsContext)
-
+export const BurgerConstructor = () => {
+  const dispatch = useDispatch()
+  const orderIngredients = useSelector(state => state.orderIngredients.items)
   const [modalOpened, setModalOpened] = useState(false)
-  const [orderNum, setOrderSum] = useState()
 
   const countSum = useMemo(() => {
-    return ingredientsList.reduce((acc, el) => acc + el.price, 0)
-  }, [ingredientsList])
+    return orderIngredients.reduce((acc, el) => acc + el.price, 0)
+  }, [orderIngredients])
 
   const bunIngredients = useMemo(() => {
-    return ingredientsList.filter(item => item.type !== 'bun')
-  }, [ingredientsList])
+    return orderIngredients.filter(item => item.type !== 'bun')
+  }, [orderIngredients])
 
   const ingredientIds = useMemo(() => {
-    return ingredientsList.map(item => item._id)
-  }, [ingredientsList])
+    return orderIngredients.map(item => item._id)
+  }, [orderIngredients])
 
   const bun = useMemo(
-    () => ingredientsList.find(ingredient => ingredient.type === 'bun'),
-    [ingredientsList]
+    () => orderIngredients.find(ingredient => ingredient.type === 'bun'),
+    [orderIngredients]
   )
 
   const openModal = async () => {
@@ -49,7 +47,10 @@ export const BurgerConstructor = ({ ingredientsList }) => {
         },
         body: JSON.stringify(data)
       })
-      setOrderSum(number)
+      dispatch({
+        type: CREATE_ORDER,
+        orderNum: number
+      })
     } catch (error) {
       console.error(error)
     }
@@ -62,11 +63,14 @@ export const BurgerConstructor = ({ ingredientsList }) => {
   }
 
   const deleteIngredient = item => {
-    handleDelIngredient(item)
+    dispatch({
+      type: DEL_INGREDIENT_FROM_ORDER,
+      item
+    })
   }
 
   return (
-    ingredientsList.length && (
+    orderIngredients.length && (
       <div className={burgerConstructorCss.wrapper}>
         {bun && (
           <div className="ml-6 mb-4">
@@ -130,14 +134,10 @@ export const BurgerConstructor = ({ ingredientsList }) => {
 
         {modalOpened && (
           <Modal title="" closeModal={closeModal}>
-            <OrderDetails orderNum={orderNum} />
+            <OrderDetails />
           </Modal>
         )}
       </div>
     )
   )
-}
-
-BurgerConstructor.propTypes = {
-  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes())
 }

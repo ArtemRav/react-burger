@@ -1,0 +1,16 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: calc(100% - 64px);
+  max-height: 36vh;
+  overflow-y: auto;
+}
+
+.bun {
+  display: flex;
+  justify-content: flex-end;
+  height: 80px;
+  margin-right: 10px;
+  padding-right: 8px;
+}

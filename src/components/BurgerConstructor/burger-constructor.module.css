@@ -9,32 +9,6 @@
   outline: 2px solid blue;
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: calc(100% - 64px);
-  max-height: 36vh;
-  overflow-y: auto;
-}
-
-.bun,
-.li {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 8px;
-}
-
-.li {
-  height: 100%;
-  align-items: center;
-}
-
-.bun {
-  height: 80px;
-  margin-right: 10px;
-}
-
 .sum {
   display: flex;
   width: 100%;

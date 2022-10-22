@@ -1,16 +1,16 @@
 import burgerConstructorCss from './burger-constructor.module.css'
 import {
   Button,
-  ConstructorElement,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import dragIcon from './../../images/constructor/Vector.png'
 import { useCallback, useMemo, useState } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
+import { OrderIngredientList } from '../OrderIngredientList/OrderIngredientList'
+
 import { useDispatch, useSelector } from 'react-redux'
-import { addIngredient, delIngredient } from '../../services/actions'
+import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
 
@@ -26,20 +26,11 @@ export const BurgerConstructor = () => {
     )
   }, [orderIngredients])
 
-  const bunIngredients = useMemo(() => {
-    return orderIngredients.filter(item => item.type !== 'bun')
-  }, [orderIngredients])
-
   const ingredientIds = useMemo(() => {
     return orderIngredients.map(item => item._id)
   }, [orderIngredients])
 
-  const bun = useMemo(
-    () => orderIngredients.find(ingredient => ingredient.type === 'bun'),
-    [orderIngredients]
-  )
-
-  const [{ isHover }, refDropContainer] = useDrop({
+  const [{ isHover }, dropForAllRef] = useDrop({
     accept: 'ingredients',
     collect: monitor => ({
       isHover: monitor.isOver()
@@ -66,64 +57,13 @@ export const BurgerConstructor = () => {
     setModalOpened(false)
   }, [setModalOpened])
 
-  const deleteIngredient = useCallback(
-    item => {
-      dispatch(delIngredient(item))
-    },
-    [dispatch]
-  )
-
   return (
     <div
-      ref={refDropContainer}
-      className={`${isHover ? burgerConstructorCss.onHover : ''} ${
-        burgerConstructorCss.wrapper
-      }`}
+      ref={dropForAllRef}
+      className={`${isHover ? burgerConstructorCss.onHover : ''} 
+      ${burgerConstructorCss.wrapper}`}
     >
-      <div className={`mb-4 ${burgerConstructorCss.bun}`}>
-        {bun && (
-          <ConstructorElement
-            type={'top'}
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        )}
-      </div>
-
-      <ul className={`app-scroll ${burgerConstructorCss.list}`}>
-        {bunIngredients.map(item => {
-          return (
-            <li className={burgerConstructorCss.li} key={item.dragId}>
-              <img
-                className="mr-3 crsr-pointer"
-                src={dragIcon}
-                alt="drag&drop"
-              />
-              <ConstructorElement
-                isLocked={false}
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-                handleClose={() => deleteIngredient(item)}
-              />
-            </li>
-          )
-        })}
-      </ul>
-
-      <div className={`mt-4 ${burgerConstructorCss.bun}`}>
-        {bun && (
-          <ConstructorElement
-            type={'bottom'}
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        )}
-      </div>
+      <OrderIngredientList orderIngredients={orderIngredients} />
 
       <div className={`${burgerConstructorCss.sum} mt-10`}>
         <div className="flex-wrap mr-10">

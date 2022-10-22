@@ -1,6 +1,7 @@
 import {
   ADD_INGREDIENT_TO_ORDER,
-  DEL_INGREDIENT_FROM_ORDER
+  DEL_INGREDIENT_FROM_ORDER,
+  UPDATE_INGREDIENTS_ORDER
 } from '../actions/index'
 
 const initialState = {
@@ -31,6 +32,12 @@ export const orderIngredientsReducer = (state = initialState, action) => {
         items: [
           ...state.items.filter(item => item.dragId !== action.item.dragId)
         ]
+      }
+
+    case UPDATE_INGREDIENTS_ORDER:
+      return {
+        ...state,
+        items: [...action.listItems]
       }
 
     default:

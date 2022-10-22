@@ -7,7 +7,6 @@ import burgerIngredientsCss from './burger-ingredients.module.css'
 import { BurgerItemContext } from '../../services/burgerItemContext'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  ADD_INGREDIENT_TO_ORDER,
   CLEAR_CURRENT_INGREDIENT,
   SET_CURRENT_INGREDIENT
 } from '../../services/actions'
@@ -71,12 +70,6 @@ export const BurgerIngredients = () => {
 
   const openModal = useCallback(
     item => {
-      // Добавить ингридиент в заказа
-      dispatch({
-        type: ADD_INGREDIENT_TO_ORDER,
-        item
-      })
-
       // Показать модальное окно по ингридиенту
       dispatch({
         type: SET_CURRENT_INGREDIENT,
@@ -87,14 +80,14 @@ export const BurgerIngredients = () => {
     [dispatch]
   )
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalOpened(false)
 
     // Удаление данных о просматриваемом ингридиенте
     dispatch({
       type: CLEAR_CURRENT_INGREDIENT
     })
-  }
+  }, [dispatch])
 
   useEffect(() => {
     const tabsNode = tabsRef.current

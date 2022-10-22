@@ -7,6 +7,8 @@ import { useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchIngredients } from '../../services/actions/ingredients'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 function App() {
   const dispatch = useDispatch()
@@ -19,17 +21,18 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <main>
-        <section className={appCss['main-section']}>
-          <h2>Соберите бургер</h2>
-          <BurgerIngredients />
-        </section>
-        <section>
-          {orderIngredients.length > 0 && (
+      <DndProvider backend={HTML5Backend}>
+        <main>
+          <section className={appCss['left-part']}>
+            <h2>Соберите бургер</h2>
+            <BurgerIngredients />
+          </section>
+
+          <section className={appCss['right-part']}>
             <BurgerConstructor ingredientsList={orderIngredients} />
-          )}
-        </section>
-      </main>
+          </section>
+        </main>
+      </DndProvider>
     </div>
   )
 }

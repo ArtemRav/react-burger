@@ -1,6 +1,5 @@
 .items {
   display: flex;
-  max-width: 600px;
   flex-wrap: wrap;
 }
 

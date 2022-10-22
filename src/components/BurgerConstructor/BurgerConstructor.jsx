@@ -5,13 +5,14 @@ import {
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import dragIcon from './../../images/constructor/Vector.png'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { useDispatch, useSelector } from 'react-redux'
-import { DEL_INGREDIENT_FROM_ORDER } from '../../services/actions'
+import { addIngredient, delIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
+import { useDrop } from 'react-dnd'
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch()
@@ -19,7 +20,10 @@ export const BurgerConstructor = () => {
   const [modalOpened, setModalOpened] = useState(false)
 
   const countSum = useMemo(() => {
-    return orderIngredients.reduce((acc, el) => acc + el.price, 0)
+    return orderIngredients.reduce(
+      (acc, el) => (el.type === 'bun' ? acc + el.price * 2 : acc + el.price),
+      0
+    )
   }, [orderIngredients])
 
   const bunIngredients = useMemo(() => {
@@ -35,92 +39,112 @@ export const BurgerConstructor = () => {
     [orderIngredients]
   )
 
-  const openModal = async () => {
+  const [{ isHover }, refDropContainer] = useDrop({
+    accept: 'ingredients',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(item) {
+      handleDrop(item)
+    }
+  })
+
+  const handleDrop = useCallback(
+    ingredient => {
+      dispatch(addIngredient(ingredient))
+    },
+    [dispatch]
+  )
+
+  const openModal = useCallback(() => {
     const data = { ingredients: ingredientIds }
     dispatch(getOrder(data))
     setModalOpened(true)
-  }
+  }, [dispatch, setModalOpened, ingredientIds])
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalOpened(false)
-  }
+  }, [setModalOpened])
 
-  const deleteIngredient = item => {
-    dispatch({
-      type: DEL_INGREDIENT_FROM_ORDER,
-      item
-    })
-  }
+  const deleteIngredient = useCallback(
+    item => {
+      dispatch(delIngredient(item))
+    },
+    [dispatch]
+  )
 
   return (
-    orderIngredients.length && (
-      <div className={burgerConstructorCss.wrapper}>
+    <div
+      ref={refDropContainer}
+      className={`${isHover ? burgerConstructorCss.onHover : ''} ${
+        burgerConstructorCss.wrapper
+      }`}
+    >
+      <div className={`mb-4 ${burgerConstructorCss.bun}`}>
         {bun && (
-          <div className="ml-6 mb-4">
-            <ConstructorElement
-              type={'top'}
-              isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
-        )}
-
-        <ul className={`app-scroll pr-2 ${burgerConstructorCss.list}`}>
-          {bunIngredients.map(item => {
-            return (
-              <li className={burgerConstructorCss.li} key={item._id}>
-                <img
-                  className="mr-3 crsr-pointer"
-                  src={dragIcon}
-                  alt="drag&drop"
-                />
-                <ConstructorElement
-                  isLocked={false}
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  handleClose={() => deleteIngredient(item)}
-                />
-              </li>
-            )
-          })}
-        </ul>
-
-        {bun && (
-          <div className="ml-6 mt-4">
-            <ConstructorElement
-              type={'bottom'}
-              isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
-        )}
-
-        <div className={`${burgerConstructorCss.sum} mt-10`}>
-          <div className="flex-wrap mr-10">
-            <p className="mr-2 text text_type_digits-default">{countSum}</p>
-            <CurrencyIcon type="primary" />
-          </div>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            onClick={openModal}
-          >
-            Оформить заказ
-          </Button>
-        </div>
-
-        {modalOpened && (
-          <Modal title="" closeModal={closeModal}>
-            <OrderDetails />
-          </Modal>
+          <ConstructorElement
+            type={'top'}
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
         )}
       </div>
-    )
+
+      <ul className={`app-scroll ${burgerConstructorCss.list}`}>
+        {bunIngredients.map(item => {
+          return (
+            <li className={burgerConstructorCss.li} key={item.dragId}>
+              <img
+                className="mr-3 crsr-pointer"
+                src={dragIcon}
+                alt="drag&drop"
+              />
+              <ConstructorElement
+                isLocked={false}
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image}
+                handleClose={() => deleteIngredient(item)}
+              />
+            </li>
+          )
+        })}
+      </ul>
+
+      <div className={`mt-4 ${burgerConstructorCss.bun}`}>
+        {bun && (
+          <ConstructorElement
+            type={'bottom'}
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        )}
+      </div>
+
+      <div className={`${burgerConstructorCss.sum} mt-10`}>
+        <div className="flex-wrap mr-10">
+          <p className="mr-2 text text_type_digits-default">{countSum}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={openModal}
+        >
+          Оформить заказ
+        </Button>
+      </div>
+
+      {modalOpened && (
+        <Modal title="" closeModal={closeModal}>
+          <OrderDetails />
+        </Modal>
+      )}
+    </div>
   )
 }

@@ -1,3 +1,4 @@
+import { BUN } from '../../utils/ingredient-types'
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -34,7 +35,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsList: [
           ...state.ingredientsList.map(item => {
             if (item._id === action._id) {
-              item.qnt = item.type === 'bun' ? 2 : ++item.qnt
+              item.qnt = item.type === BUN ? 2 : ++item.qnt
             }
             return item
           })
@@ -59,7 +60,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsList: [
           ...state.ingredientsList.map(item => {
-            if (item.type === 'bun') {
+            if (item.type === BUN) {
               item.qnt = 0
             }
             return item

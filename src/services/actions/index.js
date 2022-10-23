@@ -1,4 +1,5 @@
 import { v1 as uuidv1 } from 'uuid'
+import { BUN } from '../../utils/ingredient-types'
 import {
   DECREASE_QNT_INGREDIENTS,
   DROP_QNT_ALL_BUNS,
@@ -20,7 +21,7 @@ export const addIngredient = ingredient => dispatch => {
     }
   })
 
-  if (ingredient.type === 'bun') {
+  if (ingredient.type === BUN) {
     dispatch({
       type: DROP_QNT_ALL_BUNS
     })

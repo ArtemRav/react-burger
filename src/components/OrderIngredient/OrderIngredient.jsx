@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { delIngredient } from '../../services/actions'
 import dragIcon from './../../images/constructor/Vector.png'
 import { useDrag, useDrop } from 'react-dnd'
+import { BUN } from '../../utils/ingredient-types'
 
 export const OrderIngredient = ({ item, index, moveCard }) => {
   const { name, price, image } = item
@@ -64,7 +65,7 @@ export const OrderIngredient = ({ item, index, moveCard }) => {
 
   const opacity = isDragging ? 0 : 1
 
-  if (item.type !== 'bun') drag(drop(ref))
+  if (item.type !== BUN) drag(drop(ref))
 
   const preventDefault = e => e.preventDefault()
 

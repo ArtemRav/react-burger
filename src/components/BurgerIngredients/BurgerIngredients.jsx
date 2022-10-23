@@ -10,40 +10,41 @@ import {
   CLEAR_CURRENT_INGREDIENT,
   SET_CURRENT_INGREDIENT
 } from '../../services/actions'
+import { BUN, SAUCE, MAIN } from '../../utils/ingredient-types'
 
 export const BurgerIngredients = () => {
   const dispatch = useDispatch()
   const ingredientsList = useSelector(
     state => state.allIngredients.ingredientsList
   )
-  const [activeTab, setActiveTab] = useState({ id: 'bun', name: 'Булки' })
+  const [activeTab, setActiveTab] = useState({ id: BUN, name: 'Булки' })
   const [modalOpened, setModalOpened] = useState(false)
   const tabsList = useMemo(
     () => [
-      { id: 'bun', name: 'Булки' },
-      { id: 'sauce', name: 'Соусы' },
-      { id: 'main', name: 'Начинки' }
+      { id: BUN, name: 'Булки' },
+      { id: SAUCE, name: 'Соусы' },
+      { id: MAIN, name: 'Начинки' }
     ],
     []
   )
   const tabsRef = useRef()
 
   const burgersBun = useMemo(
-    () => ingredientsList.filter(item => item.type === 'bun'),
+    () => ingredientsList.filter(item => item.type === BUN),
     [ingredientsList]
   )
   const burgersMain = useMemo(
-    () => ingredientsList.filter(item => item.type === 'main'),
+    () => ingredientsList.filter(item => item.type === MAIN),
     [ingredientsList]
   )
   const burgersSauce = useMemo(
-    () => ingredientsList.filter(item => item.type === 'sauce'),
+    () => ingredientsList.filter(item => item.type === SAUCE),
     [ingredientsList]
   )
 
-  const bunNode = document.getElementById('bun')
-  const sauceNode = document.getElementById('sauce')
-  const mainNode = document.getElementById('main')
+  const bunNode = document.getElementById(BUN)
+  const sauceNode = document.getElementById(SAUCE)
+  const mainNode = document.getElementById(MAIN)
 
   const scrollIngredients = useCallback(() => {
     const tabsNodeY = tabsRef.current.getBoundingClientRect().top + 40
@@ -53,11 +54,11 @@ export const BurgerIngredients = () => {
     const mainNodeY = mainNode.getBoundingClientRect().top - tabsNodeY
 
     if (bunNodeY < 0 && sauceNodeY > 0 && mainNodeY > 0) {
-      setActiveTab(tabsList.find(t => t.id === 'bun'))
+      setActiveTab(tabsList.find(t => t.id === BUN))
     } else if (sauceNodeY < 0 && bunNodeY < 0 && mainNodeY > 0) {
-      setActiveTab(tabsList.find(t => t.id === 'sauce'))
+      setActiveTab(tabsList.find(t => t.id === SAUCE))
     } else if (mainNodeY < 0) {
-      setActiveTab(tabsList.find(t => t.id === 'main'))
+      setActiveTab(tabsList.find(t => t.id === MAIN))
     }
   }, [bunNode, mainNode, sauceNode, tabsList])
 

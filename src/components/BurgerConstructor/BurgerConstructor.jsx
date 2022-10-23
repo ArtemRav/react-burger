@@ -14,6 +14,8 @@ import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
 
+import { BUN } from '../../utils/ingredient-types'
+
 export const BurgerConstructor = () => {
   const dispatch = useDispatch()
   const orderIngredients = useSelector(state => state.orderIngredients.items)
@@ -21,7 +23,7 @@ export const BurgerConstructor = () => {
 
   const countSum = useMemo(() => {
     return orderIngredients.reduce(
-      (acc, el) => (el.type === 'bun' ? acc + el.price * 2 : acc + el.price),
+      (acc, el) => (el.type === BUN ? acc + el.price * 2 : acc + el.price),
       0
     )
   }, [orderIngredients])

@@ -1,3 +1,4 @@
+import { BUN } from '../../utils/ingredient-types'
 import {
   ADD_INGREDIENT_TO_ORDER,
   DEL_INGREDIENT_FROM_ORDER,
@@ -11,12 +12,12 @@ const initialState = {
 export const orderIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_ORDER:
-      if (state.items.length && action.item.type === 'bun') {
+      if (state.items.length && action.item.type === BUN) {
         return {
           ...state,
           items: [
             ...state.items.map(item => {
-              if (item.type === 'bun') {
+              if (item.type === BUN) {
                 return action.item
               }
               return item

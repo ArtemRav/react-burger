@@ -5,17 +5,18 @@ import { OrderIngredient } from '../OrderIngredient/OrderIngredient'
 import { useDispatch } from 'react-redux'
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
+import { BUN } from '../../utils/ingredient-types'
 
 export const OrderIngredientList = ({ orderIngredients }) => {
   const dispatch = useDispatch()
 
   const bun = useMemo(
-    () => orderIngredients.find(ingredient => ingredient.type === 'bun'),
+    () => orderIngredients.find(ingredient => ingredient.type === BUN),
     [orderIngredients]
   )
 
   const bunIngredients = useMemo(() => {
-    return orderIngredients.filter(item => item.type !== 'bun')
+    return orderIngredients.filter(item => item.type !== BUN)
   }, [orderIngredients])
 
   const moveCard = useCallback(

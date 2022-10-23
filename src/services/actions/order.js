@@ -6,10 +6,15 @@ export const GET_ORDER_FAILED = 'GET_ORDER_FAILED'
 
 export const getOrder = data => async dispatch => {
   dispatch({ type: GET_ORDER_REQUEST })
+
+  const handleError = () => {
+    return dispatch({ type: GET_ORDER_FAILED })
+  }
+
   try {
     const {
       order: { number }
-    } = await postData('orders', data)
+    } = await postData('orders', data, handleError)
     dispatch({
       type: GET_ORDER_SUCCESS,
       orderNum: number

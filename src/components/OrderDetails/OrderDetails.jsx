@@ -64,9 +64,9 @@ export const OrderDetails = () => {
   const getDetails = () => {
     return (
       <>
-        {number && getTitleNumber()}
+        {!!number && getTitleNumber()}
         {!number && getTitleFailed()}
-        {number && getFullForm()}
+        {!!number && getFullForm()}
       </>
     )
   }

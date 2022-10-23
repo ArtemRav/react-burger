@@ -11,6 +11,7 @@ import {
   SET_CURRENT_INGREDIENT
 } from '../../services/actions'
 import { BUN, SAUCE, MAIN } from '../../utils/ingredient-types'
+import useModal from '../../hooks/useModal'
 
 export const BurgerIngredients = () => {
   const dispatch = useDispatch()
@@ -18,9 +19,9 @@ export const BurgerIngredients = () => {
     state => state.allIngredients.ingredientsList
   )
   const [activeTab, setActiveTab] = useState({ id: BUN, name: 'Булки' })
-  const [modalOpened, setModalOpened] = useState(false)
   const tabsList = useSelector(state => state.allIngredients.ingredientTabs)
   const tabsRef = useRef()
+  const { modalVisible: modalOpened, showModal, hideModal } = useModal()
 
   const burgersBun = useMemo(
     () => ingredientsList.filter(item => item.type === BUN),
@@ -69,19 +70,19 @@ export const BurgerIngredients = () => {
         type: SET_CURRENT_INGREDIENT,
         item
       })
-      setModalOpened(true)
+      showModal()
     },
-    [dispatch]
+    [dispatch, showModal]
   )
 
   const closeModal = useCallback(() => {
-    setModalOpened(false)
+    hideModal()
 
     // Удаление данных о просматриваемом ингридиенте
     dispatch({
       type: CLEAR_CURRENT_INGREDIENT
     })
-  }, [dispatch])
+  }, [dispatch, hideModal])
 
   useEffect(() => {
     const tabsNode = tabsRef.current

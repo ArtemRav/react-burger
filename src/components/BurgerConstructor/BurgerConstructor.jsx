@@ -3,7 +3,7 @@ import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
@@ -15,11 +15,12 @@ import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
 
 import { BUN } from '../../utils/ingredient-types'
+import useModal from '../../hooks/useModal'
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch()
   const orderIngredients = useSelector(state => state.orderIngredients.items)
-  const [modalOpened, setModalOpened] = useState(false)
+  const { modalVisible: modalOpened, showModal, hideModal } = useModal()
 
   const countSum = useMemo(() => {
     return orderIngredients.reduce(
@@ -49,12 +50,12 @@ export const BurgerConstructor = () => {
   const openModal = useCallback(() => {
     const data = { ingredients: ingredientIds }
     dispatch(getOrder(data))
-    setModalOpened(true)
-  }, [dispatch, setModalOpened, ingredientIds])
+    showModal()
+  }, [dispatch, showModal, ingredientIds])
 
   const closeModal = useCallback(() => {
-    setModalOpened(false)
-  }, [setModalOpened])
+    hideModal()
+  }, [hideModal])
 
   return (
     <div

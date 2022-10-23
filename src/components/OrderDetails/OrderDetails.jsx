@@ -34,11 +34,9 @@ export const OrderDetails = () => {
     )
   }
 
-  const getDetails = () => {
+  const getFullForm = () => {
     return (
       <>
-        {number && getTitleNumber()}
-        {!number && getTitleFailed()}
         <p
           className={`${orderDetailsCss.identifier} text text_type_main-medium mb-15`}
         >
@@ -59,6 +57,16 @@ export const OrderDetails = () => {
         >
           {titleInfo}
         </p>
+      </>
+    )
+  }
+
+  const getDetails = () => {
+    return (
+      <>
+        {number && getTitleNumber()}
+        {!number && getTitleFailed()}
+        {number && getFullForm()}
       </>
     )
   }

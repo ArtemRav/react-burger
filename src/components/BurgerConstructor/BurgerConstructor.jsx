@@ -42,12 +42,9 @@ export const BurgerConstructor = () => {
     }
   })
 
-  const handleDrop = useCallback(
-    ingredient => {
-      dispatch(addIngredient(ingredient))
-    },
-    [dispatch]
-  )
+  const handleDrop = ingredient => {
+    dispatch(addIngredient(ingredient))
+  }
 
   const openModal = useCallback(() => {
     const data = { ingredients: ingredientIds }

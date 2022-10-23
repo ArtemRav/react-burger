@@ -9,13 +9,7 @@ export const getOrder = data => async dispatch => {
   try {
     const {
       order: { number }
-    } = await postData('orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+    } = await postData('orders', data)
     dispatch({
       type: GET_ORDER_SUCCESS,
       orderNum: number

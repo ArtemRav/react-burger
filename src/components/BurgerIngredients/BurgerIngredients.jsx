@@ -19,14 +19,7 @@ export const BurgerIngredients = () => {
   )
   const [activeTab, setActiveTab] = useState({ id: BUN, name: 'Булки' })
   const [modalOpened, setModalOpened] = useState(false)
-  const tabsList = useMemo(
-    () => [
-      { id: BUN, name: 'Булки' },
-      { id: SAUCE, name: 'Соусы' },
-      { id: MAIN, name: 'Начинки' }
-    ],
-    []
-  )
+  const tabsList = useSelector(state => state.allIngredients.ingredientTabs)
   const tabsRef = useRef()
 
   const burgersBun = useMemo(

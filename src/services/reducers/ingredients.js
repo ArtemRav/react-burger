@@ -1,4 +1,4 @@
-import { BUN } from '../../utils/ingredient-types'
+import { BUN, MAIN, SAUCE } from '../../utils/ingredient-types'
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -11,7 +11,12 @@ import {
 const initialState = {
   ingredientsRequest: false,
   ingredientsFailed: false,
-  ingredientsList: []
+  ingredientsList: [],
+  ingredientTabs: [
+    { id: BUN, name: 'Булки' },
+    { id: SAUCE, name: 'Соусы' },
+    { id: MAIN, name: 'Начинки' }
+  ]
 }
 
 export const ingredientsReducer = (state = initialState, action) => {

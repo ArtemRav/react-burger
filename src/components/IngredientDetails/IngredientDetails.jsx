@@ -1,8 +1,10 @@
 import detailsCss from './Ingredient-details.module.css'
-import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
-export const IngredientDetails = props => {
-  const { name, calories, proteins, fat, carbohydrates, image } = props
+export const IngredientDetails = () => {
+  const { name, calories, proteins, fat, carbohydrates, image } = useSelector(
+    state => state.curIngredient
+  )
 
   return (
     <div className={`${detailsCss.wrapper} pb-15`}>
@@ -38,13 +40,4 @@ export const IngredientDetails = props => {
       </ul>
     </div>
   )
-}
-
-IngredientDetails.propTypes = {
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired
 }

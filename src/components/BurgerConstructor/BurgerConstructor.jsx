@@ -1,143 +1,90 @@
 import burgerConstructorCss from './burger-constructor.module.css'
-import PropTypes from 'prop-types'
 import {
   Button,
-  ConstructorElement,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import dragIcon from './../../images/constructor/Vector.png'
-import { burgerListItemPropTypes } from '../../utils/prop-types'
-import { useContext, useMemo, useState } from 'react'
-import { IngredientsContext } from '../../services/appContext'
+import { useCallback, useMemo } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
-import { postData } from '../../utils/burger-api'
+import { OrderIngredientList } from '../OrderIngredientList/OrderIngredientList'
 
-export const BurgerConstructor = ({ ingredientsList }) => {
-  const { handleDelIngredient } = useContext(IngredientsContext)
+import { useDispatch, useSelector } from 'react-redux'
+import { addIngredient } from '../../services/actions'
+import { getOrder } from '../../services/actions/order'
+import { useDrop } from 'react-dnd'
 
-  const [modalOpened, setModalOpened] = useState(false)
-  const [orderNum, setOrderSum] = useState()
+import { BUN } from '../../utils/ingredient-types'
+import useModal from '../../hooks/useModal'
+
+export const BurgerConstructor = () => {
+  const dispatch = useDispatch()
+  const orderIngredients = useSelector(state => state.orderIngredients.items)
+  const { modalVisible: modalOpened, showModal, hideModal } = useModal()
 
   const countSum = useMemo(() => {
-    return ingredientsList.reduce((acc, el) => acc + el.price, 0)
-  }, [ingredientsList])
-
-  const bunIngredients = useMemo(() => {
-    return ingredientsList.filter(item => item.type !== 'bun')
-  }, [ingredientsList])
+    return orderIngredients.reduce(
+      (acc, el) => (el.type === BUN ? acc + el.price * 2 : acc + el.price),
+      0
+    )
+  }, [orderIngredients])
 
   const ingredientIds = useMemo(() => {
-    return ingredientsList.map(item => item._id)
-  }, [ingredientsList])
+    return orderIngredients.map(item => item._id)
+  }, [orderIngredients])
 
-  const bun = useMemo(
-    () => ingredientsList.find(ingredient => ingredient.type === 'bun'),
-    [ingredientsList]
-  )
-
-  const openModal = async () => {
-    const data = { ingredients: ingredientIds }
-    try {
-      const {
-        order: { number }
-      } = await postData('orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      setOrderSum(number)
-    } catch (error) {
-      console.error(error)
+  const [{ isHover }, dropForAllRef] = useDrop({
+    accept: 'ingredients',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(item) {
+      handleDrop(item)
     }
+  })
 
-    setModalOpened(true)
+  const handleDrop = ingredient => {
+    dispatch(addIngredient(ingredient))
   }
 
-  const closeModal = () => {
-    setModalOpened(false)
-  }
+  const openModal = useCallback(() => {
+    const data = { ingredients: ingredientIds }
+    dispatch(getOrder(data))
+    showModal()
+  }, [dispatch, showModal, ingredientIds])
 
-  const deleteIngredient = item => {
-    handleDelIngredient(item)
-  }
+  const closeModal = useCallback(() => {
+    hideModal()
+  }, [hideModal])
 
   return (
-    ingredientsList.length && (
-      <div className={burgerConstructorCss.wrapper}>
-        {bun && (
-          <div className="ml-6 mb-4">
-            <ConstructorElement
-              type={'top'}
-              isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
-        )}
+    <div
+      ref={dropForAllRef}
+      className={`${isHover ? burgerConstructorCss.onHover : ''} 
+      ${burgerConstructorCss.wrapper}`}
+    >
+      <OrderIngredientList orderIngredients={orderIngredients} />
 
-        <ul className={`app-scroll pr-2 ${burgerConstructorCss.list}`}>
-          {bunIngredients.map(item => {
-            return (
-              <li className={burgerConstructorCss.li} key={item._id}>
-                <img
-                  className="mr-3 crsr-pointer"
-                  src={dragIcon}
-                  alt="drag&drop"
-                />
-                <ConstructorElement
-                  isLocked={false}
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  handleClose={() => deleteIngredient(item)}
-                />
-              </li>
-            )
-          })}
-        </ul>
-
-        {bun && (
-          <div className="ml-6 mt-4">
-            <ConstructorElement
-              type={'bottom'}
-              isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
-        )}
-
-        <div className={`${burgerConstructorCss.sum} mt-10`}>
-          <div className="flex-wrap mr-10">
-            <p className="mr-2 text text_type_digits-default">{countSum}</p>
-            <CurrencyIcon type="primary" />
-          </div>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            onClick={openModal}
-          >
-            Оформить заказ
-          </Button>
+      <div className={`${burgerConstructorCss.sum} mt-10`}>
+        <div className="flex-wrap mr-10">
+          <p className="mr-2 text text_type_digits-default">{countSum}</p>
+          <CurrencyIcon type="primary" />
         </div>
-
-        {modalOpened && (
-          <Modal title="" closeModal={closeModal}>
-            <OrderDetails orderNum={orderNum} />
-          </Modal>
-        )}
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={openModal}
+        >
+          Оформить заказ
+        </Button>
       </div>
-    )
-  )
-}
 
-BurgerConstructor.propTypes = {
-  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes())
+      {modalOpened && (
+        <Modal title="" closeModal={closeModal}>
+          <OrderDetails />
+        </Modal>
+      )}
+    </div>
+  )
 }

@@ -1,37 +1,60 @@
-import { useState, useMemo, useCallback, useContext } from 'react'
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerType } from './BurgerType/BurgerType'
 import { Modal } from '../Modal/Modal'
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
 import burgerIngredientsCss from './burger-ingredients.module.css'
-import PropTypes from 'prop-types'
-import { burgerListItemPropTypes } from '../../utils/prop-types.js'
-import { IngredientsContext } from '../../services/appContext'
 import { BurgerItemContext } from '../../services/burgerItemContext'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  CLEAR_CURRENT_INGREDIENT,
+  SET_CURRENT_INGREDIENT
+} from '../../services/actions'
+import { BUN, SAUCE, MAIN } from '../../utils/ingredient-types'
+import useModal from '../../hooks/useModal'
 
-export const BurgerIngredients = ({ handleAddIngredient }) => {
-  const { ingredientsList } = useContext(IngredientsContext)
-  const [activeTab, setActiveTab] = useState({ id: 'bun', name: 'Булки' })
-  const [modalOpened, setModalOpened] = useState(false)
-  const [itemSelected, setItemSelected] = useState()
-  const tabsList = [
-    { id: 'bun', name: 'Булки' },
-    { id: 'sauce', name: 'Соусы' },
-    { id: 'main', name: 'Начинки' }
-  ]
+export const BurgerIngredients = () => {
+  const dispatch = useDispatch()
+  const ingredientsList = useSelector(
+    state => state.allIngredients.ingredientsList
+  )
+  const [activeTab, setActiveTab] = useState({ id: BUN, name: 'Булки' })
+  const tabsList = useSelector(state => state.allIngredients.ingredientTabs)
+  const tabsRef = useRef()
+  const { modalVisible: modalOpened, showModal, hideModal } = useModal()
 
   const burgersBun = useMemo(
-    () => ingredientsList.filter(item => item.type === 'bun'),
+    () => ingredientsList.filter(item => item.type === BUN),
     [ingredientsList]
   )
   const burgersMain = useMemo(
-    () => ingredientsList.filter(item => item.type === 'main'),
+    () => ingredientsList.filter(item => item.type === MAIN),
     [ingredientsList]
   )
   const burgersSauce = useMemo(
-    () => ingredientsList.filter(item => item.type === 'sauce'),
+    () => ingredientsList.filter(item => item.type === SAUCE),
     [ingredientsList]
   )
+
+  const bunNode = document.getElementById(BUN)
+  const sauceNode = document.getElementById(SAUCE)
+  const mainNode = document.getElementById(MAIN)
+
+  const scrollIngredients = useCallback(() => {
+    const tabsNodeY = tabsRef.current.getBoundingClientRect().top + 40
+
+    const bunNodeY = bunNode.getBoundingClientRect().top - tabsNodeY
+    const sauceNodeY = sauceNode.getBoundingClientRect().top - tabsNodeY
+    const mainNodeY = mainNode.getBoundingClientRect().top - tabsNodeY
+
+    if (bunNodeY < 0 && sauceNodeY > 0 && mainNodeY > 0) {
+      setActiveTab(tabsList.find(t => t.id === BUN))
+    } else if (sauceNodeY < 0 && bunNodeY < 0 && mainNodeY > 0) {
+      setActiveTab(tabsList.find(t => t.id === SAUCE))
+    } else if (mainNodeY < 0) {
+      setActiveTab(tabsList.find(t => t.id === MAIN))
+    }
+  }, [bunNode, mainNode, sauceNode, tabsList])
 
   const toggleTab = useCallback(tab => {
     setActiveTab(tab)
@@ -42,19 +65,33 @@ export const BurgerIngredients = ({ handleAddIngredient }) => {
 
   const openModal = useCallback(
     item => {
-      // Тест добавления ингридиентов в заказ
-      handleAddIngredient(item)
-
-      // Отключаем временно показ модалки
-      setItemSelected(item)
-      setModalOpened(true)
+      // Показать модальное окно по ингридиенту
+      dispatch({
+        type: SET_CURRENT_INGREDIENT,
+        item
+      })
+      showModal()
     },
-    [handleAddIngredient]
+    [dispatch, showModal]
   )
 
-  const closeModal = () => {
-    setModalOpened(false)
-  }
+  const closeModal = useCallback(() => {
+    hideModal()
+
+    // Удаление данных о просматриваемом ингридиенте
+    dispatch({
+      type: CLEAR_CURRENT_INGREDIENT
+    })
+  }, [dispatch, hideModal])
+
+  useEffect(() => {
+    const tabsNode = tabsRef.current
+    tabsNode.addEventListener('scroll', scrollIngredients)
+
+    return () => {
+      tabsNode.removeEventListener('scroll', scrollIngredients)
+    }
+  }, [scrollIngredients])
 
   return (
     <>
@@ -70,7 +107,11 @@ export const BurgerIngredients = ({ handleAddIngredient }) => {
           </Tab>
         ))}
       </div>
-      <div className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}>
+
+      <div
+        ref={tabsRef}
+        className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}
+      >
         <BurgerItemContext.Provider value={{ openModal }}>
           <BurgerType id="bun" list={burgersBun} title="Булки" />
           <BurgerType id="sauce" list={burgersSauce} title="Соусы" />
@@ -80,14 +121,9 @@ export const BurgerIngredients = ({ handleAddIngredient }) => {
 
       {modalOpened && (
         <Modal title="Детали ингридиента" closeModal={closeModal}>
-          <IngredientDetails {...itemSelected} />
+          <IngredientDetails />
         </Modal>
       )}
     </>
   )
-}
-
-BurgerIngredients.propTypes = {
-  ingredientsList: PropTypes.arrayOf(burgerListItemPropTypes()),
-  handleAddIngredient: PropTypes.func.isRequired
 }

@@ -1,4 +1,10 @@
-.main-section {
-  width: 600px;
-  float: left;
+.left-part,
+.right-part {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.left-part {
+  max-width: 600px;
 }

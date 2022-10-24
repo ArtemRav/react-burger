@@ -1,7 +1,6 @@
 .items {
   display: flex;
   height: 64vh;
-  max-width: 600px;
   overflow-y: scroll;
   flex-wrap: wrap;
 }

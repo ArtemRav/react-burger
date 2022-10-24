@@ -9,7 +9,7 @@ export const BurgerType = ({ title, list, id }) => {
       <h2 className={burgerType.title}>{title}</h2>
       <ul className={`pt-6 pb-10 pl-4 ${burgerType.items}`}>
         {list.map(item => (
-          <BurgerItem menuItem={item} key={item._id} amount={1} />
+          <BurgerItem ingredient={item} key={item._id} />
         ))}
       </ul>
     </div>

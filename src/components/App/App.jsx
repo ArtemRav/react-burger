@@ -10,35 +10,42 @@ import { ResetPassPage } from '../../pages/ResetPassPage/reset-pass-page'
 import { ProfilePage } from '../../pages/ProfilePage/propfile-page'
 import { IngredientPage } from '../../pages/IngredientPage/ingredient-page'
 import { MainPage } from '../../pages/MainPage/main-page'
+import { NotFound404 } from '../../pages/NotFound404/NotFound404'
+import { StrictMode } from 'react'
 
 function App() {
   return (
     <BrowserRouter>
-      <AppHeader />
+      <StrictMode>
+        <AppHeader />
 
-      <Switch>
-        <Route path="/" exact={true}>
-          <MainPage />
-        </Route>
-        <Route path="/login" exact={true}>
-          <LoginPage />
-        </Route>
-        <Route path="/register" exact={true}>
-          <RegisterPage />
-        </Route>
-        <Route path="/forgot-password" exact={true}>
-          <ForgotPassPage />
-        </Route>
-        <Route path="/reset-password" exact={true}>
-          <ResetPassPage />
-        </Route>
-        <Route path="/profile" exact={true}>
-          <ProfilePage />
-        </Route>
-        <Route path="/ingredients/:id" exact={true}>
-          <IngredientPage />
-        </Route>
-      </Switch>
+        <Switch>
+          <Route path="/" exact={true}>
+            <MainPage />
+          </Route>
+          <Route path="/login" exact={true}>
+            <LoginPage />
+          </Route>
+          <Route path="/register" exact={true}>
+            <RegisterPage />
+          </Route>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPassPage />
+          </Route>
+          <Route path="/reset-password" exact={true}>
+            <ResetPassPage />
+          </Route>
+          <Route path="/profile" exact={true}>
+            <ProfilePage />
+          </Route>
+          <Route path="/ingredients/:id" exact={true}>
+            <IngredientPage />
+          </Route>
+          <Route>
+            <NotFound404 />
+          </Route>
+        </Switch>
+      </StrictMode>
     </BrowserRouter>
   )
 }

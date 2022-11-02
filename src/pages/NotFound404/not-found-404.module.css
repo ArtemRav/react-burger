@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  height: calc(100vh - 92px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrapper p {
+  text-align: center;
+}

@@ -21,33 +21,47 @@ export const LoginPage = () => {
 
   return (
     <div className={style.wrapper}>
-      <form>
-        <h1 className="text text_type_main-medium">Вход</h1>
+      <form className={style['auth-form']}>
+        <h1 className={`text text_type_main-medium mb-6 ${style.title}`}>
+          Вход
+        </h1>
 
-        <EmailInput
-          className="mt-6"
-          onChange={inputEmail}
-          value={email}
-          name={'E-mail'}
-        />
+        <div className="mt-6">
+          <EmailInput onChange={inputEmail} value={email} name={'E-mail'} />
+        </div>
 
-        <PasswordInput
-          className="mt-6"
-          onChange={inputPassword}
-          value={password}
-          name={'password'}
-        />
+        <div className="mt-6">
+          <PasswordInput
+            onChange={inputPassword}
+            value={password}
+            name={'password'}
+          />
+        </div>
 
-        <Button className="mt-6" type="primary" size="medium">
-          Войти
-        </Button>
+        <div className={`mt-6 ${style.submit}`}>
+          <Button htmlType="submit" type="primary" size="medium">
+            Войти
+          </Button>
+        </div>
       </form>
 
-      <p className="mt-20">
-        Вы - новый пользователь? <Link to="/">Зарегистрироваться</Link>
+      <p className="text text_type_main-default text_color_inactive mt-20">
+        Вы - новый пользователь?{' '}
+        <Link
+          className={`text text_type_main-default ${style.link}`}
+          to="/register"
+        >
+          Зарегистрироваться
+        </Link>
       </p>
-      <p className="mt-4">
-        Забыли пароль? <Link to="/resetpassword">Восстановить пароль</Link>
+      <p className="text text_type_main-default text_color_inactive mt-4">
+        Забыли пароль?{' '}
+        <Link
+          className={`text text_type_main-default ${style.link}`}
+          to="/forgot-password"
+        >
+          Восстановить пароль
+        </Link>
       </p>
     </div>
   )

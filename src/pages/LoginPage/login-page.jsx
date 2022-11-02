@@ -22,9 +22,7 @@ export const LoginPage = () => {
   return (
     <div className={style.wrapper}>
       <form className={style['auth-form']}>
-        <h1 className={`text text_type_main-medium mb-6 ${style.title}`}>
-          Вход
-        </h1>
+        <h1 className={`text text_type_main-medium ${style.title}`}>Вход</h1>
 
         <div className="mt-6">
           <EmailInput onChange={inputEmail} value={email} name={'E-mail'} />

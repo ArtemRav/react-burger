@@ -21,10 +21,29 @@ export const RegisterPage = () => {
     setPassword(e.target.value)
   }
 
+  const inputName = e => {
+    setName(e.target.value)
+  }
+
+  const registerUser = e => {
+    e.preventDefault()
+    const response = fetch(
+      'https://norma.nomoreparties.space/api/auth/register',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password, name })
+      }
+    ).then(data => data.json())
+    console.log('User created', response)
+  }
+
   return (
     <div className={style.wrapper}>
       <form className={style['auth-form']}>
-        <h1 className={`text text_type_main-medium mb-6 ${style.title}`}>
+        <h1 className={`text text_type_main-medium ${style.title}`}>
           Регистрация
         </h1>
 
@@ -34,12 +53,13 @@ export const RegisterPage = () => {
             placeholder={'Имя'}
             size={'default'}
             value={name}
-            onChange={setName}
+            name={'name'}
+            onChange={inputName}
           />
         </div>
 
         <div className="mt-6">
-          <EmailInput onChange={inputEmail} value={email} name={'E-mail'} />
+          <EmailInput onChange={inputEmail} value={email} name={'email'} />
         </div>
 
         <div className="mt-6">
@@ -51,7 +71,12 @@ export const RegisterPage = () => {
         </div>
 
         <div className={`mt-6 ${style.submit}`}>
-          <Button htmlType="submit" type="primary" size="medium">
+          <Button
+            onClick={registerUser}
+            htmlType="submit"
+            type="primary"
+            size="medium"
+          >
             Зарегистрироваться
           </Button>
         </div>

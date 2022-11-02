@@ -1,39 +1,45 @@
 import './general.css'
-import appCss from './app.module.css'
-import { AppHeader } from '../AppHeader/AppHeader.jsx'
-import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor'
-import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients'
-import { useEffect } from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchIngredients } from '../../services/actions/ingredients'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import { AppHeader } from '../AppHeader/AppHeader.jsx'
+import { LoginPage } from '../../pages/LoginPage/login-page'
+import { RegisterPage } from '../../pages/RegisterPage/register-page'
+import { ForgotPassPage } from '../../pages/ForgotPassPage/forgot-pass-page'
+import { ResetPassPage } from '../../pages/ResetPassPage/reset-pass-page'
+import { ProfilePage } from '../../pages/ProfilePage/propfile-page'
+import { IngredientPage } from '../../pages/IngredientPage/ingredient-page'
+import { MainPage } from '../../pages/MainPage/main-page'
 
 function App() {
-  const dispatch = useDispatch()
-  const orderIngredients = useSelector(state => state.orderIngredients.items)
-
-  useEffect(() => {
-    dispatch(fetchIngredients())
-  }, [dispatch])
-
   return (
-    <div className="App">
+    <BrowserRouter>
       <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <main>
-          <section className={appCss['left-part']}>
-            <h2>Соберите бургер</h2>
-            <BurgerIngredients />
-          </section>
 
-          <section className={appCss['right-part']}>
-            <BurgerConstructor ingredientsList={orderIngredients} />
-          </section>
-        </main>
-      </DndProvider>
-    </div>
+      <Switch>
+        <Route path="/" exact={true}>
+          <MainPage />
+        </Route>
+        <Route path="/login" exact={true}>
+          <LoginPage />
+        </Route>
+        <Route path="/register" exact={true}>
+          <RegisterPage />
+        </Route>
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPassPage />
+        </Route>
+        <Route path="/reset-password" exact={true}>
+          <ResetPassPage />
+        </Route>
+        <Route path="/profile" exact={true}>
+          <ProfilePage />
+        </Route>
+        <Route path="/ingredients/:id" exact={true}>
+          <IngredientPage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   )
 }
 

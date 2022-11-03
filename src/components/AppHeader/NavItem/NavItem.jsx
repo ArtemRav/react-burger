@@ -1,20 +1,20 @@
-import navItem from './nav-item.module.css'
+import styles from './nav-item.module.css'
 import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 
 export const NavItem = props => {
-  const { children, link, name, isActive } = props
+  const { children, link, name } = props
 
   return (
-    <div className={navItem.item}>
+    <div className={styles.item}>
       <div className="icon-wrapper mr-2">{children}</div>
-      <a
-        href={link || '#'}
-        className={`${navItem.link} flex-wrap ${
-          isActive ? 'font-white' : 'text_color_inactive'
-        }`}
+      <NavLink
+        to={link}
+        className={`${styles.link} flex-wrap text_color_inactive`}
+        activeClassName={'font-white'}
       >
         {name}
-      </a>
+      </NavLink>
     </div>
   )
 }

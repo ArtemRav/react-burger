@@ -19,6 +19,9 @@ export const ForgotPassPage = () => {
       'https://norma.nomoreparties.space/api/password-reset',
       {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email })
       }
     ).then(data => data.json())

@@ -2,32 +2,33 @@ import {
   Button,
   EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+import { recoverPassword } from '../../services/actions/recover-password'
 import style from './../LoginPage/login-page.module.css'
 
 export const ForgotPassPage = () => {
   const [email, setEmail] = useState('')
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const inputEmail = e => {
     setEmail(e.target.value)
   }
 
-  const recoverPassword = async () => {
-    const { success } = await fetch(
-      'https://norma.nomoreparties.space/api/password-reset',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email })
-      }
-    ).then(data => data.json())
-    if (success) {
+  const isPasswordRecovered = useSelector(
+    state => state.recoverPassword.recoverPasswordSuccess
+  )
+
+  useEffect(() => {
+    if (isPasswordRecovered) {
       history.replace({ pathname: '/reset-password' })
     }
+  }, [isPasswordRecovered, history])
+
+  const updatePassword = async () => {
+    dispatch(recoverPassword({ email }))
   }
 
   return (
@@ -43,7 +44,7 @@ export const ForgotPassPage = () => {
 
         <div className={`mt-6 ${style.submit}`}>
           <Button
-            onClick={recoverPassword}
+            onClick={updatePassword}
             htmlType="button"
             type="primary"
             size="medium"

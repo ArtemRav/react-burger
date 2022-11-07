@@ -3,13 +3,17 @@ import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { resetPassword } from '../../services/actions/reset-password'
 import style from './../LoginPage/login-page.module.css'
 
 export const ResetPassPage = () => {
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
+  const history = useHistory()
+  const dispatch = useDispatch()
 
   const inputPassword = e => {
     setPassword(e.target.value)
@@ -19,18 +23,18 @@ export const ResetPassPage = () => {
     setToken(e.target.value)
   }
 
-  const resetPassword = () => {
-    const { success } = fetch(
-      'https://norma.nomoreparties.space/api/password-reset',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ password, token })
-      }
-    ).then(data => data.json())
-    console.log(success)
+  const isPasswordReseted = useSelector(
+    state => state.resetPassword.resetPasswordSuccess
+  )
+
+  useEffect(() => {
+    if (isPasswordReseted) {
+      history.replace({ pathname: '/' })
+    }
+  })
+
+  const dropPassword = () => {
+    dispatch(resetPassword({ password, token }))
   }
 
   return (
@@ -60,7 +64,7 @@ export const ResetPassPage = () => {
 
         <div className={`mt-6 ${style.submit}`}>
           <Button
-            onClick={resetPassword}
+            onClick={dropPassword}
             htmlType="button"
             type="primary"
             size="medium"

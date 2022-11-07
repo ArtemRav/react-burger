@@ -2,8 +2,7 @@ import style from './profile-page.module.css'
 import { NavLink } from 'react-router-dom'
 import {
   EmailInput,
-  Input,
-  PasswordInput
+  Input
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
 

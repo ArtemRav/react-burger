@@ -21,7 +21,7 @@ export const postData = async (url, data, onError) => {
   return sendRequest(`${BURGER_API_URL}/${url}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'content-type': 'application/json'
     },
     body: JSON.stringify(data)
   })

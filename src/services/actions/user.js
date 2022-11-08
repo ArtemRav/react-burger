@@ -1,21 +1,22 @@
-import { postData } from '../../utils/burger-api'
-import setCookie from '../../utils/set-cookie'
+import { postData, saveTokens } from '../../utils/burger-api'
 
-export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST'
-export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
-export const LOGIN_USER_FAILED = 'LOGIN_USER_FAILED'
+export const GET_USER_REQUEST = 'GET_USER_REQUEST'
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
+export const GET_USER_FAILED = 'GET_USER_FAILED'
 
-export const loginUser = data => async dispatch => {
-  dispatch({ type: LOGIN_USER_REQUEST })
+export const getUser = data => async dispatch => {
+  dispatch({ type: GET_USER_REQUEST })
   try {
-    const response = await postData('auth/login', data)
-    if (response.success) {
-      dispatch({ type: LOGIN_USER_SUCCESS, data: response })
-      setCookie('refresh-token', response.refreshToken, { expires: 120 })
+    const res = await postData('auth/login', data)
+    if (res.success) {
+      const { refreshToken, accessToken, user } = res
+
+      dispatch({ type: GET_USER_SUCCESS, payload: user })
+      saveTokens({ refreshToken, accessToken })
     } else {
       throw new Error('Error')
     }
-  } catch (e) {
-    dispatch({ type: LOGIN_USER_FAILED })
+  } catch (err) {
+    dispatch({ type: GET_USER_FAILED })
   }
 }

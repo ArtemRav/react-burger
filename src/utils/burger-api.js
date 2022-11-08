@@ -1,3 +1,5 @@
+import setCookie from './set-cookie'
+
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
 
 const checkResponse = (res, onError = () => {}) => {
@@ -21,8 +23,19 @@ export const postData = async (url, data, onError) => {
   return sendRequest(`${BURGER_API_URL}/${url}`, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'Content-Type': 'application/json;charset=utf-8'
     },
     body: JSON.stringify(data)
+  })
+}
+
+export const saveTokens = (refreshToken, accessToken) => {
+  setCookie('accessToken', accessToken)
+  localStorage.setItem('refreshToken', refreshToken)
+}
+
+export const refreshTokenRequest = () => {
+  return postData('auth/token', {
+    token: localStorage.getItem('refreshToken')
   })
 }

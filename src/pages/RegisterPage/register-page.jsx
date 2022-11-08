@@ -5,39 +5,28 @@ import {
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { postData, saveTokens } from '../../utils/burger-api'
 import style from './../LoginPage/login-page.module.css'
 
 export const RegisterPage = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const history = useHistory()
+  const [form, setValue] = useState({ name: '', email: '', password: '' })
 
-  const inputEmail = e => {
-    setEmail(e.target.value)
-  }
-
-  const inputPassword = e => {
-    setPassword(e.target.value)
-  }
-
-  const inputName = e => {
-    setName(e.target.value)
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value })
   }
 
   const registerUser = e => {
     e.preventDefault()
-    const response = fetch(
-      'https://norma.nomoreparties.space/api/auth/register',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password, name })
-      }
-    ).then(data => data.json())
-    console.log('User created', response)
+    const response = postData('auth/register', form)
+    if (response.success) {
+      const { refreshToken, accessToken } = response
+      history.replace({ pathname: '/' })
+      saveTokens({ refreshToken, accessToken })
+    } else {
+      history.replace({ pathname: '/login' })
+    }
   }
 
   return (
@@ -52,20 +41,20 @@ export const RegisterPage = () => {
             type={'text'}
             placeholder={'Имя'}
             size={'default'}
-            value={name}
+            value={form.name}
             name={'name'}
-            onChange={inputName}
+            onChange={onChange}
           />
         </div>
 
         <div className="mt-6">
-          <EmailInput onChange={inputEmail} value={email} name={'email'} />
+          <EmailInput onChange={onChange} value={form.email} name={'email'} />
         </div>
 
         <div className="mt-6">
           <PasswordInput
-            onChange={inputPassword}
-            value={password}
+            onChange={onChange}
+            value={form.password}
             name={'password'}
           />
         </div>

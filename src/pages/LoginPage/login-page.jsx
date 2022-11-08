@@ -6,7 +6,7 @@ import {
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { loginUser } from '../../services/actions/user'
+import { getUser } from '../../services/actions/user'
 import style from './login-page.module.css'
 import { useHistory } from 'react-router-dom'
 
@@ -20,9 +20,9 @@ export const LoginPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const login = event => {
-    event.preventDefault()
-    dispatch(loginUser(form))
+  const login = e => {
+    e.preventDefault()
+    dispatch(getUser(form))
     history.replace({ pathname: '/' })
   }
 

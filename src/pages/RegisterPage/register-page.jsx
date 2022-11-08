@@ -23,7 +23,7 @@ export const RegisterPage = () => {
     if (response.success) {
       const { refreshToken, accessToken } = response
       history.replace({ pathname: '/' })
-      saveTokens({ refreshToken, accessToken })
+      saveTokens(refreshToken, accessToken)
     } else {
       history.replace({ pathname: '/login' })
     }

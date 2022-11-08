@@ -30,7 +30,7 @@ export const postData = async (url, data, onError) => {
 }
 
 export const saveTokens = (refreshToken, accessToken) => {
-  setCookie('accessToken', accessToken)
+  setCookie('accessToken', accessToken.split('Bearer ')[1])
   localStorage.setItem('refreshToken', refreshToken)
 }
 

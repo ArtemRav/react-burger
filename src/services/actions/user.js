@@ -12,7 +12,7 @@ export const getUser = data => async dispatch => {
       const { refreshToken, accessToken, user } = res
 
       dispatch({ type: GET_USER_SUCCESS, payload: user })
-      saveTokens({ refreshToken, accessToken })
+      saveTokens(refreshToken, accessToken)
     } else {
       throw new Error('Error')
     }

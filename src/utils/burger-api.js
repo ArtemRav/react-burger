@@ -39,3 +39,12 @@ export const refreshTokenRequest = () => {
     token: localStorage.getItem('refreshToken')
   })
 }
+
+export const logOut = async () => {
+  const res = await postData('auth/logout', {
+    token: localStorage.getItem('refreshToken')
+  })
+  if (res.success) {
+    localStorage.removeItem('refreshToken')
+  }
+}

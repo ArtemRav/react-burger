@@ -7,20 +7,10 @@ import {
 import { useState } from 'react'
 
 export const ProfilePage = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [form, setValue] = useState({ name: '', email: '', password: '' })
 
-  const inputEmail = e => {
-    setEmail(e.target.value)
-  }
-
-  const inputPassword = e => {
-    setPassword(e.target.value)
-  }
-
-  const inputName = e => {
-    setName(e.target.value)
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value })
   }
 
   return (
@@ -59,17 +49,17 @@ export const ProfilePage = () => {
             type={'text'}
             placeholder={'Имя'}
             size={'default'}
-            value={name}
+            value={form.name}
             name={'name'}
             icon="EditIcon"
-            onChange={inputName}
+            onChange={onChange}
           />
         </div>
 
         <div className="mt-6">
           <EmailInput
-            onChange={inputEmail}
-            value={email}
+            onChange={onChange}
+            value={form.email}
             name={'email'}
             icon="EditIcon"
           />
@@ -80,8 +70,8 @@ export const ProfilePage = () => {
             type={'password'}
             placeholder={'Пароль'}
             size={'default'}
-            onChange={inputPassword}
-            value={password}
+            onChange={onChange}
+            value={form.password}
             name={'password'}
             icon="EditIcon"
           />

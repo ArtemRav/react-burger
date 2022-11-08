@@ -10,6 +10,7 @@ import { ResetPassPage } from '../../pages/ResetPassPage/reset-pass-page'
 import { ProfilePage } from '../../pages/ProfilePage/propfile-page'
 import { IngredientPage } from '../../pages/IngredientPage/ingredient-page'
 import { MainPage } from '../../pages/MainPage/main-page'
+import { LogoutPage } from '../../pages/log-out-page'
 import { NotFound404 } from '../../pages/NotFound404/NotFound404'
 import { StrictMode } from 'react'
 import { ProtectedRoute } from '../protected-route'
@@ -24,9 +25,9 @@ function App() {
           <Route path="/login" exact={true}>
             <LoginPage />
           </Route>
-          <ProtectedRoute path="/" exact={true}>
+          <Route path="/" exact={true}>
             <MainPage />
-          </ProtectedRoute>
+          </Route>
           <Route path="/register" exact={true}>
             <RegisterPage />
           </Route>
@@ -39,9 +40,12 @@ function App() {
           <ProtectedRoute path="/profile" exact={true}>
             <ProfilePage />
           </ProtectedRoute>
-          <ProtectedRoute path="/ingredients/:id" exact={true}>
+          <Route path="/ingredients/:id" exact={true}>
             <IngredientPage />
-          </ProtectedRoute>
+          </Route>
+          <Route path="/logout" exact={true}>
+            <LogoutPage />
+          </Route>
           <Route>
             <NotFound404 />
           </Route>

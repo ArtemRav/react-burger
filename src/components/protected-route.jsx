@@ -7,7 +7,15 @@ export const ProtectedRoute = ({ children, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={() => (isUserLogined ? children : <Redirect to="/login" />)}
+      render={({ location }) => {
+        return isUserLogined ? (
+          children
+        ) : (
+          <Redirect
+            to={{ pathname: '/login', state: { from: location.pathname } }}
+          />
+        )
+      }}
     />
   )
 }

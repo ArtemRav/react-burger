@@ -7,6 +7,7 @@ import {
 const initialState = {
   loginRequest: false,
   loginFailed: false,
+  loginSuccess: false,
   user: {
     email: '',
     name: ''
@@ -19,7 +20,12 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, loginRequest: true }
 
     case GET_USER_SUCCESS:
-      return { ...state, user: action.payload, loginRequest: false }
+      return {
+        ...state,
+        user: action.payload,
+        loginRequest: false,
+        loginSuccess: true
+      }
 
     case GET_USER_FAILED:
       return { ...state, loginFailed: true, loginRequest: false }

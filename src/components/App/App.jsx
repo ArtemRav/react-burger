@@ -12,6 +12,7 @@ import { IngredientPage } from '../../pages/IngredientPage/ingredient-page'
 import { MainPage } from '../../pages/MainPage/main-page'
 import { NotFound404 } from '../../pages/NotFound404/NotFound404'
 import { StrictMode } from 'react'
+import { ProtectedRoute } from '../protected-route'
 
 function App() {
   return (
@@ -20,12 +21,12 @@ function App() {
         <AppHeader />
 
         <Switch>
-          <Route path="/" exact={true}>
-            <MainPage />
-          </Route>
           <Route path="/login" exact={true}>
             <LoginPage />
           </Route>
+          <ProtectedRoute path="/" exact={true}>
+            <MainPage />
+          </ProtectedRoute>
           <Route path="/register" exact={true}>
             <RegisterPage />
           </Route>
@@ -35,12 +36,12 @@ function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPassPage />
           </Route>
-          <Route path="/profile" exact={true}>
+          <ProtectedRoute path="/profile" exact={true}>
             <ProfilePage />
-          </Route>
-          <Route path="/ingredients/:id" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path="/ingredients/:id" exact={true}>
             <IngredientPage />
-          </Route>
+          </ProtectedRoute>
           <Route>
             <NotFound404 />
           </Route>

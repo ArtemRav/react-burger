@@ -20,9 +20,9 @@ export const LoginPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const login = e => {
+  const login = async e => {
     e.preventDefault()
-    dispatch(getUser(form))
+    await dispatch(getUser(form))
     history.replace({ pathname: '/' })
   }
 

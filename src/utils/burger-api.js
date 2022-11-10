@@ -29,6 +29,17 @@ export const postData = async (url, data, onError) => {
   })
 }
 
+export const patchData = async (url, data) => {
+  return sendRequest(`${BURGER_API_URL}/${url}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: `Bearer ${getCookie('accessToken')}`
+    },
+    body: JSON.stringify(data)
+  })
+}
+
 export const saveTokens = (refreshToken, accessToken) => {
   setCookie('accessToken', accessToken.split('Bearer ')[1])
   localStorage.setItem('refreshToken', refreshToken)
@@ -45,7 +56,7 @@ export const getDataWithToken = async url => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      authorization: `Bearer ${getCookie('accessToken')}`
+      Authorization: `Bearer ${getCookie('accessToken')}`
     }
   }
   try {
@@ -55,7 +66,7 @@ export const getDataWithToken = async url => {
       const { refreshToken, accessToken } = await refreshTokenRequest()
       saveTokens(refreshToken, accessToken)
 
-      options.headers.authorization = `Bearer ${accessToken}`
+      options.headers.Authorization = `Bearer ${accessToken}`
 
       return await sendRequest(`${BURGER_API_URL}/${url}`, options)
     } else {

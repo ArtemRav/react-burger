@@ -13,7 +13,6 @@ export const AuthTokenPage = () => {
 
   const loginWithToken = useCallback(async () => {
     await dispatch(getUserWithToken())
-    debugger
     if (isAutorized) {
       history.replace({ pathname: state.from })
     } else {

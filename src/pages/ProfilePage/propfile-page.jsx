@@ -1,12 +1,14 @@
 import style from './profile-page.module.css'
 import { NavLink, Route, Switch } from 'react-router-dom'
 import {
+  Button,
   EmailInput,
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ProfileOrders } from '../ProfileOrders/profile-orders'
+import { patchData } from '../../utils/burger-api'
 
 export const ProfilePage = () => {
   const [form, setValue] = useState({ name: '', email: '', password: '' })
@@ -16,6 +18,21 @@ export const ProfilePage = () => {
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
+
+  useEffect(() => {
+    if (!form.name) {
+      setValue({ ...form, name })
+    }
+    if (!form.email) {
+      setValue({ ...form, email })
+    }
+  }, [form, name, email])
+
+  const postUserData = useCallback(() => patchData('auth/user', form), [form])
+  const returnUserData = useCallback(
+    () => setValue({ ...form, email, name }),
+    [form, email, name]
+  )
 
   // Вопрос ревьюверу: почему-то первый NavLink всегда active, не удалось разобраться
   return (
@@ -56,19 +73,24 @@ export const ProfilePage = () => {
                 type={'text'}
                 placeholder={'Имя'}
                 size={'default'}
-                value={form.name || name}
+                value={form.name}
                 name={'name'}
                 icon="EditIcon"
+                autoComplete="off"
                 onChange={onChange}
               />
             </div>
 
             <div className="mt-6">
               <EmailInput
-                onChange={onChange}
-                value={form.email || email}
+                type={'email'}
+                placeholder={'Логин'}
+                size={'default'}
+                value={form.email}
                 name={'email'}
                 icon="EditIcon"
+                autoComplete="off"
+                onChange={onChange}
               />
             </div>
 
@@ -77,11 +99,31 @@ export const ProfilePage = () => {
                 type={'password'}
                 placeholder={'Пароль'}
                 size={'default'}
-                onChange={onChange}
                 value={form.password}
                 name={'password'}
                 icon="EditIcon"
+                autoComplete="off"
+                onChange={onChange}
               />
+            </div>
+
+            <div className={`mt-6 ${style.controls}`}>
+              <Button
+                htmlType="button"
+                type="secondary"
+                size="large"
+                onClick={returnUserData}
+              >
+                Отмена
+              </Button>
+              <Button
+                htmlType="button"
+                type="primary"
+                size="large"
+                onClick={postUserData}
+              >
+                Сохранить
+              </Button>
             </div>
           </Route>
         </Switch>

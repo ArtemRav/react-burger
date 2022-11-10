@@ -12,10 +12,16 @@ export const MainPage = () => {
   const dispatch = useDispatch()
 
   const orderIngredients = useSelector(state => state.orderIngredients.items)
+  const ingredientsList = useSelector(
+    state => state.allIngredients.ingredientsList
+  )
 
   useEffect(() => {
-    dispatch(fetchIngredients())
-  }, [dispatch])
+    // Избегаем лишних запросов при переходах между страницами
+    if (!ingredientsList?.length) {
+      dispatch(fetchIngredients())
+    }
+  }, [dispatch, ingredientsList])
 
   return (
     <DndProvider backend={HTML5Backend}>

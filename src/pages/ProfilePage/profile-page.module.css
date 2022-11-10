@@ -29,3 +29,8 @@
   align-items: center;
   text-decoration: none;
 }
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+}

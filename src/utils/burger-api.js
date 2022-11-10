@@ -7,7 +7,7 @@ const checkResponse = (res, onError = () => {}) => {
     return res.json()
   } else {
     onError()
-    throw new Error(`Ошибка HTTP: ${res.status}`)
+    throw res
   }
 }
 
@@ -51,6 +51,10 @@ export const refreshTokenRequest = () => {
   })
 }
 
+const checkAnswer = res => {
+  return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
+}
+
 export const getDataWithToken = async url => {
   const options = {
     method: 'GET',
@@ -59,8 +63,11 @@ export const getDataWithToken = async url => {
       Authorization: `Bearer ${getCookie('accessToken')}`
     }
   }
+
   try {
-    return await sendRequest(`${BURGER_API_URL}/${url}`, options)
+    const res = await fetch(`${BURGER_API_URL}/${url}`, options)
+
+    return await checkAnswer(res)
   } catch (err) {
     if (err.message === 'jwt expired') {
       const { refreshToken, accessToken } = await refreshTokenRequest()
@@ -68,7 +75,9 @@ export const getDataWithToken = async url => {
 
       options.headers.Authorization = `Bearer ${accessToken}`
 
-      return await sendRequest(`${BURGER_API_URL}/${url}`, options)
+      const res = await fetch(url, options)
+
+      return await checkAnswer(res)
     } else {
       return Promise.reject(err)
     }

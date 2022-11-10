@@ -14,7 +14,6 @@ import { LogoutPage } from '../../pages/LogoutPage/logout-page'
 import { NotFound404 } from '../../pages/NotFound404/NotFound404'
 import { StrictMode } from 'react'
 import { ProtectedRoute } from '../protected-route'
-import { AuthTokenPage } from '../../pages/AuthTokenPage/auth-token-page'
 
 function App() {
   return (
@@ -53,10 +52,6 @@ function App() {
 
           <Route path="/logout" exact={true}>
             <LogoutPage />
-          </Route>
-
-          <Route path="/auth-token" exact={true}>
-            <AuthTokenPage />
           </Route>
 
           <Route>

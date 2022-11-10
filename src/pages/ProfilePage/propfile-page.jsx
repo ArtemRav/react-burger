@@ -1,11 +1,12 @@
 import style from './profile-page.module.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Route, Switch } from 'react-router-dom'
 import {
   EmailInput,
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { ProfileOrders } from '../ProfileOrders/profile-orders'
 
 export const ProfilePage = () => {
   const [form, setValue] = useState({ name: '', email: '', password: '' })
@@ -16,6 +17,7 @@ export const ProfilePage = () => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
 
+  // Вопрос ревьюверу: почему-то первый NavLink всегда active, не удалось разобраться
   return (
     <section className={style.wrapper}>
       <div className={`${style['left-side']} mr-15`}>
@@ -47,38 +49,48 @@ export const ProfilePage = () => {
       </div>
 
       <div className={style['right-side']}>
-        <div className="mt-6">
-          <Input
-            type={'text'}
-            placeholder={'Имя'}
-            size={'default'}
-            value={form.name || name}
-            name={'name'}
-            icon="EditIcon"
-            onChange={onChange}
-          />
-        </div>
+        <Switch>
+          <Route path="/profile" exact={true}>
+            <div className="mt-6">
+              <Input
+                type={'text'}
+                placeholder={'Имя'}
+                size={'default'}
+                value={form.name || name}
+                name={'name'}
+                icon="EditIcon"
+                onChange={onChange}
+              />
+            </div>
 
-        <div className="mt-6">
-          <EmailInput
-            onChange={onChange}
-            value={form.email || email}
-            name={'email'}
-            icon="EditIcon"
-          />
-        </div>
+            <div className="mt-6">
+              <EmailInput
+                onChange={onChange}
+                value={form.email || email}
+                name={'email'}
+                icon="EditIcon"
+              />
+            </div>
 
-        <div className="mt-6">
-          <Input
-            type={'password'}
-            placeholder={'Пароль'}
-            size={'default'}
-            onChange={onChange}
-            value={form.password}
-            name={'password'}
-            icon="EditIcon"
-          />
-        </div>
+            <div className="mt-6">
+              <Input
+                type={'password'}
+                placeholder={'Пароль'}
+                size={'default'}
+                onChange={onChange}
+                value={form.password}
+                name={'password'}
+                icon="EditIcon"
+              />
+            </div>
+          </Route>
+        </Switch>
+
+        <Switch>
+          <Route path="/profile/orders">
+            <ProfileOrders />
+          </Route>
+        </Switch>
       </div>
 
       <div className={`${style['left-side']} mr-15`}></div>

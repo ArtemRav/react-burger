@@ -1,4 +1,4 @@
-import { logOut } from '../utils/burger-api'
+import { logOut } from '../../utils/burger-api'
 import { Redirect } from 'react-router-dom'
 
 export const LogoutPage = () => {

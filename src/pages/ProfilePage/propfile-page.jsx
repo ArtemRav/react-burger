@@ -5,9 +5,12 @@ import {
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export const ProfilePage = () => {
   const [form, setValue] = useState({ name: '', email: '', password: '' })
+
+  const { email, name } = useSelector(state => state.user.userInfo)
 
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value })
@@ -49,7 +52,7 @@ export const ProfilePage = () => {
             type={'text'}
             placeholder={'Имя'}
             size={'default'}
-            value={form.name}
+            value={form.name || name}
             name={'name'}
             icon="EditIcon"
             onChange={onChange}
@@ -59,7 +62,7 @@ export const ProfilePage = () => {
         <div className="mt-6">
           <EmailInput
             onChange={onChange}
-            value={form.email}
+            value={form.email || email}
             name={'email'}
             icon="EditIcon"
           />

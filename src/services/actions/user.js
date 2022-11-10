@@ -1,4 +1,4 @@
-import { postData, saveTokens } from '../../utils/burger-api'
+import { getDataWithToken, postData, saveTokens } from '../../utils/burger-api'
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST'
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
@@ -15,6 +15,18 @@ export const getUser = data => async dispatch => {
       saveTokens(refreshToken, accessToken)
     } else {
       throw new Error('Error')
+    }
+  } catch (err) {
+    dispatch({ type: GET_USER_FAILED })
+  }
+}
+
+export const getUserData = () => async dispatch => {
+  dispatch({ type: GET_USER_REQUEST })
+  try {
+    const res = await getDataWithToken('auth/user')
+    if (res.success) {
+      dispatch({ type: GET_USER_SUCCESS, payload: res.user })
     }
   } catch (err) {
     dispatch({ type: GET_USER_FAILED })

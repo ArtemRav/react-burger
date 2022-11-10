@@ -8,7 +8,8 @@ const initialState = {
   loginRequest: false,
   loginFailed: false,
   loginSuccess: false,
-  user: {
+
+  userInfo: {
     email: '',
     name: ''
   }
@@ -22,13 +23,18 @@ export const userReducer = (state = initialState, action) => {
     case GET_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        userInfo: action.payload,
         loginRequest: false,
         loginSuccess: true
       }
 
     case GET_USER_FAILED:
-      return { ...state, loginFailed: true, loginRequest: false }
+      return {
+        ...state,
+        loginFailed: true,
+        loginRequest: false,
+        loginSuccess: false
+      }
 
     default:
       return state

@@ -1,4 +1,4 @@
-import setCookie from './set-cookie'
+import { getCookie, setCookie } from './cookie-helper'
 
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
 
@@ -38,6 +38,30 @@ export const refreshTokenRequest = () => {
   return postData('auth/token', {
     token: localStorage.getItem('refreshToken')
   })
+}
+
+export const getDataWithToken = async url => {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      authorization: getCookie('accessToken')
+    }
+  }
+  try {
+    return await sendRequest(`${BURGER_API_URL}/${url}`, options)
+  } catch (err) {
+    if (err.message === 'jwt expired') {
+      const { refreshToken, accessToken } = await refreshTokenRequest()
+      saveTokens(refreshToken, accessToken)
+
+      options.headers.authorization = accessToken
+
+      return await sendRequest(`${BURGER_API_URL}/${url}`, options)
+    } else {
+      return Promise.reject(err)
+    }
+  }
 }
 
 export const logOut = async () => {

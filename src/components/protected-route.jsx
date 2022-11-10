@@ -2,17 +2,17 @@ import { useSelector } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
 
 export const ProtectedRoute = ({ children, ...rest }) => {
-  const isUserLogined = useSelector(state => state.user.loginSuccess)
+  const isAutorized = useSelector(state => state.user.loginSuccess)
 
   return (
     <Route
       {...rest}
       render={({ location }) => {
-        return isUserLogined ? (
+        return isAutorized ? (
           children
         ) : (
           <Redirect
-            to={{ pathname: '/login', state: { from: location.pathname } }}
+            to={{ pathname: '/auth-token', state: { from: location.pathname } }}
           />
         )
       }}

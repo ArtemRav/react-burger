@@ -45,7 +45,7 @@ export const getDataWithToken = async url => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      authorization: getCookie('accessToken')
+      authorization: `Bearer ${getCookie('accessToken')}`
     }
   }
   try {
@@ -55,7 +55,7 @@ export const getDataWithToken = async url => {
       const { refreshToken, accessToken } = await refreshTokenRequest()
       saveTokens(refreshToken, accessToken)
 
-      options.headers.authorization = accessToken
+      options.headers.authorization = `Bearer ${accessToken}`
 
       return await sendRequest(`${BURGER_API_URL}/${url}`, options)
     } else {

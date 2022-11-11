@@ -9,7 +9,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/reset-password'
 import style from './../LoginPage/login-page.module.css'
 
-export const ResetPassPage = () => {
+export const ResetPassPage = ({ userReceived, isAutorized }) => {
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
   const history = useHistory()
@@ -37,7 +37,9 @@ export const ResetPassPage = () => {
     dispatch(resetPassword({ password, token }))
   }
 
-  const isAutorized = useSelector(state => state.user.loginSuccess)
+  if (!userReceived) {
+    return null
+  }
 
   if (isAutorized) {
     return <Redirect to="/" />

@@ -5,12 +5,11 @@ import {
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import { postData, saveTokens } from '../../utils/burger-api'
 import style from './../LoginPage/login-page.module.css'
 
-export const RegisterPage = () => {
+export const RegisterPage = ({ userReceived, isAutorized }) => {
   const history = useHistory()
   const [form, setValue] = useState({ name: '', email: '', password: '' })
 
@@ -18,7 +17,9 @@ export const RegisterPage = () => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
 
-  const isAutorized = useSelector(state => state.user.loginSuccess)
+  if (!userReceived) {
+    return null
+  }
 
   if (isAutorized) {
     return <Redirect to="/" />

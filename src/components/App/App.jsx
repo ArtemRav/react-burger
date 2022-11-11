@@ -14,8 +14,14 @@ import { LogoutPage } from '../../pages/LogoutPage/logout-page'
 import { NotFound404 } from '../../pages/NotFound404/NotFound404'
 import { StrictMode } from 'react'
 import { ProtectedRoute } from '../protected-route'
+import { withAuthCheck } from '../../hoc/with-auth-check'
 
 function App() {
+  const WithAuthCheckLoginPage = withAuthCheck(LoginPage)
+  const WithAuthCheckRegisterPage = withAuthCheck(RegisterPage)
+  const WithAuthCheckForgotPage = withAuthCheck(ForgotPassPage)
+  const WithAuthCheckResetPassPage = withAuthCheck(ResetPassPage)
+
   return (
     <BrowserRouter>
       <StrictMode>
@@ -23,19 +29,19 @@ function App() {
 
         <Switch>
           <Route path="/login" exact={true}>
-            <LoginPage />
+            <WithAuthCheckLoginPage />
           </Route>
 
           <Route path="/register" exact={true}>
-            <RegisterPage />
+            <WithAuthCheckRegisterPage />
           </Route>
 
           <Route path="/forgot-password" exact={true}>
-            <ForgotPassPage />
+            <WithAuthCheckForgotPage />
           </Route>
 
           <Route path="/reset-password" exact={true}>
-            <ResetPassPage />
+            <WithAuthCheckResetPassPage />
           </Route>
 
           <Route path="/" exact={true}>

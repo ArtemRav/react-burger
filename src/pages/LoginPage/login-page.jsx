@@ -5,22 +5,20 @@ import {
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useCallback, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUser } from '../../services/actions/user'
 import style from './login-page.module.css'
 import { Redirect, useLocation } from 'react-router-dom'
 
-export const LoginPage = () => {
-  const isAutorized = useSelector(state => state.user.loginSuccess)
+export const LoginPage = ({ userReceived, isAutorized }) => {
   const location = useLocation()
   const [form, setValue] = useState({ email: '', password: '' })
+  const dispatch = useDispatch()
 
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
-
-  const dispatch = useDispatch()
 
   const login = useCallback(
     async e => {
@@ -29,6 +27,10 @@ export const LoginPage = () => {
     },
     [dispatch, form]
   )
+
+  if (!userReceived) {
+    return null
+  }
 
   if (isAutorized) {
     return <Redirect to={location.state?.from || '/'} />

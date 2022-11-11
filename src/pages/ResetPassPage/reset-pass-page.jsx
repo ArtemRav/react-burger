@@ -5,7 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/reset-password'
 import style from './../LoginPage/login-page.module.css'
 
@@ -35,6 +35,12 @@ export const ResetPassPage = () => {
 
   const dropPassword = () => {
     dispatch(resetPassword({ password, token }))
+  }
+
+  const isAutorized = useSelector(state => state.user.loginSuccess)
+
+  if (isAutorized) {
+    return <Redirect to="/" />
   }
 
   return (

@@ -9,10 +9,7 @@ const initialState = {
   loginFailed: false,
   loginSuccess: false,
 
-  userInfo: {
-    email: '',
-    name: ''
-  }
+  userInfo: null
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -25,7 +22,8 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
         loginRequest: false,
-        loginSuccess: true
+        loginSuccess: true,
+        loginFailed: false
       }
 
     case GET_USER_FAILED:
@@ -33,7 +31,8 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         loginFailed: true,
         loginRequest: false,
-        loginSuccess: false
+        loginSuccess: false,
+        userInfo: null
       }
 
     default:

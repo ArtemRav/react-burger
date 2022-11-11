@@ -4,14 +4,16 @@ import {
   EmailInput,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUser } from '../../services/actions/user'
 import style from './login-page.module.css'
-import { useHistory, Redirect, useLocation } from 'react-router-dom'
+import { Redirect, useLocation } from 'react-router-dom'
 
 export const LoginPage = () => {
+  const isAutorized = useSelector(state => state.user.loginSuccess)
+  const location = useLocation()
   const [form, setValue] = useState({ email: '', password: '' })
 
   const onChange = e => {
@@ -19,19 +21,17 @@ export const LoginPage = () => {
   }
 
   const dispatch = useDispatch()
-  const history = useHistory()
-  const { state } = useLocation()
 
-  const login = async e => {
-    e.preventDefault()
-    await dispatch(getUser(form))
-    history.replace({ pathname: '/' })
-  }
-
-  const isAutorized = useSelector(state => state.user.loginSuccess)
+  const login = useCallback(
+    async e => {
+      e.preventDefault()
+      await dispatch(getUser(form))
+    },
+    [dispatch, form]
+  )
 
   if (isAutorized) {
-    return <Redirect to={state?.from || '/'} />
+    return <Redirect to={location.state?.from || '/'} />
   }
 
   return (

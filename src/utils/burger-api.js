@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from './cookie-helper'
+import { deleteCookie, getCookie, setCookie } from './cookie-helper'
 
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
 
@@ -23,7 +23,8 @@ export const postData = async (url, data, onError) => {
   return sendRequest(`${BURGER_API_URL}/${url}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: `Bearer ${getCookie('accessToken')}`
     },
     body: JSON.stringify(data)
   })
@@ -90,5 +91,6 @@ export const logOut = async () => {
   })
   if (res.success) {
     localStorage.removeItem('refreshToken')
+    deleteCookie('accessToken')
   }
 }

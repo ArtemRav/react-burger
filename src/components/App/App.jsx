@@ -9,7 +9,6 @@ import { ForgotPassPage } from '../../pages/ForgotPassPage/forgot-pass-page'
 import { ResetPassPage } from '../../pages/ResetPassPage/reset-pass-page'
 import { ProfilePage } from '../../pages/ProfilePage/propfile-page'
 import { MainPage } from '../../pages/MainPage/main-page'
-import { LogoutPage } from '../../pages/LogoutPage/logout-page'
 import { NotFound404 } from '../../pages/NotFound404/NotFound404'
 import { StrictMode } from 'react'
 import { ProtectedRoute } from '../protected-route'
@@ -58,10 +57,6 @@ function App() {
 
           <Route path="/" exact={true}>
             <MainPage />
-          </Route>
-
-          <Route path="/logout" exact={true}>
-            <LogoutPage />
           </Route>
 
           <ProtectedRoute path="/profile">

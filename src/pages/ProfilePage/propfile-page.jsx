@@ -6,11 +6,13 @@ import {
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useCallback, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ProfileOrders } from '../ProfileOrders/profile-orders'
-import { patchData } from '../../utils/burger-api'
+import { logOut, patchData } from '../../utils/burger-api'
 
 export const ProfilePage = () => {
+  const history = useHistory()
   const [form, setValue] = useState({ name: '', email: '', password: '' })
 
   const { email, name } = useSelector(state => state.user.userInfo)
@@ -33,6 +35,14 @@ export const ProfilePage = () => {
     () => setValue({ ...form, email, name }),
     [form, email, name]
   )
+  const logoutUser = useCallback(
+    async event => {
+      event.preventDefault()
+      await logOut()
+      history.replace({ pathname: '/login' })
+    },
+    [history]
+  )
 
   // Вопрос ревьюверу: почему-то первый NavLink всегда active, не удалось разобраться
   return (
@@ -53,7 +63,8 @@ export const ProfilePage = () => {
           История заказов
         </NavLink>
         <NavLink
-          to="/logout"
+          to="/login"
+          onClick={logoutUser}
           className={`text text_type_main-medium text_color_inactive ${style.link}`}
           activeClassName={style['active-link']}
         >

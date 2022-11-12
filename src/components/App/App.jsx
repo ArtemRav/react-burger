@@ -93,17 +93,6 @@ function App() {
             }
           />
         )}
-
-        {background && (
-          <ProtectedRoute
-            path="/profile/orders/:orderNumber"
-            children={
-              <Modal title="" closeModal={handleModalClose}>
-                <OrderDetails />
-              </Modal>
-            }
-          />
-        )}
       </>
     )
   }

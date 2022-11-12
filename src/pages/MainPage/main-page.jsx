@@ -10,8 +10,6 @@ import style from './main-page.module.css'
 
 export const MainPage = () => {
   const dispatch = useDispatch()
-
-  const orderIngredients = useSelector(state => state.orderIngredients.items)
   const ingredientsList = useSelector(
     state => state.allIngredients.ingredientsList
   )
@@ -32,7 +30,7 @@ export const MainPage = () => {
         </section>
 
         <section className={style['right-part']}>
-          <BurgerConstructor ingredientsList={orderIngredients} />
+          <BurgerConstructor />
         </section>
       </main>
     </DndProvider>

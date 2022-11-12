@@ -2,6 +2,14 @@ import { deleteCookie, getCookie, setCookie } from './cookie-helper'
 
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
 
+const getHeaders = () => {
+  const headers = { 'Content-Type': 'application/json;charset=utf-8' }
+  if (getCookie('accessToken')) {
+    headers.Authorization = `Bearer ${getCookie('accessToken')}`
+  }
+  return headers
+}
+
 const checkResponse = (res, onError = () => {}) => {
   if (res.ok) {
     return res.json()
@@ -22,10 +30,7 @@ export const getData = async url => {
 export const postData = async (url, data, onError) => {
   return sendRequest(`${BURGER_API_URL}/${url}`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${getCookie('accessToken')}`
-    },
+    headers: getHeaders(),
     body: JSON.stringify(data)
   })
 }
@@ -33,10 +38,7 @@ export const postData = async (url, data, onError) => {
 export const patchData = async (url, data) => {
   return sendRequest(`${BURGER_API_URL}/${url}`, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${getCookie('accessToken')}`
-    },
+    headers: getHeaders(),
     body: JSON.stringify(data)
   })
 }
@@ -59,10 +61,7 @@ const checkAnswer = res => {
 export const getDataWithToken = async url => {
   const options = {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${getCookie('accessToken')}`
-    }
+    headers: getHeaders()
   }
 
   try {

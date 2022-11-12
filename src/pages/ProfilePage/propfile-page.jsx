@@ -14,11 +14,15 @@ import { logOut, patchData } from '../../utils/burger-api'
 export const ProfilePage = () => {
   const history = useHistory()
   const [form, setValue] = useState({ name: '', email: '', password: '' })
+  const [hasControls, setControls] = useState(false)
 
   const { email, name } = useSelector(state => state.user.userInfo)
 
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value })
+    if (!hasControls) {
+      setControls(true)
+    }
   }
 
   useEffect(() => {
@@ -30,11 +34,14 @@ export const ProfilePage = () => {
     }
   }, [form, name, email])
 
-  const postUserData = useCallback(() => patchData('auth/user', form), [form])
-  const returnUserData = useCallback(
-    () => setValue({ ...form, email, name }),
-    [form, email, name]
-  )
+  const postUserData = useCallback(async () => {
+    await patchData('auth/user', form)
+    setControls(false)
+  }, [form])
+  const returnUserData = useCallback(() => {
+    setValue({ ...form, email, name })
+    setControls(false)
+  }, [form, email, name])
   const logoutUser = useCallback(
     async event => {
       event.preventDefault()
@@ -120,24 +127,26 @@ export const ProfilePage = () => {
               />
             </div>
 
-            <div className={`mt-6 ${style.controls}`}>
-              <Button
-                htmlType="button"
-                type="secondary"
-                size="large"
-                onClick={returnUserData}
-              >
-                Отмена
-              </Button>
-              <Button
-                htmlType="button"
-                type="primary"
-                size="large"
-                onClick={postUserData}
-              >
-                Сохранить
-              </Button>
-            </div>
+            {hasControls && (
+              <div className={`mt-6 ${style.controls}`}>
+                <Button
+                  htmlType="button"
+                  type="secondary"
+                  size="large"
+                  onClick={returnUserData}
+                >
+                  Отмена
+                </Button>
+                <Button
+                  htmlType="button"
+                  type="primary"
+                  size="large"
+                  onClick={postUserData}
+                >
+                  Сохранить
+                </Button>
+              </div>
+            )}
           </Route>
         </Switch>
 

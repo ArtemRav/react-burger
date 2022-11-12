@@ -10,6 +10,7 @@ export const NavItem = props => {
       <div className="icon-wrapper mr-2">{children}</div>
       <NavLink
         to={link}
+        exact
         className={`${styles.link} flex-wrap text_color_inactive`}
         activeClassName={'font-white'}
       >

@@ -44,12 +44,12 @@ export const ProfilePage = () => {
     [history]
   )
 
-  // Вопрос ревьюверу: почему-то первый NavLink всегда active, не удалось разобраться
   return (
     <section className={style.wrapper}>
       <div className={`${style['left-side']} mr-15`}>
         <NavLink
           to="/profile"
+          exact
           className={`text text_type_main-medium text_color_inactive ${style.link}`}
           activeClassName={style['active-link']}
         >
@@ -57,6 +57,7 @@ export const ProfilePage = () => {
         </NavLink>
         <NavLink
           to="/profile/orders"
+          exact
           className={`text text_type_main-medium text_color_inactive ${style.link}`}
           activeClassName={style['active-link']}
         >
@@ -64,6 +65,7 @@ export const ProfilePage = () => {
         </NavLink>
         <NavLink
           to="/login"
+          exact
           onClick={logoutUser}
           className={`text text_type_main-medium text_color_inactive ${style.link}`}
           activeClassName={style['active-link']}

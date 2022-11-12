@@ -80,11 +80,11 @@ export const BurgerConstructor = () => {
         </Button>
       </div>
 
-      {modalOpened && (
+      {/* {modalOpened && (
         <Modal title="" closeModal={closeModal}>
           <OrderDetails />
         </Modal>
-      )}
+      )} */}
     </div>
   )
 }

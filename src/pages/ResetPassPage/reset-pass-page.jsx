@@ -5,11 +5,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/reset-password'
 import style from './../LoginPage/login-page.module.css'
 
-export const ResetPassPage = ({ userReceived, isAutorized }) => {
+export const ResetPassPage = () => {
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
   const history = useHistory()
@@ -35,14 +35,6 @@ export const ResetPassPage = ({ userReceived, isAutorized }) => {
 
   const dropPassword = () => {
     dispatch(resetPassword({ password, token }))
-  }
-
-  if (!userReceived) {
-    return null
-  }
-
-  if (isAutorized) {
-    return <Redirect to="/" />
   }
 
   return (

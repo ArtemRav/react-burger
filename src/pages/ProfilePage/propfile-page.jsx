@@ -38,15 +38,17 @@ export const ProfilePage = () => {
     await patchData('auth/user', form)
     setControls(false)
   }, [form])
+
   const returnUserData = useCallback(() => {
     setValue({ ...form, email, name })
     setControls(false)
   }, [form, email, name])
+
   const logoutUser = useCallback(
     async event => {
       event.preventDefault()
       await logOut()
-      history.replace({ pathname: '/login' })
+      history.replace({ pathname: '/login', state: { from: '/login' } })
     },
     [history]
   )

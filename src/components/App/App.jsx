@@ -12,7 +12,6 @@ import { MainPage } from '../../pages/MainPage/main-page'
 import { NotFound404 } from '../../pages/NotFound404/NotFound404'
 import { StrictMode } from 'react'
 import { ProtectedRoute } from '../protected-route'
-import { withAuthCheck } from '../../hoc/with-auth-check'
 
 import { useLocation, useHistory } from 'react-router-dom'
 import { Modal } from '../Modal/Modal'
@@ -20,11 +19,6 @@ import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
 import { OrderDetails } from '../../components/OrderDetails/OrderDetails'
 
 function App() {
-  const WithAuthCheckLoginPage = withAuthCheck(LoginPage)
-  const WithAuthCheckRegisterPage = withAuthCheck(RegisterPage)
-  const WithAuthCheckForgotPage = withAuthCheck(ForgotPassPage)
-  const WithAuthCheckResetPassPage = withAuthCheck(ResetPassPage)
-
   const ModalSwitch = () => {
     const location = useLocation()
     const history = useHistory()
@@ -39,21 +33,25 @@ function App() {
         <AppHeader />
 
         <Switch location={background || location}>
-          <Route path="/login" exact={true}>
-            <WithAuthCheckLoginPage />
-          </Route>
+          <ProtectedRoute onlyUnAuth="true" path="/login" exact={true}>
+            <LoginPage />
+          </ProtectedRoute>
 
-          <Route path="/register" exact={true}>
-            <WithAuthCheckRegisterPage />
-          </Route>
+          <ProtectedRoute onlyUnAuth="true" path="/register" exact={true}>
+            <RegisterPage />
+          </ProtectedRoute>
 
-          <Route path="/forgot-password" exact={true}>
-            <WithAuthCheckForgotPage />
-          </Route>
+          <ProtectedRoute
+            onlyUnAuth="true"
+            path="/forgot-password"
+            exact={true}
+          >
+            <ForgotPassPage />
+          </ProtectedRoute>
 
-          <Route path="/reset-password" exact={true}>
-            <WithAuthCheckResetPassPage />
-          </Route>
+          <ProtectedRoute onlyUnAuth="true" path="/reset-password" exact={true}>
+            <ResetPassPage />
+          </ProtectedRoute>
 
           <Route path="/" exact={true}>
             <MainPage />

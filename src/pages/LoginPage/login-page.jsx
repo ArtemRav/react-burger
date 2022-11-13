@@ -9,10 +9,8 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUser } from '../../services/actions/user'
 import style from './login-page.module.css'
-import { Redirect, useLocation } from 'react-router-dom'
 
-export const LoginPage = ({ userReceived, isAutorized }) => {
-  const location = useLocation()
+export const LoginPage = () => {
   const [form, setValue] = useState({ email: '', password: '' })
   const dispatch = useDispatch()
 
@@ -27,14 +25,6 @@ export const LoginPage = ({ userReceived, isAutorized }) => {
     },
     [dispatch, form]
   )
-
-  if (!userReceived) {
-    return null
-  }
-
-  if (isAutorized) {
-    return <Redirect to={location.state?.from || '/'} />
-  }
 
   return (
     <div className={style.wrapper}>

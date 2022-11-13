@@ -1,13 +1,15 @@
 import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
-  GET_USER_FAILED
+  GET_USER_FAILED,
+  TOGGLE_USER_AUTH_CHECKED
 } from '../actions/user'
 
 const initialState = {
   loginRequest: false,
   loginFailed: false,
   loginSuccess: false,
+  isAuthChecked: false,
 
   userInfo: null
 }
@@ -33,6 +35,12 @@ export const userReducer = (state = initialState, action) => {
         loginRequest: false,
         loginSuccess: false,
         userInfo: null
+      }
+
+    case TOGGLE_USER_AUTH_CHECKED:
+      return {
+        ...state,
+        isAuthChecked: !state.isAuthChecked
       }
 
     default:

@@ -15,7 +15,8 @@ ul {
   display: flex;
 }
 
-.font-white {
+.font-white,
+.text_color_inactive.font-white {
   color: #ffffff;
 }
 

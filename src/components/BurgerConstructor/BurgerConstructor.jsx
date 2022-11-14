@@ -10,6 +10,7 @@ import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { OrderIngredientList } from '../OrderIngredientList/OrderIngredientList'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
@@ -19,8 +20,11 @@ import useModal from '../../hooks/useModal'
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
+  const location = useLocation()
   const orderIngredients = useSelector(state => state.orderIngredients.items)
   const { modalVisible: modalOpened, showModal, hideModal } = useModal()
+  const isAutorized = useSelector(state => state.user.loginSuccess)
 
   const countSum = useMemo(() => {
     return orderIngredients.reduce(
@@ -48,10 +52,14 @@ export const BurgerConstructor = () => {
   }
 
   const openModal = useCallback(() => {
-    const data = { ingredients: ingredientIds }
-    dispatch(getOrder(data))
-    showModal()
-  }, [dispatch, showModal, ingredientIds])
+    if (isAutorized) {
+      const data = { ingredients: ingredientIds }
+      dispatch(getOrder(data))
+      showModal()
+    } else {
+      history.push({ pathname: '/login', state: { from: location } })
+    }
+  }, [dispatch, showModal, ingredientIds, history, location, isAutorized])
 
   const closeModal = useCallback(() => {
     hideModal()

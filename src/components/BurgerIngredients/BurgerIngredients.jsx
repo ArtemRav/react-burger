@@ -1,27 +1,18 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerType } from './BurgerType/BurgerType'
-import { Modal } from '../Modal/Modal'
-import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
 import burgerIngredientsCss from './burger-ingredients.module.css'
-import { BurgerItemContext } from '../../services/burgerItemContext'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  CLEAR_CURRENT_INGREDIENT,
-  SET_CURRENT_INGREDIENT
-} from '../../services/actions'
+import { useSelector } from 'react-redux'
+
 import { BUN, SAUCE, MAIN } from '../../utils/ingredient-types'
-import useModal from '../../hooks/useModal'
 
 export const BurgerIngredients = () => {
-  const dispatch = useDispatch()
   const ingredientsList = useSelector(
     state => state.allIngredients.ingredientsList
   )
   const [activeTab, setActiveTab] = useState({ id: BUN, name: 'Булки' })
   const tabsList = useSelector(state => state.allIngredients.ingredientTabs)
   const tabsRef = useRef()
-  const { modalVisible: modalOpened, showModal, hideModal } = useModal()
 
   const burgersBun = useMemo(
     () => ingredientsList.filter(item => item.type === BUN),
@@ -63,27 +54,6 @@ export const BurgerIngredients = () => {
     })
   }, [])
 
-  const openModal = useCallback(
-    item => {
-      // Показать модальное окно по ингридиенту
-      dispatch({
-        type: SET_CURRENT_INGREDIENT,
-        item
-      })
-      showModal()
-    },
-    [dispatch, showModal]
-  )
-
-  const closeModal = useCallback(() => {
-    hideModal()
-
-    // Удаление данных о просматриваемом ингридиенте
-    dispatch({
-      type: CLEAR_CURRENT_INGREDIENT
-    })
-  }, [dispatch, hideModal])
-
   useEffect(() => {
     const tabsNode = tabsRef.current
     tabsNode.addEventListener('scroll', scrollIngredients)
@@ -112,18 +82,10 @@ export const BurgerIngredients = () => {
         ref={tabsRef}
         className={`app-scroll pt-10 ${burgerIngredientsCss.items}`}
       >
-        <BurgerItemContext.Provider value={{ openModal }}>
-          <BurgerType id="bun" list={burgersBun} title="Булки" />
-          <BurgerType id="sauce" list={burgersSauce} title="Соусы" />
-          <BurgerType id="main" list={burgersMain} title="Начинки" />
-        </BurgerItemContext.Provider>
+        <BurgerType id="bun" list={burgersBun} title="Булки" />
+        <BurgerType id="sauce" list={burgersSauce} title="Соусы" />
+        <BurgerType id="main" list={burgersMain} title="Начинки" />
       </div>
-
-      {modalOpened && (
-        <Modal title="Детали ингридиента" closeModal={closeModal}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </>
   )
 }

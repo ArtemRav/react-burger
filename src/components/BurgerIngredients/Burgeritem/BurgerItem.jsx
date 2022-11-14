@@ -4,13 +4,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerStyle from './burger-item.module.css'
 import { burgerListItemPropTypes } from '../../../utils/prop-types'
-import { BurgerItemContext } from '../../../services/burgerItemContext'
-import { useContext } from 'react'
 import { useDrag } from 'react-dnd'
+import { Link, useLocation } from 'react-router-dom'
 
 export const BurgerItem = ({ ingredient }) => {
+  const location = useLocation()
   const { _id, name, image, price, qnt } = ingredient
-  const { openModal } = useContext(BurgerItemContext)
 
   const [{ opacity }, dragRef] = useDrag({
     type: 'ingredients',
@@ -20,30 +19,30 @@ export const BurgerItem = ({ ingredient }) => {
     })
   })
 
-  const showModal = () => {
-    openModal(ingredient)
-  }
-
   return (
-    <li
-      key={_id}
-      ref={dragRef}
-      style={{ opacity }}
-      className={`pl-4 pr-4 ${burgerStyle.card}`}
-      onClick={showModal}
+    <Link
+      to={{ pathname: `/ingredients/${_id}`, state: { background: location } }}
+      className={burgerStyle.link}
     >
-      <img src={image} alt={name} />
-      <div className={burgerStyle.price}>
-        <p className="mr-2 text text_type_digits-default">{price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={`mt-2 text text_type_main-small ${burgerStyle.desc}`}>
-        {name}
-      </p>
-      {!!qnt && (
-        <Counter className={burgerStyle.counter} count={qnt} size="small" />
-      )}
-    </li>
+      <li
+        key={_id}
+        ref={dragRef}
+        style={{ opacity }}
+        className={`pl-4 pr-4 ${burgerStyle.card}`}
+      >
+        <img src={image} alt={name} />
+        <div className={burgerStyle.price}>
+          <p className="mr-2 text text_type_digits-default">{price}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className={`mt-2 text text_type_main-small ${burgerStyle.desc}`}>
+          {name}
+        </p>
+        {!!qnt && (
+          <Counter className={burgerStyle.counter} count={qnt} size="small" />
+        )}
+      </li>
+    </Link>
   )
 }
 

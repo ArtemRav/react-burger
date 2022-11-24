@@ -1,4 +1,4 @@
-import { BUN, MAIN, SAUCE } from '../../utils/ingredient-types'
+import { BUN, MAIN, SAUCE, TIngredientItem } from '../../utils/ingredient-types'
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -7,6 +7,18 @@ import {
   DECREASE_QNT_INGREDIENTS,
   DROP_QNT_ALL_BUNS
 } from '../actions/ingredients'
+
+type TTab = {
+  id: typeof BUN
+  name: string
+}
+
+type TIngredientsInfo = {
+  ingredientsRequest: boolean
+  ingredientsFailed: boolean
+  ingredientsList: Array<TIngredientItem>
+  ingredientTabs: Array<TTab>
+}
 
 const initialState = {
   ingredientsRequest: false,
@@ -19,7 +31,10 @@ const initialState = {
   ]
 }
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state: TIngredientsInfo = initialState,
+  action: any
+) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST:
       return { ...state, ingredientsRequest: true }

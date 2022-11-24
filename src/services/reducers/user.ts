@@ -14,7 +14,16 @@ const initialState = {
   userInfo: null
 }
 
-export const userReducer = (state = initialState, action) => {
+type TAction = {
+  type:
+    | typeof GET_USER_REQUEST
+    | typeof GET_USER_SUCCESS
+    | typeof GET_USER_FAILED
+    | typeof TOGGLE_USER_AUTH_CHECKED
+  payload: any
+}
+
+export const userReducer = (state = initialState, action: TAction) => {
   switch (action.type) {
     case GET_USER_REQUEST:
       return { ...state, loginRequest: true }

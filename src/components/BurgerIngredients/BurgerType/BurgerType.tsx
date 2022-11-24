@@ -1,9 +1,15 @@
+import { FC } from 'react'
 import { BurgerItem } from '../Burgeritem/BurgerItem'
 import burgerType from './burger-type.module.css'
-import PropTypes from 'prop-types'
-import { burgerListItemPropTypes } from '../../../utils/prop-types'
+import { TIngredientItem } from '../../../utils/ingredient-types'
 
-export const BurgerType = ({ title, list, id }) => {
+type TBurger = {
+  title: string
+  list: Array<TIngredientItem>
+  id: string
+}
+
+export const BurgerType: FC<TBurger> = ({ title, list, id }) => {
   return (
     <div id={id}>
       <h2 className={burgerType.title}>{title}</h2>
@@ -14,10 +20,4 @@ export const BurgerType = ({ title, list, id }) => {
       </ul>
     </div>
   )
-}
-
-BurgerType.propTypes = {
-  title: PropTypes.string.isRequired,
-  list: PropTypes.arrayOf(burgerListItemPropTypes()).isRequired,
-  id: PropTypes.string.isRequired
 }

@@ -1,16 +1,25 @@
 import { deleteCookie, getCookie, setCookie } from './cookie-helper'
-
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
 
+type TError = {
+  message: string
+}
+type THeader = Record<string, string>
+type TPatchData = (url: string, data: any) => any
+type TSaveTokens = (refreshToken: string, accessToken: string) => void
+type TCheckToken = (err: TError, url: string, options: { headers: THeader })
+
 const getHeaders = () => {
-  const headers = { 'Content-Type': 'application/json;charset=utf-8' }
+  const headers: THeader = {
+    'Content-Type': 'application/json;charset=utf-8'
+  }
   if (getCookie('accessToken')) {
     headers.Authorization = `Bearer ${getCookie('accessToken')}`
   }
   return headers
 }
 
-export const saveTokens = (refreshToken, accessToken) => {
+export const saveTokens: TSaveTokens = (refreshToken, accessToken) => {
   setCookie('accessToken', accessToken.split('Bearer ')[1])
   localStorage.setItem('refreshToken', refreshToken)
 }
@@ -21,19 +30,19 @@ export const refreshTokenRequest = () => {
   })
 }
 
-const checkAnswer = res => {
-  return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
+const checkAnswer = (res: any) => {
+  return res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err))
 }
 
-function sendRequest(url, options = {}) {
+function sendRequest(url: string, options = {}) {
   return fetch(url, options).then(res => checkAnswer(res))
 }
 
-export const getData = async url => {
+export const getData = async (url: string) => {
   return sendRequest(`${BURGER_API_URL}/${url}`)
 }
 
-const checkToken = async (err, url, options) => {
+const checkToken: TCheckToken = async (err, url, options) => {
   if (err.message === 'jwt expired') {
     const { refreshToken, accessToken } = await refreshTokenRequest()
     saveTokens(refreshToken, accessToken)
@@ -46,7 +55,7 @@ const checkToken = async (err, url, options) => {
   }
 }
 
-export const postData = async (url, data) => {
+export const postData: TPatchData = async (url, data) => {
   const options = {
     method: 'POST',
     headers: getHeaders(),
@@ -60,7 +69,7 @@ export const postData = async (url, data) => {
   }
 }
 
-export const patchData = async (url, data) => {
+export const patchData: TPatchData = async (url, data) => {
   const options = {
     method: 'PATCH',
     headers: getHeaders(),
@@ -74,7 +83,7 @@ export const patchData = async (url, data) => {
   }
 }
 
-export const getDataWithToken = async url => {
+export const getDataWithToken = async (url: string) => {
   const options = {
     method: 'GET',
     headers: getHeaders()
@@ -89,8 +98,12 @@ export const getDataWithToken = async url => {
   }
 }
 
+type TLogOutResponse = {
+  success: boolean
+}
+
 export const logOut = async () => {
-  const res = await postData('auth/logout', {
+  const res: TLogOutResponse = await postData('auth/logout', {
     token: localStorage.getItem('refreshToken')
   })
   if (res.success) {

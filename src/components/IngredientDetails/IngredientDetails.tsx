@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchIngredients } from '../../services/actions/ingredients'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
+import { TState } from '../../services/reducers'
+import { TIngredientItem } from '../../utils/ingredient-types'
 
 export const IngredientDetails = () => {
   const dispatch = useDispatch()
-  const params = useParams()
+  const params = useParams<{ ingredientId: string }>()
 
   const ingredientsList = useSelector(
-    state => state.allIngredients.ingredientsList
+    (state: TState) => state.allIngredients.ingredientsList
   )
 
   useEffect(() => {
@@ -18,8 +20,11 @@ export const IngredientDetails = () => {
     }
   }, [])
 
-  const ingredient = useMemo(
-    () => ingredientsList.find(item => item._id === params.ingredientId),
+  const ingredient = useMemo<TIngredientItem>(
+    () =>
+      ingredientsList.find(
+        (item: TIngredientItem) => item._id === params.ingredientId
+      ),
     [ingredientsList, params.ingredientId]
   )
 

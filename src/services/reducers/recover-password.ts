@@ -10,7 +10,17 @@ const initialState = {
   recoverPasswordFailed: false
 }
 
-export const recoverPasswordReducer = (state = initialState, action) => {
+type TAction = {
+  type:
+    | typeof RECOVER_PASSWORD_FAILED
+    | typeof RECOVER_PASSWORD_REQUEST
+    | typeof RECOVER_PASSWORD_SUCCESS
+}
+
+export const recoverPasswordReducer = (
+  state = initialState,
+  action: TAction
+) => {
   switch (action.type) {
     case RECOVER_PASSWORD_REQUEST:
       return { ...state, recoverPasswordRequest: true }

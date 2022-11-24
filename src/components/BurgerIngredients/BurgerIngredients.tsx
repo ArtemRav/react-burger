@@ -4,32 +4,49 @@ import { BurgerType } from './BurgerType/BurgerType'
 import burgerIngredientsCss from './burger-ingredients.module.css'
 import { useSelector } from 'react-redux'
 
-import { BUN, SAUCE, MAIN } from '../../utils/ingredient-types'
+import { BUN, SAUCE, MAIN, TIngredientItem } from '../../utils/ingredient-types'
+import { TState } from '../../services/reducers'
 
 export const BurgerIngredients = () => {
+  // TYPE START
+  type TTab = {
+    id: typeof BUN | typeof SAUCE | typeof MAIN
+    name: string
+  }
+
+  type TToggleTab = (tab: TTab) => void
+  // TYPES END
+
   const ingredientsList = useSelector(
-    state => state.allIngredients.ingredientsList
+    (state: TState) => state.allIngredients.ingredientsList
   )
-  const [activeTab, setActiveTab] = useState({ id: BUN, name: 'Булки' })
-  const tabsList = useSelector(state => state.allIngredients.ingredientTabs)
-  const tabsRef = useRef()
+  const [activeTab, setActiveTab] = useState<TTab | any>({
+    id: BUN,
+    name: 'Булки'
+  })
+
+  const tabsList = useSelector(
+    (state: TState) => state.allIngredients.ingredientTabs
+  )
+  const tabsRef = useRef<HTMLDivElement | any>(null)
 
   const burgersBun = useMemo(
-    () => ingredientsList.filter(item => item.type === BUN),
+    () => ingredientsList.filter((item: TIngredientItem) => item.type === BUN),
     [ingredientsList]
   )
   const burgersMain = useMemo(
-    () => ingredientsList.filter(item => item.type === MAIN),
+    () => ingredientsList.filter((item: TIngredientItem) => item.type === MAIN),
     [ingredientsList]
   )
   const burgersSauce = useMemo(
-    () => ingredientsList.filter(item => item.type === SAUCE),
+    () =>
+      ingredientsList.filter((item: TIngredientItem) => item.type === SAUCE),
     [ingredientsList]
   )
 
-  const bunNode = document.getElementById(BUN)
-  const sauceNode = document.getElementById(SAUCE)
-  const mainNode = document.getElementById(MAIN)
+  const bunNode: any = document.getElementById(BUN)
+  const sauceNode: any = document.getElementById(SAUCE)
+  const mainNode: any = document.getElementById(MAIN)
 
   const scrollIngredients = useCallback(() => {
     const tabsNodeY = tabsRef.current.getBoundingClientRect().top + 40
@@ -39,15 +56,15 @@ export const BurgerIngredients = () => {
     const mainNodeY = mainNode.getBoundingClientRect().top - tabsNodeY
 
     if (bunNodeY < 0 && sauceNodeY > 0 && mainNodeY > 0) {
-      setActiveTab(tabsList.find(t => t.id === BUN))
+      setActiveTab(tabsList.find(tab => tab.id === BUN))
     } else if (sauceNodeY < 0 && bunNodeY < 0 && mainNodeY > 0) {
-      setActiveTab(tabsList.find(t => t.id === SAUCE))
+      setActiveTab(tabsList.find(tab => tab.id === SAUCE))
     } else if (mainNodeY < 0) {
-      setActiveTab(tabsList.find(t => t.id === MAIN))
+      setActiveTab(tabsList.find(tab => tab.id === MAIN))
     }
   }, [bunNode, mainNode, sauceNode, tabsList])
 
-  const toggleTab = useCallback(tab => {
+  const toggleTab = useCallback<TToggleTab>(tab => {
     setActiveTab(tab)
     document.querySelector(`#${tab.id}`).scrollIntoView({
       behavior: 'smooth'
@@ -55,7 +72,7 @@ export const BurgerIngredients = () => {
   }, [])
 
   useEffect(() => {
-    const tabsNode = tabsRef.current
+    const tabsNode: any = tabsRef.current
     tabsNode.addEventListener('scroll', scrollIngredients)
 
     return () => {

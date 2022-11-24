@@ -1,8 +1,14 @@
 import styles from './nav-item.module.css'
-import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+import { FC } from 'react'
 
-export const NavItem = props => {
+type TNavItem = {
+  children: any
+  link: string
+  name: string
+}
+
+export const NavItem: FC<TNavItem> = props => {
   const { children, link, name } = props
 
   return (
@@ -18,10 +24,4 @@ export const NavItem = props => {
       </NavLink>
     </div>
   )
-}
-
-NavItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  color: PropTypes.string,
-  link: PropTypes.string
 }

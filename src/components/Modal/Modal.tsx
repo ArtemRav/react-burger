@@ -2,16 +2,22 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay'
 import ReactDOM from 'react-dom'
 import modalCss from './modal.module.css'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 
 const ESC_KEYCODE = 27
-const modalRoot = document.getElementById('modals')
+const modalRoot: any = document.getElementById('modals')
 
-export const Modal = ({ title, children, closeModal }) => {
+type TModal = {
+  title: string
+  children: any
+  closeModal: () => void
+}
+
+export const Modal: FC<TModal> = ({ title, children, closeModal }) => {
   const { wrapper, modal, header, body } = modalCss
 
   useEffect(() => {
-    const onTapEsc = event => {
+    const onTapEsc = (event: any) => {
       if (event.keyCode === ESC_KEYCODE) {
         closeModal()
       }

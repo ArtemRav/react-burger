@@ -14,3 +14,5 @@ export const rootReducer = combineReducers({
   recoverPassword: recoverPasswordReducer,
   resetPassword: resetPasswordReducer
 })
+
+export type TState = ReturnType<typeof rootReducer>

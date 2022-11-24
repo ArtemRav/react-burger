@@ -4,6 +4,16 @@ import {
   GET_ORDER_FAILED
 } from '../actions/order'
 
+type TOrder = {
+  number: number
+  titleId: string
+  titleState: string
+  titleInfo: string
+  titleOrderFailed: string
+  orderRequest: boolean
+  orderFailed: boolean
+}
+
 const initialState = {
   number: 0,
   titleId: 'идентификатор заказа',
@@ -14,7 +24,7 @@ const initialState = {
   orderFailed: false
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state: TOrder = initialState, action: any) => {
   switch (action.type) {
     case GET_ORDER_REQUEST:
       return { ...state, orderRequest: true, orderFailed: false }

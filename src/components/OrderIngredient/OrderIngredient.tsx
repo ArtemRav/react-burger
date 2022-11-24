@@ -1,18 +1,30 @@
 import style from './order-ingredient.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useCallback, useRef } from 'react'
+import { FC, useCallback, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { delIngredient } from '../../services/actions'
 import dragIcon from './../../images/constructor/Vector.png'
 import { useDrag, useDrop } from 'react-dnd'
-import { BUN } from '../../utils/ingredient-types'
+import { BUN, TIngredientItem } from '../../utils/ingredient-types'
 
-export const OrderIngredient = ({ item, index, moveCard }) => {
+type TOrderIngredient = {
+  item: TIngredientItem
+  index: number
+  moveCard: any
+}
+
+export const OrderIngredient: FC<TOrderIngredient> = ({
+  item,
+  index,
+  moveCard
+}) => {
   const { name, price, image } = item
+
+  type TDelIngredient = (item: TOrderIngredient) => void
 
   const dispatch = useDispatch()
 
-  const deleteIngredient = useCallback(
+  const deleteIngredient = useCallback<TDelIngredient>(
     item => {
       dispatch(delIngredient(item))
     },
@@ -42,7 +54,7 @@ export const OrderIngredient = ({ item, index, moveCard }) => {
       const hoverBoundingRect = ref.current?.getBoundingClientRect()
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-      const clientOffset = monitor.getClientOffset()
+      const clientOffset: any = monitor.getClientOffset()
       const hoverClientY = clientOffset.y - hoverBoundingRect.top
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
@@ -67,7 +79,7 @@ export const OrderIngredient = ({ item, index, moveCard }) => {
 
   if (item.type !== BUN) drag(drop(ref))
 
-  const preventDefault = e => e.preventDefault()
+  const preventDefault = (e: any) => e.preventDefault()
 
   return (
     <li
@@ -81,8 +93,8 @@ export const OrderIngredient = ({ item, index, moveCard }) => {
       <ConstructorElement
         isLocked={false}
         text={name}
-        price={price}
-        thumbnail={image}
+        price:number={price}
+        thumbnail:string={image}
         handleClose={() => deleteIngredient(item)}
       />
     </li>

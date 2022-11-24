@@ -15,20 +15,24 @@ import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
 
-import { BUN } from '../../utils/ingredient-types'
+import { BUN, TIngredientItem } from '../../utils/ingredient-types'
 import useModal from '../../hooks/useModal'
+import { TState } from '../../services/reducers'
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation()
-  const orderIngredients = useSelector(state => state.orderIngredients.items)
+  const orderIngredients = useSelector(
+    (state: TState) => state.orderIngredients.items
+  )
   const { modalVisible: modalOpened, showModal, hideModal } = useModal()
-  const isAutorized = useSelector(state => state.user.loginSuccess)
+  const isAutorized = useSelector((state: TState) => state.user.loginSuccess)
 
   const countSum = useMemo(() => {
     return orderIngredients.reduce(
-      (acc, el) => (el.type === BUN ? acc + el.price * 2 : acc + el.price),
+      (acc, el: TIngredientItem) =>
+        el.type === BUN ? acc + el.price * 2 : acc + el.price,
       0
     )
   }, [orderIngredients])
@@ -47,7 +51,7 @@ export const BurgerConstructor = () => {
     }
   })
 
-  const handleDrop = ingredient => {
+  const handleDrop = (ingredient: TIngredientItem) => {
     dispatch(addIngredient(ingredient))
   }
 

@@ -1,25 +1,31 @@
-import { useCallback, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 import style from './order-ingredient-list.module.css'
 
 import { OrderIngredient } from '../OrderIngredient/OrderIngredient'
 import { useDispatch } from 'react-redux'
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { BUN } from '../../utils/ingredient-types'
+import { BUN, TIngredientItem } from '../../utils/ingredient-types'
 
 export const OrderIngredientList = ({ orderIngredients }) => {
+  type TMoveCard = (dragIndex: number, hoverIndex: number) => void
+  type TGetOrderIngredient = (item: TIngredientItem, index: number) => void
+
   const dispatch = useDispatch()
 
-  const bun = useMemo(
-    () => orderIngredients.find(ingredient => ingredient.type === BUN),
+  const bun = useMemo<TIngredientItem>(
+    () =>
+      orderIngredients.find(
+        (ingredient: TIngredientItem) => ingredient.type === BUN
+      ),
     [orderIngredients]
   )
 
-  const bunIngredients = useMemo(() => {
-    return orderIngredients.filter(item => item.type !== BUN)
+  const bunIngredients = useMemo<Array<TIngredientItem>>(() => {
+    return orderIngredients.filter((item: TIngredientItem) => item.type !== BUN)
   }, [orderIngredients])
 
-  const moveCard = useCallback(
+  const moveCard = useCallback<TMoveCard>(
     (dragIndex, hoverIndex) => {
       const dragItem = bunIngredients[dragIndex]
       const newIngredients = [...bunIngredients]
@@ -33,7 +39,10 @@ export const OrderIngredientList = ({ orderIngredients }) => {
     [bunIngredients, bun, dispatch]
   )
 
-  const getOrderBun = (type, title) => {
+  const getOrderBun: FC<{ type: 'top' | 'bottom'; title: string }> = (
+    type,
+    title
+  ) => {
     return (
       bun && (
         <ConstructorElement
@@ -47,7 +56,7 @@ export const OrderIngredientList = ({ orderIngredients }) => {
     )
   }
 
-  const getOrderIngredient = useCallback(
+  const getOrderIngredient = useCallback<TGetOrderIngredient>(
     (item, index) => {
       return (
         <OrderIngredient

@@ -2,7 +2,7 @@ import './general.css'
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import { AppHeader } from '../AppHeader/AppHeader.jsx'
+import { AppHeader } from '../AppHeader/AppHeader.js'
 import { LoginPage } from '../../pages/LoginPage/login-page'
 import { RegisterPage } from '../../pages/RegisterPage/register-page'
 import { ForgotPassPage } from '../../pages/ForgotPassPage/forgot-pass-page'

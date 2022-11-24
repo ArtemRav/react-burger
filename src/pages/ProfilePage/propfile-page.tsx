@@ -10,15 +10,16 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ProfileOrders } from '../ProfileOrders/profile-orders'
 import { logOut, patchData } from '../../utils/burger-api'
+import { TState } from '../../services/reducers'
 
 export const ProfilePage = () => {
   const history = useHistory()
   const [form, setValue] = useState({ name: '', email: '', password: '' })
   const [hasControls, setControls] = useState(false)
 
-  const { email, name } = useSelector(state => state.user.userInfo)
+  const { email, name } = useSelector((state: TState) => state.user.userInfo)
 
-  const onChange = e => {
+  const onChange = (e: any) => {
     setValue({ ...form, [e.target.name]: e.target.value })
     if (!hasControls) {
       setControls(true)
@@ -45,7 +46,7 @@ export const ProfilePage = () => {
   }, [form, email, name])
 
   const logoutUser = useCallback(
-    async event => {
+    async (event: any) => {
       event.preventDefault()
       await logOut()
       history.replace({ pathname: '/login', state: { from: '/login' } })

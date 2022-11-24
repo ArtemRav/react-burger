@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { recoverPassword } from '../../services/actions/recover-password'
+import { TState } from '../../services/reducers'
 import style from './../LoginPage/login-page.module.css'
 
 export const ForgotPassPage = () => {
@@ -13,12 +14,12 @@ export const ForgotPassPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const inputEmail = e => {
+  const inputEmail = (e: any) => {
     setEmail(e.target.value)
   }
 
   const isPasswordRecovered = useSelector(
-    state => state.recoverPassword.recoverPasswordSuccess
+    (state: TState) => state.recoverPassword.recoverPasswordSuccess
   )
 
   useEffect(() => {

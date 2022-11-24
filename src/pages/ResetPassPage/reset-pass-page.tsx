@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/reset-password'
+import { TState } from '../../services/reducers'
 import style from './../LoginPage/login-page.module.css'
 
 export const ResetPassPage = () => {
@@ -15,16 +16,16 @@ export const ResetPassPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const inputPassword = e => {
+  const inputPassword = (e: any) => {
     setPassword(e.target.value)
   }
 
-  const inputToken = e => {
+  const inputToken = (e: any) => {
     setToken(e.target.value)
   }
 
   const isPasswordReseted = useSelector(
-    state => state.resetPassword.resetPasswordSuccess
+    (state: TState) => state.resetPassword.resetPasswordSuccess
   )
 
   useEffect(() => {

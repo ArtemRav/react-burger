@@ -7,7 +7,7 @@ export type TIngredientItem = {
   name?: string
   image?: string
   price: number
-  qnt?: number
+  qnt: number
   type?: string
   calories?: Array<number>
   proteins?: Array<number>

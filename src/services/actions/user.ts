@@ -4,6 +4,7 @@ import { getDataWithToken, postData, saveTokens } from '../../utils/burger-api'
 export const GET_USER_REQUEST = 'GET_USER_REQUEST'
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
 export const GET_USER_FAILED = 'GET_USER_FAILED'
+export const TOGGLE_USER_AUTH_CHECKED = 'TOGGLE_USER_AUTH_CHECKED'
 
 type TData = {
   email: string

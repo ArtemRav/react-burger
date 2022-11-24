@@ -20,7 +20,8 @@ type TAction = {
     | typeof GET_USER_SUCCESS
     | typeof GET_USER_FAILED
     | typeof TOGGLE_USER_AUTH_CHECKED
-  payload: any
+  payload?: any
+  isAuthChecked?: boolean
 }
 
 export const userReducer = (state = initialState, action: TAction) => {

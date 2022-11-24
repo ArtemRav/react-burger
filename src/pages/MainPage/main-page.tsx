@@ -7,11 +7,12 @@ import { BurgerConstructor } from '../../components/BurgerConstructor/BurgerCons
 import { BurgerIngredients } from '../../components/BurgerIngredients/BurgerIngredients'
 
 import style from './main-page.module.css'
+import { TState } from '../../services/reducers'
 
 export const MainPage = () => {
   const dispatch = useDispatch()
   const ingredientsList = useSelector(
-    state => state.allIngredients.ingredientsList
+    (state: TState) => state.allIngredients.ingredientsList
   )
 
   useEffect(() => {

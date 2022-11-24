@@ -13,11 +13,11 @@ export const RegisterPage = () => {
   const history = useHistory()
   const [form, setValue] = useState({ name: '', email: '', password: '' })
 
-  const onChange = e => {
+  const onChange = (e: any) => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
 
-  const registerUser = e => {
+  const registerUser = (e: any) => {
     e.preventDefault()
     const response = postData('auth/register', form)
     if (response.success) {

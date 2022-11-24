@@ -14,12 +14,12 @@ export const LoginPage = () => {
   const [form, setValue] = useState({ email: '', password: '' })
   const dispatch = useDispatch()
 
-  const onChange = e => {
+  const onChange = (e: any) => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
 
   const login = useCallback(
-    async e => {
+    async (e: any) => {
       e.preventDefault()
       await dispatch(getUser(form))
     },

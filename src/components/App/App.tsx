@@ -16,7 +16,7 @@ import { ProtectedRoute } from '../protected-route'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Modal } from '../Modal/Modal'
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
-import { OrderDetails } from '../../components/OrderDetails/OrderDetails'
+import { OrderDetails } from '../OrderDetails/OrderDetails'
 
 function App() {
   const ModalSwitch = () => {
@@ -33,23 +33,23 @@ function App() {
         <AppHeader />
 
         <Switch location={background || location}>
-          <ProtectedRoute onlyUnAuth="true" path="/login" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/login" exact={true}>
             <LoginPage />
           </ProtectedRoute>
 
-          <ProtectedRoute onlyUnAuth="true" path="/register" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/register" exact={true}>
             <RegisterPage />
           </ProtectedRoute>
 
           <ProtectedRoute
-            onlyUnAuth="true"
+            onlyUnAuth={true}
             path="/forgot-password"
             exact={true}
           >
             <ForgotPassPage />
           </ProtectedRoute>
 
-          <ProtectedRoute onlyUnAuth="true" path="/reset-password" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/reset-password" exact={true}>
             <ResetPassPage />
           </ProtectedRoute>
 

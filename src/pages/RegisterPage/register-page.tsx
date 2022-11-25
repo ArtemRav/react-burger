@@ -4,7 +4,7 @@ import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { postData, saveTokens } from '../../utils/burger-api'
 import style from './../LoginPage/login-page.module.css'
@@ -13,12 +13,12 @@ export const RegisterPage = () => {
   const history = useHistory()
   const [form, setValue] = useState({ name: '', email: '', password: '' })
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
 
-  const registerUser = (e: any) => {
-    e.preventDefault()
+  const registerUser = (event: SyntheticEvent<Element, Event>) => {
+    event.preventDefault()
     const response = postData('auth/register', form)
     if (response.success) {
       const { refreshToken, accessToken } = response

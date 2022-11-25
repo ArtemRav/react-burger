@@ -8,14 +8,12 @@ import { BUN, SAUCE, MAIN, TIngredientItem } from '../../utils/ingredient-types'
 import { TState } from '../../services/reducers'
 
 export const BurgerIngredients = () => {
-  // TYPE START
   type TTab = {
     id: typeof BUN | typeof SAUCE | typeof MAIN
     name: string
   }
 
   type TToggleTab = (tab: TTab) => void
-  // TYPES END
 
   const ingredientsList = useSelector(
     (state: TState) => state.allIngredients.ingredientsList

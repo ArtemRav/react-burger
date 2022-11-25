@@ -4,7 +4,13 @@ import {
   Button,
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useCallback, useEffect, useState } from 'react'
+import {
+  ChangeEvent,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ProfileOrders } from '../ProfileOrders/profile-orders'
@@ -18,7 +24,7 @@ export const ProfilePage = () => {
 
   const { email, name } = useSelector((state: TState) => state.user.userInfo)
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })
     if (!hasControls) {
       setControls(true)
@@ -34,18 +40,24 @@ export const ProfilePage = () => {
     }
   }, [form, name, email])
 
-  const postUserData = useCallback(async () => {
-    await patchData('auth/user', form)
-    setControls(false)
-  }, [form])
+  const postUserData = useCallback(
+    async (event: SyntheticEvent<Element, Event>) => {
+      await patchData('auth/user', form)
+      setControls(false)
+    },
+    [form]
+  )
 
-  const returnUserData = useCallback(() => {
-    setValue({ ...form, email, name })
-    setControls(false)
-  }, [form, email, name])
+  const returnUserData = useCallback(
+    (event: SyntheticEvent<Element, Event>) => {
+      setValue({ ...form, email, name })
+      setControls(false)
+    },
+    [form, email, name]
+  )
 
   const logoutUser = useCallback(
-    async (event: any) => {
+    async (event: SyntheticEvent<HTMLAnchorElement>) => {
       event.preventDefault()
       await logOut()
       history.replace({ pathname: '/login', state: { from: '/login' } })

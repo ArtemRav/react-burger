@@ -3,7 +3,7 @@ import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/reset-password'
@@ -16,11 +16,11 @@ export const ResetPassPage = () => {
   const history = useHistory()
   const dispatch = useDispatch<any>()
 
-  const inputPassword = (e: any) => {
+  const inputPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
-  const inputToken = (e: any) => {
+  const inputToken = (e: ChangeEvent<HTMLInputElement>) => {
     setToken(e.target.value)
   }
 
@@ -34,7 +34,7 @@ export const ResetPassPage = () => {
     }
   })
 
-  const dropPassword = () => {
+  const dropPassword = (event: SyntheticEvent<Element, Event>) => {
     dispatch(resetPassword({ password, token }))
   }
 

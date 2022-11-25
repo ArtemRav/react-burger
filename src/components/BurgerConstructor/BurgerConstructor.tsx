@@ -3,7 +3,7 @@ import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useCallback, useMemo } from 'react'
+import { SyntheticEvent, useCallback, useMemo } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
@@ -55,15 +55,18 @@ export const BurgerConstructor = () => {
     dispatch(addIngredient(ingredient))
   }
 
-  const openModal = useCallback(() => {
-    if (isAutorized) {
-      const data = { ingredients: ingredientIds }
-      dispatch(getOrder(data))
-      showModal()
-    } else {
-      history.push({ pathname: '/login', state: { from: location } })
-    }
-  }, [dispatch, showModal, ingredientIds, history, location, isAutorized])
+  const openModal = useCallback(
+    (event: SyntheticEvent<Element, Event>) => {
+      if (isAutorized) {
+        const data = { ingredients: ingredientIds }
+        dispatch(getOrder(data))
+        showModal()
+      } else {
+        history.push({ pathname: '/login', state: { from: location } })
+      }
+    },
+    [dispatch, showModal, ingredientIds, history, location, isAutorized]
+  )
 
   const closeModal = useCallback(() => {
     hideModal()

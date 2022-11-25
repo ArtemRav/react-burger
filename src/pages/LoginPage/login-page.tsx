@@ -4,7 +4,7 @@ import {
   EmailInput,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useCallback, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUser } from '../../services/actions/user'
@@ -14,12 +14,12 @@ export const LoginPage = () => {
   const [form, setValue] = useState({ email: '', password: '' })
   const dispatch = useDispatch<any>()
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
 
   const login = useCallback(
-    async (e: any) => {
+    async (e: SyntheticEvent<Element, Event>) => {
       e.preventDefault()
       await dispatch(getUser(form))
     },

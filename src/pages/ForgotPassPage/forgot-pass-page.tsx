@@ -2,7 +2,7 @@ import {
   Button,
   EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { recoverPassword } from '../../services/actions/recover-password'
@@ -14,7 +14,7 @@ export const ForgotPassPage = () => {
   const history = useHistory()
   const dispatch = useDispatch<any>()
 
-  const inputEmail = (e: any) => {
+  const inputEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
@@ -28,7 +28,7 @@ export const ForgotPassPage = () => {
     }
   }, [isPasswordRecovered, history])
 
-  const updatePassword = async () => {
+  const updatePassword = async (event: SyntheticEvent<Element, Event>) => {
     dispatch(recoverPassword({ email }))
   }
 

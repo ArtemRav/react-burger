@@ -3,7 +3,7 @@ import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/reset-password'
@@ -34,13 +34,13 @@ export const ResetPassPage = () => {
     }
   })
 
-  const dropPassword = (event: SyntheticEvent<Element, Event>) => {
+  const dropPassword = (event: FormEvent<HTMLFormElement>) => {
     dispatch(resetPassword({ password, token }))
   }
 
   return (
     <div className={style.wrapper}>
-      <form className={style['auth-form']}>
+      <form className={style['auth-form']} onSubmit={dropPassword}>
         <h1 className={`text text_type_main-medium ${style.title}`}>
           Восстановление пароля
         </h1>
@@ -64,12 +64,7 @@ export const ResetPassPage = () => {
         </div>
 
         <div className={`mt-6 ${style.submit}`}>
-          <Button
-            onClick={dropPassword}
-            htmlType="button"
-            type="primary"
-            size="medium"
-          >
+          <Button htmlType="button" type="primary" size="medium">
             Сохранить
           </Button>
         </div>

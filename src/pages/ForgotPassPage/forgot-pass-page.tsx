@@ -2,7 +2,7 @@ import {
   Button,
   EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { recoverPassword } from '../../services/actions/recover-password'
@@ -28,13 +28,13 @@ export const ForgotPassPage = () => {
     }
   }, [isPasswordRecovered, history])
 
-  const updatePassword = async (event: SyntheticEvent<Element, Event>) => {
+  const updatePassword = async (event: FormEvent<HTMLFormElement>) => {
     dispatch(recoverPassword({ email }))
   }
 
   return (
     <div className={style.wrapper}>
-      <form className={style['auth-form']}>
+      <form className={style['auth-form']} onSubmit={updatePassword}>
         <h1 className={`text text_type_main-medium ${style.title}`}>
           Восстановление пароля
         </h1>
@@ -44,12 +44,7 @@ export const ForgotPassPage = () => {
         </div>
 
         <div className={`mt-6 ${style.submit}`}>
-          <Button
-            onClick={updatePassword}
-            htmlType="button"
-            type="primary"
-            size="medium"
-          >
+          <Button htmlType="button" type="primary" size="medium">
             Восстановить
           </Button>
         </div>

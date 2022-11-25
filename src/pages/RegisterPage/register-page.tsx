@@ -4,7 +4,7 @@ import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { postData, saveTokens } from '../../utils/burger-api'
 import style from './../LoginPage/login-page.module.css'
@@ -17,7 +17,7 @@ export const RegisterPage = () => {
     setValue({ ...form, [e.target.name]: e.target.value })
   }
 
-  const registerUser = (event: SyntheticEvent<Element, Event>) => {
+  const registerUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const response = postData('auth/register', form)
     if (response.success) {
@@ -31,7 +31,7 @@ export const RegisterPage = () => {
 
   return (
     <div className={style.wrapper}>
-      <form className={style['auth-form']}>
+      <form className={style['auth-form']} onSubmit={registerUser}>
         <h1 className={`text text_type_main-medium ${style.title}`}>
           Регистрация
         </h1>
@@ -60,12 +60,7 @@ export const RegisterPage = () => {
         </div>
 
         <div className={`mt-6 ${style.submit}`}>
-          <Button
-            onClick={registerUser}
-            htmlType="submit"
-            type="primary"
-            size="medium"
-          >
+          <Button htmlType="submit" type="primary" size="medium">
             Зарегистрироваться
           </Button>
         </div>

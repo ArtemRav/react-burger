@@ -4,7 +4,7 @@ import {
   EmailInput,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useCallback, useState } from 'react'
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUser } from '../../services/actions/user'
@@ -19,8 +19,8 @@ export const LoginPage = () => {
   }
 
   const login = useCallback(
-    async (e: SyntheticEvent<Element, Event>) => {
-      e.preventDefault()
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
       await dispatch(getUser(form))
     },
     [dispatch, form]
@@ -28,7 +28,7 @@ export const LoginPage = () => {
 
   return (
     <div className={style.wrapper}>
-      <form className={style['auth-form']}>
+      <form className={style['auth-form']} onSubmit={login}>
         <h1 className={`text text_type_main-medium ${style.title}`}>Вход</h1>
 
         <div className="mt-6">
@@ -44,12 +44,7 @@ export const LoginPage = () => {
         </div>
 
         <div className={`mt-6 ${style.submit}`}>
-          <Button
-            htmlType="submit"
-            type="primary"
-            size="medium"
-            onClick={login}
-          >
+          <Button htmlType="submit" type="primary" size="medium">
             Войти
           </Button>
         </div>

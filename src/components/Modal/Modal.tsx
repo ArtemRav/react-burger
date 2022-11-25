@@ -17,7 +17,7 @@ export const Modal: FC<TModal> = ({ title, children, closeModal }) => {
   const { wrapper, modal, header, body } = modalCss
 
   useEffect(() => {
-    const onTapEsc = (event: any) => {
+    const onTapEsc = (event: KeyboardEvent): void => {
       if (event.keyCode === ESC_KEYCODE) {
         closeModal()
       }

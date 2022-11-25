@@ -20,7 +20,15 @@ import { OrderDetails } from '../OrderDetails/OrderDetails'
 
 function App() {
   const ModalSwitch = () => {
-    const location: { state: { background: any } } = useLocation()
+    interface ILocation {
+      from?: any
+      background?: any
+      pathname?: string
+    }
+
+    const location = useLocation<ILocation>()
+
+    // const location: { state: { background: any } } = useLocation()
     const history = useHistory()
     let background = location.state && location.state.background
 

@@ -1,23 +1,14 @@
 import { deleteCookie, getCookie, setCookie } from './cookie-helper'
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
 
-type TError = {
-  message: string
-}
 type THeader = Record<string, string>
 type TPatchData = (url: string, data: any) => any
 type TSaveTokens = (refreshToken: string, accessToken: string) => void
-type TCheckToken = (err: TError, url: string, options: { headers: THeader })
-
-const getHeaders = () => {
-  const headers: THeader = {
-    'Content-Type': 'application/json;charset=utf-8'
-  }
-  if (getCookie('accessToken')) {
-    headers.Authorization = `Bearer ${getCookie('accessToken')}`
-  }
-  return headers
-}
+type TCheckToken = (
+  err: { message: string },
+  url: string,
+  options: any
+) => Promise<any>
 
 export const saveTokens: TSaveTokens = (refreshToken, accessToken) => {
   setCookie('accessToken', accessToken.split('Bearer ')[1])
@@ -31,7 +22,9 @@ export const refreshTokenRequest = () => {
 }
 
 const checkAnswer = (res: any) => {
-  return res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err))
+  return res.ok
+    ? res.json()
+    : res.json().then((err: any) => Promise.reject(err))
 }
 
 function sendRequest(url: string, options = {}) {
@@ -55,6 +48,16 @@ const checkToken: TCheckToken = async (err, url, options) => {
   }
 }
 
+const getHeaders = () => {
+  const headers: THeader = {
+    'Content-Type': 'application/json;charset=utf-8'
+  }
+  if (getCookie('accessToken')) {
+    headers.Authorization = `Bearer ${getCookie('accessToken')}`
+  }
+  return headers
+}
+
 export const postData: TPatchData = async (url, data) => {
   const options = {
     method: 'POST',
@@ -64,7 +67,7 @@ export const postData: TPatchData = async (url, data) => {
 
   try {
     return sendRequest(`${BURGER_API_URL}/${url}`, options)
-  } catch (err) {
+  } catch (err: any) {
     return checkToken(err, url, options)
   }
 }
@@ -78,7 +81,7 @@ export const patchData: TPatchData = async (url, data) => {
 
   try {
     return sendRequest(`${BURGER_API_URL}/${url}`, options)
-  } catch (err) {
+  } catch (err: any) {
     return checkToken(err, url, options)
   }
 }
@@ -93,7 +96,7 @@ export const getDataWithToken = async (url: string) => {
     const res = await fetch(`${BURGER_API_URL}/${url}`, options)
 
     return await checkAnswer(res)
-  } catch (err) {
+  } catch (err: any) {
     return checkToken(err, url, options)
   }
 }

@@ -12,7 +12,7 @@ import style from './../LoginPage/login-page.module.css'
 export const ForgotPassPage = () => {
   const [email, setEmail] = useState('')
   const history = useHistory()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
 
   const inputEmail = (e: any) => {
     setEmail(e.target.value)

@@ -20,18 +20,16 @@ export const OrderIngredient: FC<TOrderIngredient> = ({
 }) => {
   const { name, price, image } = item
 
-  type TDelIngredient = (item: TOrderIngredient) => void
+  const dispatch = useDispatch<any>()
 
-  const dispatch = useDispatch()
-
-  const deleteIngredient = useCallback<TDelIngredient>(
-    item => {
+  const deleteIngredient = useCallback(
+    (item: any) => {
       dispatch(delIngredient(item))
     },
     [dispatch]
   )
 
-  const ref = useRef(null)
+  const ref = useRef<HTMLLIElement>(null)
 
   const [{ handlerId }, drop] = useDrop({
     accept: 'component',
@@ -42,7 +40,7 @@ export const OrderIngredient: FC<TOrderIngredient> = ({
       }
     },
 
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return
       }
@@ -93,8 +91,8 @@ export const OrderIngredient: FC<TOrderIngredient> = ({
       <ConstructorElement
         isLocked={false}
         text={name}
-        price:number={price}
-        thumbnail:string={image}
+        price={price}
+        thumbnail={image}
         handleClose={() => deleteIngredient(item)}
       />
     </li>

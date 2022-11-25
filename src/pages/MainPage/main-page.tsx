@@ -10,7 +10,7 @@ import style from './main-page.module.css'
 import { TState } from '../../services/reducers'
 
 export const MainPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
   const ingredientsList = useSelector(
     (state: TState) => state.allIngredients.ingredientsList
   )

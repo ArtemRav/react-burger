@@ -66,7 +66,8 @@ export const BurgerIngredients = () => {
 
   const toggleTab = useCallback<TToggleTab>(tab => {
     setActiveTab(tab)
-    document.querySelector(`#${tab.id}`).scrollIntoView({
+    const modalRoot = document.querySelector(`#${tab.id}`) as HTMLDivElement
+    modalRoot.scrollIntoView({
       behavior: 'smooth'
     })
   }, [])

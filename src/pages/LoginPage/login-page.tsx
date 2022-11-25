@@ -12,7 +12,7 @@ import style from './login-page.module.css'
 
 export const LoginPage = () => {
   const [form, setValue] = useState({ email: '', password: '' })
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
 
   const onChange = (e: any) => {
     setValue({ ...form, [e.target.name]: e.target.value })

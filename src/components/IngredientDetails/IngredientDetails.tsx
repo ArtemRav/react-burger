@@ -7,7 +7,7 @@ import { TState } from '../../services/reducers'
 import { TIngredientItem } from '../../utils/ingredient-types'
 
 export const IngredientDetails = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
   const params = useParams<{ ingredientId: string }>()
 
   const ingredientsList = useSelector(

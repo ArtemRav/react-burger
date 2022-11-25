@@ -2,7 +2,6 @@ import style from './profile-page.module.css'
 import { NavLink, Route, Switch } from 'react-router-dom'
 import {
   Button,
-  EmailInput,
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useCallback, useEffect, useState } from 'react'
@@ -105,7 +104,7 @@ export const ProfilePage = () => {
             </div>
 
             <div className="mt-6">
-              <EmailInput
+              <Input
                 type={'email'}
                 placeholder={'Логин'}
                 size={'default'}

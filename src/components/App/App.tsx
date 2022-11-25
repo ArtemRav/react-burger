@@ -2,7 +2,7 @@ import './general.css'
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import { AppHeader } from '../AppHeader/AppHeader.js'
+import { AppHeader } from '../AppHeader/AppHeader'
 import { LoginPage } from '../../pages/LoginPage/login-page'
 import { RegisterPage } from '../../pages/RegisterPage/register-page'
 import { ForgotPassPage } from '../../pages/ForgotPassPage/forgot-pass-page'
@@ -20,7 +20,7 @@ import { OrderDetails } from '../OrderDetails/OrderDetails'
 
 function App() {
   const ModalSwitch = () => {
-    const location = useLocation()
+    const location: { state: { background: any } } = useLocation()
     const history = useHistory()
     let background = location.state && location.state.background
 

@@ -14,7 +14,7 @@ export const ResetPassPage = () => {
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
   const history = useHistory()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
 
   const inputPassword = (e: any) => {
     setPassword(e.target.value)

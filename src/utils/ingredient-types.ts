@@ -3,9 +3,10 @@ export const SAUCE: string = 'sauce'
 export const MAIN: string = 'main'
 
 export type TIngredientItem = {
+  id?: string
   _id?: string
-  name?: string
-  image?: string
+  name: string
+  image: string
   price: number
   qnt: number
   type?: string

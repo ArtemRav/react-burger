@@ -20,7 +20,7 @@ import useModal from '../../hooks/useModal'
 import { TState } from '../../services/reducers'
 
 export const BurgerConstructor = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
   const history = useHistory()
   const location = useLocation()
   const orderIngredients = useSelector(
@@ -46,7 +46,7 @@ export const BurgerConstructor = () => {
     collect: monitor => ({
       isHover: monitor.isOver()
     }),
-    drop(item) {
+    drop(item: any) {
       handleDrop(item)
     }
   })

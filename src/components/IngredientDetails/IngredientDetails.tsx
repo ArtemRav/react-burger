@@ -1,24 +1,16 @@
 import detailsCss from './Ingredient-details.module.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchIngredients } from '../../services/actions/ingredients'
-import { useEffect, useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { TState } from '../../services/reducers'
 import { TIngredientItem } from '../../utils/ingredient-types'
 
 export const IngredientDetails = () => {
-  const dispatch = useDispatch<any>()
   const params = useParams<{ ingredientId: string }>()
 
   const ingredientsList = useSelector(
     (state: TState) => state.allIngredients.ingredientsList
   )
-
-  useEffect(() => {
-    if (!ingredientsList.length) {
-      dispatch(fetchIngredients())
-    }
-  }, [])
 
   const ingredient = useMemo<TIngredientItem>(
     () =>

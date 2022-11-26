@@ -21,7 +21,7 @@ export const refreshTokenRequest = () => {
   })
 }
 
-const checkAnswer = (res: any) => {
+const checkAnswer = (res: Response) => {
   return res.ok
     ? res.json()
     : res.json().then((err: any) => Promise.reject(err))

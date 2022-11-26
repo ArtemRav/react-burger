@@ -10,15 +10,31 @@ import { ResetPassPage } from '../../pages/ResetPassPage/reset-pass-page'
 import { ProfilePage } from '../../pages/ProfilePage/propfile-page'
 import { MainPage } from '../../pages/MainPage/main-page'
 import { NotFound404 } from '../../pages/NotFound404/NotFound404'
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { ProtectedRoute } from '../protected-route'
 
 import { useLocation, useHistory } from 'react-router-dom'
 import { Modal } from '../Modal/Modal'
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
+import { useDispatch, useSelector } from 'react-redux'
+import { TState } from '../../services/reducers'
+import { fetchIngredients } from '../../services/actions/ingredients'
 
 function App() {
+  const dispatch = useDispatch<any>()
+
+  const ingredientsList = useSelector(
+    (state: TState) => state.allIngredients.ingredientsList
+  )
+
+  useEffect(() => {
+    // Избегаем лишних запросов при переходах между страницами
+    if (!ingredientsList?.length) {
+      dispatch(fetchIngredients())
+    }
+  }, [dispatch, ingredientsList])
+
   const ModalSwitch = () => {
     interface ILocation {
       from?: any
@@ -27,8 +43,6 @@ function App() {
     }
 
     const location = useLocation<ILocation>()
-
-    // const location: { state: { background: any } } = useLocation()
     const history = useHistory()
     const background = location.state && location.state.background
 

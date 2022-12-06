@@ -1,8 +1,8 @@
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC } from 'react'
 import { TOrderItem } from '../../pages/FeedPage/feed-page'
 import { TIngredientItem } from '../../utils/ingredient-types'
 import { BaseIcon } from '../BaseIcon/BaseIcon'
+import { BaseSum } from '../BaseSum/BaseSum'
 import style from './feed-order-item.module.css'
 
 export const FeedOrderItem: FC<TOrderItem> = ({
@@ -26,14 +26,11 @@ export const FeedOrderItem: FC<TOrderItem> = ({
       <div className={style['row-details']}>
         <div className={`${style['ingredients-icon-list']} ml-4`}>
           {ingredients.map((item: TIngredientItem) => (
-            <BaseIcon key={item.name} {...item} />
+            <BaseIcon key={item._id} {...item} />
           ))}
         </div>
 
-        <div className={style['ingredient-price']}>
-          <span className="mr-2">{price}</span>
-          <CurrencyIcon type="primary" />
-        </div>
+        <BaseSum sum={price} />
       </div>
     </div>
   )

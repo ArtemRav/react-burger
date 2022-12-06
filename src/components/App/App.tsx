@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TState } from '../../services/reducers'
 import { fetchIngredients } from '../../services/actions/ingredients'
 import { FeedPage } from '../../pages/FeedPage/feed-page'
+import { OrderPage } from '../../pages/OrderPage/order-page'
 
 function App() {
   const dispatch = useDispatch<any>()
@@ -56,27 +57,23 @@ function App() {
         <AppHeader />
 
         <Switch location={background || location}>
-          <ProtectedRoute onlyUnAuth={true} path="/login" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/login" exact>
             <LoginPage />
           </ProtectedRoute>
 
-          <ProtectedRoute onlyUnAuth={true} path="/register" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/register" exact>
             <RegisterPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            onlyUnAuth={true}
-            path="/forgot-password"
-            exact={true}
-          >
+          <ProtectedRoute onlyUnAuth={true} path="/forgot-password" exact>
             <ForgotPassPage />
           </ProtectedRoute>
 
-          <ProtectedRoute onlyUnAuth={true} path="/reset-password" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/reset-password" exact>
             <ResetPassPage />
           </ProtectedRoute>
 
-          <Route path="/" exact={true}>
+          <Route path="/" exact>
             <MainPage />
           </Route>
 
@@ -84,17 +81,21 @@ function App() {
             <ProfilePage />
           </ProtectedRoute>
 
-          <Route path="/feed">
+          <Route path="/feed" exact>
             <FeedPage />
+          </Route>
+
+          <Route path="/feed/:id" exact>
+            <OrderPage />
           </Route>
 
           <Route
             path="/profile/orders/:orderNumber"
             children={<OrderDetails />}
-            exact={true}
+            exact
           />
 
-          <Route path="/ingredients/:ingredientId" exact={true}>
+          <Route path="/ingredients/:ingredientId" exact>
             <IngredientDetails />
           </Route>
 

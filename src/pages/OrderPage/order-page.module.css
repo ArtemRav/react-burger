@@ -1,0 +1,26 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 640px;
+  height: 620px;
+  margin: 122px auto 0;
+}
+
+.number {
+  text-align: center;
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  max-height: 336px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -18,7 +18,7 @@ export const AppHeader = () => {
             </NavItem>
           </li>
           <li className="pt-4 pb-4 pr-5 pl-5">
-            <NavItem name="Лента заказов" link="/feed-orders">
+            <NavItem name="Лента заказов" link="/feed">
               <ListIcon type="secondary" />
             </NavItem>
           </li>

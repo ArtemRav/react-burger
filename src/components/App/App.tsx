@@ -20,6 +20,7 @@ import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { useDispatch, useSelector } from 'react-redux'
 import { TState } from '../../services/reducers'
 import { fetchIngredients } from '../../services/actions/ingredients'
+import { FeedPage } from '../../pages/FeedPage/feed-page'
 
 function App() {
   const dispatch = useDispatch<any>()
@@ -83,7 +84,11 @@ function App() {
             <ProfilePage />
           </ProtectedRoute>
 
-          <ProtectedRoute
+          <Route path="/feed">
+            <FeedPage />
+          </Route>
+
+          <Route
             path="/profile/orders/:orderNumber"
             children={<OrderDetails />}
             exact={true}

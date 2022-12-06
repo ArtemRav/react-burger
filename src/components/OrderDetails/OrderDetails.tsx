@@ -11,7 +11,7 @@ export const OrderDetails = () => {
 
   const getIsLoading = () => {
     return (
-      <p className={`${orderDetailsCss.number} text text_type_main-large mb-8`}>
+      <p className={`text-highlight text text_type_main-large mb-8`}>
         Идет загрузка ...
       </p>
     )
@@ -19,9 +19,7 @@ export const OrderDetails = () => {
 
   const getTitleNumber = () => {
     return (
-      <p
-        className={`${orderDetailsCss.number} text text_type_digits-large mb-8`}
-      >
+      <p className={`text-highlight text text_type_digits-large mb-8`}>
         {number}
       </p>
     )
@@ -29,7 +27,7 @@ export const OrderDetails = () => {
 
   const getTitleFailed = () => {
     return (
-      <p className={`${orderDetailsCss.number} text text_type_main-large mb-8`}>
+      <p className={`text-highlight text text_type_main-large mb-8`}>
         {titleOrderFailed}
       </p>
     )

@@ -1,4 +1,6 @@
-export const data = [
+import { TIngredientItem } from './ingredient-types'
+
+export const data: Array<TIngredientItem> = [
   {
     _id: '60666c42cc7b410027a1a9b1',
     name: 'Краторная булка N-200i',
@@ -9,9 +11,7 @@ export const data = [
     calories: 420,
     price: 1255,
     image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b5',
@@ -23,9 +23,7 @@ export const data = [
     calories: 2674,
     price: 3000,
     image: 'https://code.s3.yandex.net/react/code/meat-04.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-04-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-04-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b6',
@@ -37,9 +35,7 @@ export const data = [
     calories: 4242,
     price: 424,
     image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b7',
@@ -51,9 +47,7 @@ export const data = [
     calories: 30,
     price: 90,
     image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b4',
@@ -65,9 +59,7 @@ export const data = [
     calories: 420,
     price: 1337,
     image: 'https://code.s3.yandex.net/react/code/meat-02.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-02-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-02-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b9',
@@ -79,9 +71,7 @@ export const data = [
     calories: 99,
     price: 15,
     image: 'https://code.s3.yandex.net/react/code/sauce-03.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-03-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-03-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b8',
@@ -93,9 +83,7 @@ export const data = [
     calories: 14,
     price: 80,
     image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9bc',
@@ -107,9 +95,7 @@ export const data = [
     calories: 77,
     price: 874,
     image: 'https://code.s3.yandex.net/react/code/sp_1.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sp_1-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sp_1-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9bb',
@@ -121,11 +107,7 @@ export const data = [
     calories: 986,
     price: 300,
     image: 'https://code.s3.yandex.net/react/code/mineral_rings.png',
-    image_mobile:
-      'https://code.s3.yandex.net/react/code/mineral_rings-mobile.png',
-    image_large:
-      'https://code.s3.yandex.net/react/code/mineral_rings-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9ba',
@@ -137,9 +119,7 @@ export const data = [
     calories: 100,
     price: 88,
     image: 'https://code.s3.yandex.net/react/code/sauce-01.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-01-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-01-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9bd',
@@ -151,9 +131,7 @@ export const data = [
     calories: 189,
     price: 762,
     image: 'https://code.s3.yandex.net/react/code/core.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/core-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/core-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9be',
@@ -165,9 +143,7 @@ export const data = [
     calories: 6,
     price: 4400,
     image: 'https://code.s3.yandex.net/react/code/salad.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/salad-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/salad-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b3',
@@ -179,9 +155,7 @@ export const data = [
     calories: 643,
     price: 988,
     image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9bf',
@@ -193,9 +167,7 @@ export const data = [
     calories: 3377,
     price: 4142,
     image: 'https://code.s3.yandex.net/react/code/cheese.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/cheese-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/cheese-large.png',
-    __v: 0
+    qnt: 1
   },
   {
     _id: '60666c42cc7b410027a1a9b2',
@@ -207,8 +179,6 @@ export const data = [
     calories: 643,
     price: 988,
     image: 'https://code.s3.yandex.net/react/code/bun-01.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-01-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-01-large.png',
-    __v: 0
+    qnt: 1
   }
 ]

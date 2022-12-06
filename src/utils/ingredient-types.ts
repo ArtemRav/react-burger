@@ -10,10 +10,10 @@ export type TIngredientItem = {
   price: number
   qnt: number
   type?: string
-  calories?: Array<number>
-  proteins?: Array<number>
-  fat?: Array<number>
-  carbohydrates?: Array<number>
+  calories?: number
+  proteins?: number
+  fat?: number
+  carbohydrates?: number
   dragId?: string
 }
 

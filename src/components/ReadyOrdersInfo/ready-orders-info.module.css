@@ -1,0 +1,18 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 580px;
+}
+
+.table {
+  display: flex;
+  width: 100%;
+}
+
+.ready,
+.process {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}

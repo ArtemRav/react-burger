@@ -1,0 +1,28 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.header,
+.body {
+  display: flex;
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+}
+
+.left-section,
+.right-section {
+  display: flex;
+  flex-grow: 1;
+}
+
+.left-section {
+  flex-direction: column;
+  max-width: 600px;
+  max-height: calc(100vh - 172px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

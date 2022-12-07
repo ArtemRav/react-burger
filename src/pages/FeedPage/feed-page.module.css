@@ -13,16 +13,8 @@
   height: 100%;
 }
 
-.left-section,
+.list-orders,
 .right-section {
   display: flex;
   flex-grow: 1;
-}
-
-.left-section {
-  flex-direction: column;
-  max-width: 600px;
-  max-height: calc(100vh - 172px);
-  overflow-y: scroll;
-  overflow-x: hidden;
 }

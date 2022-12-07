@@ -13,9 +13,9 @@ import {
 } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { ProfileOrders } from '../ProfileOrders/profile-orders'
 import { logOut, patchData } from '../../utils/burger-api'
 import { TState } from '../../services/reducers'
+import { OrdersHistory } from '../../components/OrdersHistory/OrdersHistory'
 
 export const ProfilePage = () => {
   const history = useHistory()
@@ -166,7 +166,7 @@ export const ProfilePage = () => {
 
         <Switch>
           <Route path="/profile/orders">
-            <ProfileOrders />
+            <OrdersHistory />
           </Route>
         </Switch>
       </div>

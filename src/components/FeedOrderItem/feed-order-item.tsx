@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import { TOrderItem } from '../../pages/FeedPage/feed-page'
 import { TIngredientItem } from '../../utils/ingredient-types'
 import { BaseIcon } from '../BaseIcon/BaseIcon'
 import { BaseSum } from '../BaseSum/BaseSum'
+import { TOrderItem } from '../OrdersHistory/OrdersHistory'
 import style from './feed-order-item.module.css'
 
 export const FeedOrderItem: FC<TOrderItem> = ({

@@ -10,8 +10,3 @@
 .item.white svg {
   fill: #fff;
 }
-
-.link,
-.link:hover {
-  text-decoration: none;
-}

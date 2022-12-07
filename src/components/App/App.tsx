@@ -22,6 +22,7 @@ import { TState } from '../../services/reducers'
 import { fetchIngredients } from '../../services/actions/ingredients'
 import { FeedPage } from '../../pages/FeedPage/feed-page'
 import { OrderPage } from '../../pages/OrderPage/order-page'
+import { OrdersHistory } from '../OrdersHistory/OrdersHistory'
 
 function App() {
   const dispatch = useDispatch<any>()

@@ -17,7 +17,7 @@ export const NavItem: FC<TNavItem> = props => {
       <NavLink
         to={link}
         exact
-        className={`${styles.link} flex-wrap text_color_inactive`}
+        className={`link flex-wrap text_color_inactive`}
         activeClassName={'font-white'}
       >
         {name}

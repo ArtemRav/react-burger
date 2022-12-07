@@ -33,6 +33,12 @@ ul {
   cursor: pointer;
 }
 
+.link,
+.link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Cusrom scrollbar */
 .app-scroll::-webkit-scrollbar {
   width: 8px;

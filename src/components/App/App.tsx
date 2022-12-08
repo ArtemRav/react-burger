@@ -16,13 +16,11 @@ import { ProtectedRoute } from '../protected-route'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Modal } from '../Modal/Modal'
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
-import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { useDispatch, useSelector } from 'react-redux'
 import { TState } from '../../services/reducers'
 import { fetchIngredients } from '../../services/actions/ingredients'
 import { FeedPage } from '../../pages/FeedPage/feed-page'
 import { OrderPage } from '../../pages/OrderPage/order-page'
-import { OrdersHistory } from '../OrdersHistory/OrdersHistory'
 
 function App() {
   const dispatch = useDispatch<any>()
@@ -82,6 +80,10 @@ function App() {
             <ProfilePage />
           </ProtectedRoute>
 
+          <Route path="/profile/orders/:id" exact>
+            <OrderPage />
+          </Route>
+
           <Route path="/feed" exact>
             <FeedPage />
           </Route>
@@ -89,12 +91,6 @@ function App() {
           <Route path="/feed/:id" exact>
             <OrderPage />
           </Route>
-
-          <Route
-            path="/profile/orders/:orderNumber"
-            children={<OrderDetails />}
-            exact
-          />
 
           <Route path="/ingredients/:ingredientId" exact>
             <IngredientDetails />

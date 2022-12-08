@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { data } from '../../utils/data'
 import { TIngredientItem } from '../../utils/ingredient-types'
@@ -11,7 +12,11 @@ export type TOrderItem = {
   ingredients: Array<TIngredientItem>
 }
 
-export const OrdersHistory = () => {
+type TOrdersHistory = {
+  route: string
+}
+
+export const OrdersHistory: FC<TOrdersHistory> = ({ route }) => {
   const orderItems: ReadonlyArray<TOrderItem> = [
     {
       number: '#034535',
@@ -53,15 +58,14 @@ export const OrdersHistory = () => {
 
   return (
     <section className={`${style['list-orders']} app-scroll pr-2`}>
-      {orderItems.map(item => (
-        <Link
-          className="link"
-          key={item.number}
-          to={`/feed/orders/${item.number}`}
-        >
-          <FeedOrderItem {...item} />
-        </Link>
-      ))}
+      {orderItems.map(item => {
+        const orderId = item.number.slice(1)
+        return (
+          <Link className="link" key={item.number} to={`${route}/${orderId}`}>
+            <FeedOrderItem {...item} />
+          </Link>
+        )
+      })}
     </section>
   )
 }

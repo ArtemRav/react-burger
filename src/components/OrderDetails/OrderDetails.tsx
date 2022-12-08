@@ -11,7 +11,9 @@ export const OrderDetails = () => {
 
   const getIsLoading = () => {
     return (
-      <p className={`text-highlight text text_type_main-large mb-8`}>
+      <p
+        className={`text-center text-highlight text text_type_main-large mb-8`}
+      >
         Идет загрузка ...
       </p>
     )
@@ -19,7 +21,9 @@ export const OrderDetails = () => {
 
   const getTitleNumber = () => {
     return (
-      <p className={`text-highlight text text_type_digits-large mb-8`}>
+      <p
+        className={`text-center text-highlight text text_type_digits-large mb-8`}
+      >
         {number}
       </p>
     )

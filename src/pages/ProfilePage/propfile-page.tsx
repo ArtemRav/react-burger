@@ -165,8 +165,8 @@ export const ProfilePage = () => {
         </Switch>
 
         <Switch>
-          <Route path="/profile/orders">
-            <OrdersHistory />
+          <Route path="/profile/orders" exact>
+            <OrdersHistory route="/profile/orders" />
           </Route>
         </Switch>
       </div>

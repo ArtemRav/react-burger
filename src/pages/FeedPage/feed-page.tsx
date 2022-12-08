@@ -9,7 +9,7 @@ export const FeedPage = () => {
         Лента заказов
       </div>
       <div className={style.body}>
-        <OrdersHistory />
+        <OrdersHistory route="/feed" />
 
         <section className={style['right-section']}>
           <ReadyOrdersInfo />

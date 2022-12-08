@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { data } from '../../utils/data'
 import { TIngredientItem } from '../../utils/ingredient-types'
 import { FeedOrderItem } from '../FeedOrderItem/feed-order-item'
@@ -56,12 +56,21 @@ export const OrdersHistory: FC<TOrdersHistory> = ({ route }) => {
     }
   ]
 
+  const location = useLocation()
+
   return (
     <section className={`${style['list-orders']} app-scroll pr-2`}>
       {orderItems.map(item => {
         const orderId = item.number.slice(1)
         return (
-          <Link className="link" key={item.number} to={`${route}/${orderId}`}>
+          <Link
+            className="link"
+            key={item.number}
+            to={{
+              pathname: `${route}/${orderId}`,
+              state: { background: location }
+            }}
+          >
             <FeedOrderItem {...item} />
           </Link>
         )

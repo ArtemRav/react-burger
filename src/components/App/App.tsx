@@ -76,13 +76,13 @@ function App() {
             <MainPage />
           </Route>
 
+          <ProtectedRoute path="/profile/orders/:id" exact>
+            <OrderPage />
+          </ProtectedRoute>
+
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
-
-          <Route path="/profile/orders/:id" exact>
-            <OrderPage />
-          </Route>
 
           <Route path="/feed" exact>
             <FeedPage />
@@ -107,6 +107,28 @@ function App() {
             children={
               <Modal title="Детали ингридиента" closeModal={handleModalClose}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+        )}
+
+        {background && (
+          <Route
+            path="/feed/:id"
+            children={
+              <Modal title="" closeModal={handleModalClose}>
+                <OrderPage />
+              </Modal>
+            }
+          />
+        )}
+
+        {background && (
+          <Route
+            path="/profile/orders/:id"
+            children={
+              <Modal title="" closeModal={handleModalClose}>
+                <OrderPage />
               </Modal>
             }
           />

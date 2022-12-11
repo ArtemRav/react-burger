@@ -4,10 +4,14 @@ import { useSelector } from 'react-redux'
 import { TState } from '../../services/reducers'
 
 export const OrderDetails = () => {
-  const { number, titleId, titleState, titleInfo, titleOrderFailed } =
-    useSelector((state: TState) => state.curOrder)
-
-  const isLoading = useSelector((state: TState) => state.curOrder.orderRequest)
+  const {
+    number,
+    titleId,
+    titleState,
+    titleInfo,
+    titleOrderFailed,
+    isLoading
+  } = useSelector((state: TState) => state.curOrder)
 
   const getIsLoading = () => {
     return (
@@ -31,7 +35,9 @@ export const OrderDetails = () => {
 
   const getTitleFailed = () => {
     return (
-      <p className={`text-highlight text text_type_main-large mb-8`}>
+      <p
+        className={`text-center text-highlight text text_type_main-large mb-8`}
+      >
         {titleOrderFailed}
       </p>
     )

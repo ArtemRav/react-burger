@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { TIngredientItem } from '../../services/types/data'
 import { data } from '../../utils/data'
-import { TIngredientItem } from '../../utils/ingredient-types'
 import { FeedOrderItem } from '../FeedOrderItem/feed-order-item'
 import style from './orders-history.module.css'
 

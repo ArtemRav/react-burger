@@ -2,25 +2,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './components/App/App'
 import reportWebVitals from './reportWebVitals'
-import { applyMiddleware, compose, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import { rootReducer } from './services/reducers'
 import { Provider } from 'react-redux'
-
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
-  }
-}
-
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose
-
-const enhancer = composeEnhancers(applyMiddleware(thunk))
-
-const store = createStore(rootReducer, enhancer)
+import { store } from './services/store'
 
 const rootElement = document.getElementById('root')
 const root = createRoot(rootElement as HTMLDivElement)

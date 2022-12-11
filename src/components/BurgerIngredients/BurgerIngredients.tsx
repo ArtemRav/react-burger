@@ -4,8 +4,8 @@ import { BurgerType } from './BurgerType/BurgerType'
 import burgerIngredientsCss from './burger-ingredients.module.css'
 import { useSelector } from 'react-redux'
 
-import { BUN, SAUCE, MAIN, TIngredientItem } from '../../utils/ingredient-types'
 import { TState } from '../../services/reducers'
+import { BUN, MAIN, SAUCE, TIngredientItem } from '../../services/types/data'
 
 export const BurgerIngredients = () => {
   type TTab = {

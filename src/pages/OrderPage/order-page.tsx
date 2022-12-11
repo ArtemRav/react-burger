@@ -1,7 +1,7 @@
 import { BaseSum } from '../../components/BaseSum/BaseSum'
 import { OrderItem } from '../../components/OrderItem/OrderItem'
+import { TIngredientItem } from '../../services/types/data'
 import { data } from '../../utils/data'
-import { TIngredientItem } from '../../utils/ingredient-types'
 import style from './order-page.module.css'
 
 export type TOrderPage = {

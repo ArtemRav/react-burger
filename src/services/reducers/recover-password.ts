@@ -1,7 +1,8 @@
 import {
   RECOVER_PASSWORD_FAILED,
   RECOVER_PASSWORD_REQUEST,
-  RECOVER_PASSWORD_SUCCESS
+  RECOVER_PASSWORD_SUCCESS,
+  TRecoverPasswordActions
 } from '../actions/recover-password'
 
 const initialState = {
@@ -10,16 +11,9 @@ const initialState = {
   recoverPasswordFailed: false
 }
 
-type TAction = {
-  type:
-    | typeof RECOVER_PASSWORD_FAILED
-    | typeof RECOVER_PASSWORD_REQUEST
-    | typeof RECOVER_PASSWORD_SUCCESS
-}
-
 export const recoverPasswordReducer = (
   state = initialState,
-  action: TAction
+  action: TRecoverPasswordActions
 ) => {
   switch (action.type) {
     case RECOVER_PASSWORD_REQUEST:

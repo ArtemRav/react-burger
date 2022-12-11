@@ -1,19 +1,10 @@
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
 import {
   ADD_INGREDIENT_TO_ORDER,
   DEL_INGREDIENT_FROM_ORDER,
-  UPDATE_INGREDIENTS_ORDER
+  UPDATE_INGREDIENTS_ORDER,
+  TIngredientDetailsActions
 } from '../actions/index'
-
-type TOrderIngredient = {
-  items: Array<TIngredientItem>
-}
-
-type TAction = {
-  type: string
-  item: TIngredientItem
-  listItems: Array<TIngredientItem>
-}
+import { BUN, TOrderIngredient } from '../types/data'
 
 const initialState = {
   items: []
@@ -21,7 +12,7 @@ const initialState = {
 
 export const orderIngredientsReducer = (
   state: TOrderIngredient = initialState,
-  action: TAction
+  action: TIngredientDetailsActions
 ) => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_ORDER:

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { delIngredient } from '../../services/actions'
 import dragIcon from './../../images/constructor/Vector.png'
 import { useDrag, useDrop } from 'react-dnd'
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
+import { BUN, TIngredientItem } from '../../services/types/data'
 
 type TOrderIngredient = {
   item: TIngredientItem

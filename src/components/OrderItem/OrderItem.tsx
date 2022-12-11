@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { TIngredientItem } from '../../utils/ingredient-types'
+import { TIngredientItem } from '../../services/types/data'
 import { BaseIcon } from '../BaseIcon/BaseIcon'
 import { BaseSum } from '../BaseSum/BaseSum'
 import style from './order-item.module.css'

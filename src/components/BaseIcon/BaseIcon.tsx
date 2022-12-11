@@ -1,10 +1,6 @@
 import { FC } from 'react'
+import { TBaseIcon } from '../../services/types/data'
 import style from './base-icon.module.css'
-
-type TBaseIcon = {
-  image: string
-  name: string
-}
 
 export const BaseIcon: FC<TBaseIcon> = ({ image }) => {
   return (

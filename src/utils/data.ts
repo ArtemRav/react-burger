@@ -1,4 +1,4 @@
-import { TIngredientItem } from './ingredient-types'
+import { TIngredientItem } from '../services/types/data'
 
 export const data: Array<TIngredientItem> = [
   {

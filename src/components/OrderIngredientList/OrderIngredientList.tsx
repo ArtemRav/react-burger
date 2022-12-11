@@ -5,7 +5,7 @@ import { OrderIngredient } from '../OrderIngredient/OrderIngredient'
 import { useDispatch } from 'react-redux'
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
+import { BUN, TIngredientItem } from '../../services/types/data'
 
 type TOrderIngredients = {
   orderIngredients: Array<TIngredientItem>

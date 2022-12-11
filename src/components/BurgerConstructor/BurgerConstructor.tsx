@@ -15,9 +15,9 @@ import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
 
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
 import useModal from '../../hooks/useModal'
 import { TState } from '../../services/reducers'
+import { BUN, TIngredientItem } from '../../services/types/data'
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch<any>()

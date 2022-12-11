@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { TState } from '../../services/reducers'
-import { TIngredientItem } from '../../utils/ingredient-types'
+import { TIngredientItem } from '../../services/types/data'
 
 export const IngredientDetails = () => {
   const params = useParams<{ ingredientId: string }>()
@@ -12,7 +12,7 @@ export const IngredientDetails = () => {
     (state: TState) => state.allIngredients.ingredientsList
   )
 
-  const ingredient = useMemo<TIngredientItem>(
+  const ingredient = useMemo<TIngredientItem | any>(
     () =>
       ingredientsList.find(
         (item: TIngredientItem) => item._id === params.ingredientId

@@ -7,9 +7,11 @@ import { TIngredientDetailsActions } from '../actions'
 import { TRecoverPasswordActions } from '../actions/recover-password'
 import { TResetPasswordActions } from '../actions/reset-password'
 import { TUserActions } from '../actions/user'
+import { TOrderMakedActions } from '../actions/order-maked'
 
 type TApplicationActions = TIngredientsActions &
   TOrderActions &
+  TOrderMakedActions &
   TIngredientDetailsActions &
   TRecoverPasswordActions &
   TResetPasswordActions &

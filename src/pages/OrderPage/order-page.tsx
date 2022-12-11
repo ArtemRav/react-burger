@@ -1,7 +1,12 @@
+import { useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { BaseSum } from '../../components/BaseSum/BaseSum'
 import { OrderItem } from '../../components/OrderItem/OrderItem'
-import { TIngredientItem } from '../../services/types/data'
-import { data } from '../../utils/data'
+import { Preloader } from '../../components/Preloader/Preloader'
+import { getOrderMaked } from '../../services/actions/order-maked'
+import { TState } from '../../services/reducers'
+import { BUN, TIngredientItem } from '../../services/types/data'
 import style from './order-page.module.css'
 
 export type TOrderPage = {
@@ -14,40 +19,78 @@ export type TOrderPage = {
 }
 
 export const OrderPage = () => {
-  const orderData: TOrderPage = {
-    number: '#034533',
-    name: 'Black Hole Singularity острый бургер',
-    state: 'Выполнен',
-    orderItems: data.slice(0, 5),
-    date: 'Вчера, 13:50',
-    sum: 510
-  }
+  const dispatch = useDispatch<any>()
+  const { id } = useParams<{ id: string }>()
+  const orderMakedRequest = useSelector(
+    (state: TState) => state.orderMaked.orderMakedRequest
+  )
+  const orderData = useSelector(
+    (state: TState) => state.orderMaked.orderContent
+  )
+
+  useEffect(() => {
+    dispatch(getOrderMaked(id))
+  }, [dispatch, id])
+
+  const storeIngredients = useSelector(
+    (state: TState) => state.allIngredients.ingredientsList
+  )
+
+  const orderIngredients = useMemo(() => {
+    if (storeIngredients.length && orderData?.ingredients?.length) {
+      return storeIngredients.filter((item: any) =>
+        orderData.ingredients.includes(item._id)
+      )
+    }
+    return []
+  }, [storeIngredients, orderData])
+
+  const orderPrice = useMemo(() => {
+    if (orderIngredients.length) {
+      return orderIngredients.reduce(
+        (acc, el: TIngredientItem) =>
+          el.type === BUN ? acc + el.price * 2 : acc + el.price,
+        0
+      )
+    }
+    return 0
+  }, [orderIngredients])
 
   return (
     <div className={`${style.main} `}>
-      <div className={`${style.number} text text_type_digits-default mb-10`}>
-        {orderData.number}
-      </div>
+      {orderMakedRequest && <Preloader />}
 
-      <div className={`text text_type_main-medium mb-3`}>{orderData.name}</div>
+      {!orderMakedRequest && (
+        <>
+          <div
+            className={`${style.number} text text_type_digits-default mb-10`}
+          >
+            {orderData.number}
+          </div>
 
-      <div className={`font-ready mb-15`}>{orderData.state}</div>
+          <div className={`text text_type_main-medium mb-3`}>
+            {orderData.name}
+          </div>
 
-      <div className={`text text_type_main-medium mb-6`}>Состав:</div>
+          <div className={`font-ready mb-15`}>{orderData.state}</div>
 
-      <ul className={`app-scroll mb-10 pr-24 ${style.order} `}>
-        {orderData.orderItems.map((item: TIngredientItem) => (
-          <OrderItem key={item._id} {...item} />
-        ))}
-      </ul>
+          <div className={`text text_type_main-medium mb-6`}>Состав:</div>
 
-      <div className={`${style.summary} `}>
-        <div className="text text_type_main-default text_color_inactive">
-          {orderData.date}
-        </div>
+          <ul className={`app-scroll mb-10 pr-24 ${style.order} `}>
+            {orderIngredients.map((item: TIngredientItem) => (
+              <OrderItem key={item._id} {...item} />
+            ))}
+          </ul>
 
-        <BaseSum sum={orderData.sum} />
-      </div>
+          <div className={`${style.summary} `}>
+            <div className="text text_type_main-default text_color_inactive">
+              {orderData.date}
+            </div>
+
+            <BaseSum sum={orderPrice} />
+          </div>
+        </>
+      )}
     </div>
   )
 }

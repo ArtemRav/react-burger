@@ -1,5 +1,6 @@
 import { deleteCookie, getCookie, setCookie } from './cookie-helper'
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api'
+const ORDERS_API_URL = 'https://norma.nomoreparties.space/api/orders'
 
 type THeader = Record<string, string>
 type TPatchData = (url: string, data: any) => any
@@ -46,6 +47,15 @@ const checkToken: TCheckToken = async (err, url, options) => {
   } else {
     return Promise.reject(err)
   }
+}
+
+export const getOrderByNumber = (number: number | string) => {
+  return fetch(`${ORDERS_API_URL}/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => checkAnswer(res))
 }
 
 const getHeaders = () => {

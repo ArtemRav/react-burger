@@ -139,9 +139,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <StrictMode>
-        <ModalSwitch />
-      </StrictMode>
+      {/* <StrictMode> */}
+      <ModalSwitch />
+      {/* </StrictMode> */}
     </BrowserRouter>
   )
 }

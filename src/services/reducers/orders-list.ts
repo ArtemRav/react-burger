@@ -12,7 +12,8 @@ const initialState: THistoryOrders = {
   success: false,
   orders: [],
   total: 0,
-  totalToday: 0
+  totalToday: 0,
+  error: undefined
 }
 
 export const ordersListReducer = (
@@ -27,7 +28,7 @@ export const ordersListReducer = (
       return { ...state, wsConnected: false, error: action.error }
 
     case WS_CONNECTION_CLOSE:
-      return { ...state, wsConnected: false, error: undefined }
+      return { ...state, wsConnected: false, error: undefined, orders: [] }
 
     case WS_CONNECTION_MESSAGE:
       const { success, total, totalToday, orders } = JSON.parse(action.payload)

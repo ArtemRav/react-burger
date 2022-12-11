@@ -5,7 +5,7 @@ export const setCookie: TSetCookie = (name, value, props) => {
   let exp = props.expires
   if (typeof exp == 'number' && exp) {
     const d = new Date()
-    d.setTime(d.getTime() + exp * 1000)
+    d.setTime(d.getTime() + exp * 15000)
     exp = props.expires = d
   }
   if (exp && exp.toUTCString) {

@@ -14,12 +14,12 @@ export const FeedPage = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // Вопрос ревьюверу: почему тут вызов происходит 4 раза, так и не смог разобраться
-    // console.log('FEED PAGE')
-    dispatch({
-      type: WS_CONNECTION_START,
-      payload: '/all'
-    })
+    if (!isConnected) {
+      dispatch({
+        type: WS_CONNECTION_START,
+        payload: '/all'
+      })
+    }
 
     return () => {
       if (isConnected) {

@@ -51,6 +51,7 @@ export type THistoryOrderItem = {
 
 export type THistoryOrders = {
   wsConnected?: boolean
+  error?: any
   success: boolean
   orders: Array<THistoryOrderItem>
   total: number

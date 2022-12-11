@@ -5,6 +5,12 @@
   max-width: 580px;
 }
 
+.main-list {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: calc(100vh - 672px);
+}
+
 .table {
   display: flex;
   width: 100%;

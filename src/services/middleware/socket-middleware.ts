@@ -10,8 +10,8 @@ export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
       const { type, payload } = action
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions
 
-      if (type === wsInit) {
-        socket = new WebSocket(wsUrl)
+      if (type === wsInit && payload) {
+        socket = new WebSocket(`${wsUrl}${payload}`)
       }
 
       if (socket) {

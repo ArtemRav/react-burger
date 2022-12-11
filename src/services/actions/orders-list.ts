@@ -1,5 +1,3 @@
-import { THistoryOrderItem } from '../types/data'
-
 export const WS_CONNECTION_START = 'WS_CONNECTION_START'
 export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS'
 export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR'
@@ -8,6 +6,7 @@ export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED'
 
 export type TWsConnectionStartAction = {
   readonly type: typeof WS_CONNECTION_START
+  wsUrl: string
 }
 
 export type TWsConnectionSuccessAction = {
@@ -21,7 +20,7 @@ export type TWsConnectionErrorAction = {
 
 export type TWsConnectionMessageAction = {
   readonly type: typeof WS_CONNECTION_MESSAGE
-  orders: Array<THistoryOrderItem>
+  payload: string
 }
 
 export type TWsConnectionClosedAction = {

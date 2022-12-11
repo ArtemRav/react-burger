@@ -56,6 +56,22 @@ function App() {
         <AppHeader />
 
         <Switch location={background || location}>
+          <Route path="/" exact>
+            <MainPage />
+          </Route>
+
+          <Route path="/feed" exact>
+            <FeedPage />
+          </Route>
+
+          <Route path="/feed/:id" exact>
+            <OrderPage />
+          </Route>
+
+          <Route path="/ingredients/:ingredientId" exact>
+            <IngredientDetails />
+          </Route>
+
           <ProtectedRoute onlyUnAuth={true} path="/login" exact>
             <LoginPage />
           </ProtectedRoute>
@@ -72,10 +88,6 @@ function App() {
             <ResetPassPage />
           </ProtectedRoute>
 
-          <Route path="/" exact>
-            <MainPage />
-          </Route>
-
           <ProtectedRoute path="/profile/orders/:id" exact>
             <OrderPage />
           </ProtectedRoute>
@@ -83,18 +95,6 @@ function App() {
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
-
-          <Route path="/feed" exact>
-            <FeedPage />
-          </Route>
-
-          <Route path="/feed/:id" exact>
-            <OrderPage />
-          </Route>
-
-          <Route path="/ingredients/:ingredientId" exact>
-            <IngredientDetails />
-          </Route>
 
           <Route>
             <NotFound404 />

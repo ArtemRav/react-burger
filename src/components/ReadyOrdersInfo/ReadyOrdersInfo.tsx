@@ -1,15 +1,28 @@
+import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { TState } from '../../services/reducers'
 import style from './ready-orders-info.module.css'
 
 export const ReadyOrdersInfo = () => {
-  const readyOrders: Array<string> = [
-    '034531',
-    '034532',
-    '034533',
-    '034534',
-    '034535'
-  ]
-
-  const processOrders: Array<string> = ['034537', '034538', '034539']
+  const orderItems = useSelector((state: TState) => state.ordersList.orders)
+  const orderTotal = useSelector((state: TState) => state.ordersList.total)
+  const orderTotalToday = useSelector(
+    (state: TState) => state.ordersList.totalToday
+  )
+  const readyOrders = useMemo(
+    () =>
+      orderItems
+        .filter(item => item.status === 'done')
+        .map(item => item.number),
+    [orderItems]
+  )
+  const processOrders = useMemo(
+    () =>
+      orderItems
+        .filter(item => item.status !== 'done')
+        .map(item => item.number),
+    [orderItems]
+  )
 
   return (
     <div className={`${style.main} ml-15`}>
@@ -18,11 +31,11 @@ export const ReadyOrdersInfo = () => {
           <div className={`${style.title} text text_type_main-medium mb-6`}>
             Готовы:
           </div>
-          <ul className={`${style.main}`}>
-            {readyOrders.map(order => (
+          <ul className={`${style['main-list']} app-scroll`}>
+            {readyOrders.map((order, idx) => (
               <li
                 className="text text_type_digits-default font-ready mb-2"
-                key={order}
+                key={idx}
               >
                 {order}
               </li>
@@ -34,7 +47,7 @@ export const ReadyOrdersInfo = () => {
           <div className={`${style.title} text text_type_main-medium mb-6`}>
             В работе:
           </div>
-          <ul className={`${style.main}`}>
+          <ul className={`${style['main-list']} app-scroll`}>
             {processOrders.map(order => (
               <li className="text text_type_digits-default mb-2" key={order}>
                 {order}
@@ -51,7 +64,7 @@ export const ReadyOrdersInfo = () => {
         <div
           className={`${style.qnt} text text_type_digits-large text-highlight`}
         >
-          28752
+          {orderTotal}
         </div>
       </div>
 
@@ -62,7 +75,7 @@ export const ReadyOrdersInfo = () => {
         <div
           className={`${style.qnt} text text_type_digits-large text-highlight`}
         >
-          138
+          {orderTotalToday}
         </div>
       </div>
     </div>

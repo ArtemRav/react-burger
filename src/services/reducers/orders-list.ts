@@ -9,8 +9,8 @@ import { THistoryOrders } from '../types/data'
 
 const initialState: THistoryOrders = {
   wsConnected: false,
-  error: undefined,
-  ordersList: [],
+  success: false,
+  orders: [],
   total: 0,
   totalToday: 0
 }
@@ -30,7 +30,14 @@ export const ordersListReducer = (
       return { ...state, wsConnected: false, error: undefined }
 
     case WS_CONNECTION_MESSAGE:
-      return { ...state, ordersList: [...state.ordersList, action.orders] }
+      const { success, total, totalToday, orders } = JSON.parse(action.payload)
+      return {
+        ...state,
+        success,
+        total,
+        totalToday,
+        orders: [...state.orders, ...orders]
+      }
 
     default:
       return state

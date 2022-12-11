@@ -1,3 +1,5 @@
+import { THistoryOrderItem } from '../types/data'
+
 export const WS_CONNECTION_START = 'WS_CONNECTION_START'
 export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS'
 export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR'
@@ -14,10 +16,12 @@ export type TWsConnectionSuccessAction = {
 
 export type TWsConnectionErrorAction = {
   readonly type: typeof WS_CONNECTION_ERROR
+  error: string
 }
 
 export type TWsConnectionMessageAction = {
   readonly type: typeof WS_CONNECTION_MESSAGE
+  orders: Array<THistoryOrderItem>
 }
 
 export type TWsConnectionClosedAction = {

@@ -9,7 +9,7 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_MESSAGE
-} from './actions/orders'
+} from './actions/orders-list'
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders'
 

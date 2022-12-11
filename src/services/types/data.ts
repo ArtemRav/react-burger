@@ -39,6 +39,23 @@ export type TOrder = {
   orderFailed: boolean
 }
 
+export type THistoryOrderItem = {
+  ingredients: Array<string>
+  _id: string
+  status: string
+  number: number
+  createdAt: string
+  updatedAt: string
+}
+
+export type THistoryOrders = {
+  wsConnected: boolean
+  ordersList: Array<THistoryOrderItem>
+  total: number
+  totalToday: number
+  error?: Event
+}
+
 export type TIngredientItem = {
   id?: string
   _id?: string

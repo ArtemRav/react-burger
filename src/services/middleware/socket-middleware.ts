@@ -15,22 +15,19 @@ export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
       }
 
       if (socket) {
-        // функция, которая вызывается при открытии сокета
         socket.onopen = (event: Event) => {
           dispatch({ type: onOpen, payload: event })
         }
 
-        // функция, которая вызывается при ошибке соединения
         socket.onerror = event => {
           dispatch({ type: onError, payload: event })
         }
 
-        // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
           const { data } = event
           dispatch({ type: onMessage, payload: data })
         }
-        // функция, которая вызывается при закрытии соединения
+
         socket.onclose = event => {
           dispatch({ type: onClose, payload: event })
         }

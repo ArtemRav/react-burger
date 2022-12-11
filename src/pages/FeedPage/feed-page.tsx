@@ -4,7 +4,10 @@ import { OrdersHistory } from '../../components/OrdersHistory/OrdersHistory'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { WS_CONNECTION_START } from '../../services/actions/orders-list'
+import {
+  WS_CONNECTION_CLOSE,
+  WS_CONNECTION_START
+} from '../../services/actions/orders-list'
 
 export const FeedPage = () => {
   const isConnected = useSelector((state: any) => state.ordersList.wsConnected)
@@ -17,7 +20,15 @@ export const FeedPage = () => {
       type: WS_CONNECTION_START,
       payload: '/all'
     })
-  }, [dispatch])
+
+    return () => {
+      if (isConnected) {
+        dispatch({
+          type: WS_CONNECTION_CLOSE
+        })
+      }
+    }
+  }, [dispatch, isConnected])
 
   return (
     <main className={`${style.main} pl-5 pr-5`}>

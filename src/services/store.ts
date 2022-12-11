@@ -4,7 +4,7 @@ import { socketMiddleware } from './middleware/socket-middleware'
 import { rootReducer } from './reducers'
 
 import {
-  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
@@ -22,7 +22,7 @@ declare global {
 const wsActions = {
   wsInit: WS_CONNECTION_START,
   onOpen: WS_CONNECTION_SUCCESS,
-  onClose: WS_CONNECTION_CLOSED,
+  onClose: WS_CONNECTION_CLOSE,
   onError: WS_CONNECTION_ERROR,
   onMessage: WS_CONNECTION_MESSAGE
 }

@@ -1,6 +1,6 @@
 import {
   TWebSocketActions,
-  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_MESSAGE,
   WS_CONNECTION_SUCCESS
@@ -26,7 +26,7 @@ export const ordersListReducer = (
     case WS_CONNECTION_ERROR:
       return { ...state, wsConnected: false, error: action.error }
 
-    case WS_CONNECTION_CLOSED:
+    case WS_CONNECTION_CLOSE:
       return { ...state, wsConnected: false, error: undefined }
 
     case WS_CONNECTION_MESSAGE:

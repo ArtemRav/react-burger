@@ -28,14 +28,8 @@ export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
           dispatch({ type: onMessage, payload: data })
         }
 
-        socket.onclose = event => {
-          dispatch({ type: onClose, payload: event })
-        }
-
-        if (type === 'WS_SEND_MESSAGE') {
-          const message = payload
-          // функция для отправки сообщения на сервер
-          socket.send(JSON.stringify(message))
+        if (type === onClose) {
+          socket.close()
         }
       }
 

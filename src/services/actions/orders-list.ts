@@ -2,7 +2,7 @@ export const WS_CONNECTION_START = 'WS_CONNECTION_START'
 export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS'
 export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR'
 export const WS_CONNECTION_MESSAGE = 'WS_CONNECTION_MESSAGE'
-export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED'
+export const WS_CONNECTION_CLOSE = 'WS_CONNECTION_CLOSE'
 
 export type TWsConnectionStartAction = {
   readonly type: typeof WS_CONNECTION_START
@@ -24,7 +24,7 @@ export type TWsConnectionMessageAction = {
 }
 
 export type TWsConnectionClosedAction = {
-  readonly type: typeof WS_CONNECTION_CLOSED
+  readonly type: typeof WS_CONNECTION_CLOSE
 }
 
 export type TWebSocketActions =

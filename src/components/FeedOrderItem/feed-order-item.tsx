@@ -1,3 +1,4 @@
+import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { TState } from '../../services/reducers'
@@ -13,7 +14,7 @@ import style from './feed-order-item.module.css'
 export const FeedOrderItem: FC<THistoryOrderItem> = ({
   name,
   number,
-  updatedAt,
+  createdAt,
   ingredients
 }) => {
   const storeIngredients = useSelector(
@@ -40,7 +41,7 @@ export const FeedOrderItem: FC<THistoryOrderItem> = ({
         <div className="text text_type_digits-default">{number}</div>
 
         <div className="text text_type_main-default text_color_inactive">
-          {updatedAt}
+          {<FormattedDate date={new Date(createdAt)} />}
         </div>
       </div>
 

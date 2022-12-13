@@ -23,19 +23,21 @@ export type TOrderActions =
   | TGetOrderSuccessAction
   | TGetOrderFailedAction
 
-export const getOrder = (data: any) => async (dispatch: AppDispatch) => {
-  dispatch({ type: GET_ORDER_REQUEST })
+export const getOrder =
+  (data: { ingredients: (string | undefined)[] }) =>
+  async (dispatch: AppDispatch) => {
+    dispatch({ type: GET_ORDER_REQUEST })
 
-  try {
-    const {
-      order: { number }
-    } = await postData('orders', data)
-    dispatch({
-      type: GET_ORDER_SUCCESS,
-      orderNum: number
-    })
-  } catch (error) {
-    dispatch({ type: GET_ORDER_FAILED })
-    console.error(error)
+    try {
+      const {
+        order: { number }
+      } = await postData('orders', data)
+      dispatch({
+        type: GET_ORDER_SUCCESS,
+        orderNum: number
+      })
+    } catch (error) {
+      dispatch({ type: GET_ORDER_FAILED })
+      console.error(error)
+    }
   }
-}

@@ -2,31 +2,31 @@ import { getOrderByNumber } from '../../utils/burger-api'
 import { AppDispatch } from '../types'
 import { TOrdersListItem } from '../types/data'
 
-export const GET_ORDER_MAKED_REQUEST = 'GET_ORDER_MAKED_REQUEST'
-export const GET_ORDER_MAKED_SUCCESS = 'GET_ORDER_MAKED_SUCCESS'
-export const GET_ORDER_MAKED_FAILED = 'GET_ORDER_MAKED_FAILED'
+export const FEED_ORDERS_ITEM_REQUEST = 'FEED_ORDERS_ITEM_REQUEST'
+export const FEED_ORDERS_ITEM_SUCCESS = 'FEED_ORDERS_ITEM_SUCCESS'
+export const FEED_ORDERS_ITEM_FAILED = 'FEED_ORDERS_ITEM_FAILED'
 
 export type TGetOrderMakedRequestAction = {
-  readonly type: typeof GET_ORDER_MAKED_REQUEST
+  readonly type: typeof FEED_ORDERS_ITEM_REQUEST
 }
 
 export type TGetOrderMakedSuccessAction = {
-  readonly type: typeof GET_ORDER_MAKED_SUCCESS
+  readonly type: typeof FEED_ORDERS_ITEM_SUCCESS
   payload: TOrdersListItem
 }
 
 export type TGetOrderMakedFailedAction = {
-  readonly type: typeof GET_ORDER_MAKED_FAILED
+  readonly type: typeof FEED_ORDERS_ITEM_FAILED
 }
 
-export type TOrderMakedActions =
+export type TFeedOrdersItem =
   | TGetOrderMakedRequestAction
   | TGetOrderMakedSuccessAction
   | TGetOrderMakedFailedAction
 
 export const getOrderMaked =
   (number: number | string) => async (dispatch: AppDispatch) => {
-    dispatch({ type: GET_ORDER_MAKED_REQUEST })
+    dispatch({ type: FEED_ORDERS_ITEM_REQUEST })
 
     try {
       const { success, orders } = await getOrderByNumber(number)
@@ -35,12 +35,18 @@ export const getOrderMaked =
           'Не удалось получить информацию по переданному номеру заказа.'
         )
       }
+      const status = orders[0].status === 'done' ? 'Выполнен' : 'Готовится'
+      const statusClass = orders[0].status === 'done' ? 'font-ready' : ''
       dispatch({
-        type: GET_ORDER_MAKED_SUCCESS,
-        payload: orders[0]
+        type: FEED_ORDERS_ITEM_SUCCESS,
+        payload: {
+          ...orders[0],
+          status,
+          statusClass
+        }
       })
     } catch (error) {
-      dispatch({ type: GET_ORDER_MAKED_FAILED })
+      dispatch({ type: FEED_ORDERS_ITEM_FAILED })
       console.error(error)
     }
   }

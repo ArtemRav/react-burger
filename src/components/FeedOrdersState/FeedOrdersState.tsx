@@ -31,7 +31,7 @@ export const FeedOrdersState = () => {
           <div className={`${style.title} text text_type_main-medium mb-6`}>
             Готовы:
           </div>
-          <ul className={`${style['main-list']} app-scroll`}>
+          <ul className={`${style['main-list']}`}>
             {readyOrders.map((order, idx) => (
               <li
                 className="text text_type_digits-default font-ready mb-2"
@@ -47,7 +47,7 @@ export const FeedOrdersState = () => {
           <div className={`${style.title} text text_type_main-medium mb-6`}>
             В работе:
           </div>
-          <ul className={`${style['main-list']} app-scroll`}>
+          <ul className={`${style['main-list']}`}>
             {processOrders.map(order => (
               <li className="text text_type_digits-default mb-2" key={order}>
                 {order}

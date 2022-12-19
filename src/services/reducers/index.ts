@@ -5,14 +5,14 @@ import { ingredientsReducer } from './ingredients'
 import { orderIngredientsReducer } from './order-ingredients'
 import { recoverPasswordReducer } from './recover-password'
 import { resetPasswordReducer } from './reset-password'
-import { orderMakedReducer } from './order-maked'
+import { feedOrdersItemReducer } from './feed-orders-item'
 import { feedOrdersReducer } from './feed-orders'
 import { userOrdersReducer } from './user-orders'
 
 export const rootReducer = combineReducers({
   user: userReducer,
   curOrder: orderReducer,
-  orderMaked: orderMakedReducer,
+  feedOrdersItem: feedOrdersItemReducer,
   feedOrders: feedOrdersReducer,
   userOrders: userOrdersReducer,
   resetPassword: resetPasswordReducer,

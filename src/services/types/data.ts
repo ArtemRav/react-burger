@@ -46,6 +46,7 @@ export type TOrdersListItem = {
   number: number
   createdAt: string
   updatedAt: string
+  statusClass: string
   ingredients: Array<string>
 }
 

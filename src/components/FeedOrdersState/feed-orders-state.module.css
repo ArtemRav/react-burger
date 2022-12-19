@@ -6,9 +6,12 @@
 }
 
 .main-list {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  max-height: calc(100vh - 672px);
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  max-height: 120px;
+  max-width: 216px;
+  justify-content: space-between;
 }
 
 .table {

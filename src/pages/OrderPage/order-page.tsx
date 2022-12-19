@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { BaseSum } from '../../components/BaseSum/BaseSum'
 import { OrderItem } from '../../components/OrderItem/OrderItem'
 import { Preloader } from '../../components/Preloader/Preloader'
-import { getOrderMaked } from '../../services/actions/order-maked'
+import { getOrderMaked } from '../../services/actions/feed-orders-item'
 import { TState } from '../../services/reducers'
 import { BUN, TIngredientItem } from '../../services/types/data'
 import style from './order-page.module.css'
@@ -22,10 +22,10 @@ export const OrderPage = () => {
   const dispatch = useDispatch<any>()
   const { id } = useParams<{ id: string }>()
   const orderMakedRequest = useSelector(
-    (state: TState) => state.orderMaked.orderMakedRequest
+    (state: TState) => state.feedOrdersItem.orderMakedRequest
   )
   const orderData = useSelector(
-    (state: TState) => state.orderMaked.orderContent
+    (state: TState) => state.feedOrdersItem.orderContent
   )
 
   useEffect(() => {
@@ -38,9 +38,20 @@ export const OrderPage = () => {
 
   const orderIngredients = useMemo(() => {
     if (storeIngredients.length && orderData?.ingredients?.length) {
-      return storeIngredients.filter((item: any) =>
+      const ingredients = storeIngredients.filter((item: any) =>
         orderData.ingredients.includes(item._id)
       )
+      const setIngredients = new Set(ingredients)
+      return [...setIngredients].map((item: TIngredientItem) => {
+        const allCurIngredients = ingredients.filter(
+          elem => elem._id === item._id
+        )
+        return {
+          ...item,
+          qnt: item.type === BUN ? 2 : allCurIngredients.length,
+          price: item.price * allCurIngredients.length
+        }
+      })
     }
     return []
   }, [storeIngredients, orderData])
@@ -57,14 +68,12 @@ export const OrderPage = () => {
   }, [orderIngredients])
 
   return (
-    <div className={`${style.main} `}>
+    <div className={`${style.main} pl-8 pr-8`}>
       {orderMakedRequest && <Preloader />}
 
       {!orderMakedRequest && (
         <>
-          <div
-            className={`${style.number} text text_type_digits-default mb-10`}
-          >
+          <div className={`${style.number} text text_type_digits-medium mb-10`}>
             {orderData.number}
           </div>
 
@@ -72,7 +81,11 @@ export const OrderPage = () => {
             {orderData.name}
           </div>
 
-          <div className={`font-ready mb-15`}>{orderData.state}</div>
+          <div
+            className={`${orderData.statusClass} text text_type_main-default mb-15`}
+          >
+            {orderData.status}
+          </div>
 
           <div className={`text text_type_main-medium mb-6`}>Состав:</div>
 
@@ -82,7 +95,7 @@ export const OrderPage = () => {
             ))}
           </ul>
 
-          <div className={`${style.summary} `}>
+          <div className={`${style.summary} pb-8`}>
             <div className="text text_type_main-default text_color_inactive">
               {orderData.date}
             </div>

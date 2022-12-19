@@ -1,9 +1,9 @@
 import {
-  GET_ORDER_MAKED_REQUEST,
-  GET_ORDER_MAKED_SUCCESS,
-  GET_ORDER_MAKED_FAILED,
-  TOrderMakedActions
-} from '../actions/order-maked'
+  FEED_ORDERS_ITEM_REQUEST,
+  FEED_ORDERS_ITEM_SUCCESS,
+  FEED_ORDERS_ITEM_FAILED,
+  TFeedOrdersItem
+} from '../actions/feed-orders-item'
 
 const initialState = {
   orderContent: {},
@@ -11,21 +11,24 @@ const initialState = {
   orderMakedFailed: false
 }
 
-export const orderMakedReducer = (
+export const feedOrdersItemReducer = (
   state: any = initialState,
-  action: TOrderMakedActions
+  action: TFeedOrdersItem
 ) => {
   switch (action.type) {
-    case GET_ORDER_MAKED_REQUEST:
+    case FEED_ORDERS_ITEM_REQUEST:
       return { ...state, orderMakedRequest: true, orderMakedFailed: false }
-    case GET_ORDER_MAKED_SUCCESS:
+
+    case FEED_ORDERS_ITEM_SUCCESS:
       return {
         ...state,
         orderContent: action.payload,
         orderMakedRequest: false
       }
-    case GET_ORDER_MAKED_FAILED:
+
+    case FEED_ORDERS_ITEM_FAILED:
       return { ...state, orderMakedFailed: true, orderMakedRequest: false }
+
     default:
       return state
   }

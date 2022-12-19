@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux'
 import { TState } from '../../services/reducers'
 import {
   BUN,
-  THistoryOrderItem,
+  TOrdersListItem,
   TIngredientItem
 } from '../../services/types/data'
 import { BaseIcon } from '../BaseIcon/BaseIcon'
 import { BaseSum } from '../BaseSum/BaseSum'
 import style from './feed-order-item.module.css'
 
-export const FeedOrderItem: FC<THistoryOrderItem> = ({
+export const FeedOrderItem: FC<TOrdersListItem> = ({
   name,
   number,
   createdAt,

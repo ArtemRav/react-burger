@@ -1,13 +1,13 @@
 import {
-  TWebSocketActions,
-  WS_CONNECTION_CLOSE,
-  WS_CONNECTION_ERROR,
-  WS_CONNECTION_MESSAGE,
-  WS_CONNECTION_SUCCESS
-} from '../actions/orders-list'
-import { THistoryOrders } from '../types/data'
+  TFeedConnection,
+  USER_CONNECTION_CLOSE,
+  USER_CONNECTION_ERROR,
+  USER_GET_MESSAGE,
+  USER_CONNECTION_SUCCESS
+} from '../actions/user-orders'
+import { TOrdersList } from '../types/data'
 
-const initialState: THistoryOrders = {
+const initialState: TOrdersList = {
   wsConnected: false,
   success: false,
   orders: [],
@@ -16,21 +16,21 @@ const initialState: THistoryOrders = {
   error: undefined
 }
 
-export const ordersListReducer = (
+export const userOrdersReducer = (
   state = initialState,
-  action: TWebSocketActions
+  action: TFeedConnection
 ) => {
   switch (action.type) {
-    case WS_CONNECTION_SUCCESS:
+    case USER_CONNECTION_SUCCESS:
       return { ...state, wsConnected: true, error: undefined }
 
-    case WS_CONNECTION_ERROR:
+    case USER_CONNECTION_ERROR:
       return { ...state, wsConnected: false, error: action.error }
 
-    case WS_CONNECTION_CLOSE:
+    case USER_CONNECTION_CLOSE:
       return { ...state, wsConnected: false, error: undefined, orders: [] }
 
-    case WS_CONNECTION_MESSAGE:
+    case USER_GET_MESSAGE:
       const { success, total, totalToday, orders } = JSON.parse(action.payload)
       return {
         ...state,

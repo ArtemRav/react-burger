@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { TState } from '../../services/reducers'
-import style from './ready-orders-info.module.css'
+import style from './feed-orders-state.module.css'
 
-export const ReadyOrdersInfo = () => {
-  const orderItems = useSelector((state: TState) => state.ordersList.orders)
-  const orderTotal = useSelector((state: TState) => state.ordersList.total)
+export const FeedOrdersState = () => {
+  const orderItems = useSelector((state: TState) => state.feedOrders.orders)
+  const orderTotal = useSelector((state: TState) => state.feedOrders.total)
   const orderTotalToday = useSelector(
-    (state: TState) => state.ordersList.totalToday
+    (state: TState) => state.feedOrders.totalToday
   )
   const readyOrders = useMemo(
     () =>

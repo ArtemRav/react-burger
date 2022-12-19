@@ -1,6 +1,6 @@
 import { getOrderByNumber } from '../../utils/burger-api'
 import { AppDispatch } from '../types'
-import { THistoryOrderItem } from '../types/data'
+import { TOrdersListItem } from '../types/data'
 
 export const GET_ORDER_MAKED_REQUEST = 'GET_ORDER_MAKED_REQUEST'
 export const GET_ORDER_MAKED_SUCCESS = 'GET_ORDER_MAKED_SUCCESS'
@@ -12,7 +12,7 @@ export type TGetOrderMakedRequestAction = {
 
 export type TGetOrderMakedSuccessAction = {
   readonly type: typeof GET_ORDER_MAKED_SUCCESS
-  payload: THistoryOrderItem
+  payload: TOrdersListItem
 }
 
 export type TGetOrderMakedFailedAction = {

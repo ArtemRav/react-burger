@@ -7,14 +7,18 @@ export const socketMiddleware = (
 ): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null
+    let isConnected: boolean = false
+    let reconnectTimer: number = 0
 
     return next => action => {
       const { dispatch } = store
       const { type, payload } = action
-      const { wsInit, onOpen, onClose, onError, onMessage } = wsActions
+      const { wsInit, onOpen, onClose, onError, onClosed, onMessage } =
+        wsActions
 
       if (type === wsInit && payload) {
         socket = new WebSocket(`${wsUrl}${payload}`)
+        isConnected = true
       }
 
       if (socket) {
@@ -22,8 +26,8 @@ export const socketMiddleware = (
           dispatch({ type: onOpen, payload: event })
         }
 
-        socket.onerror = event => {
-          dispatch({ type: onError, payload: event })
+        socket.onerror = error => {
+          dispatch({ type: onError, error: error })
         }
 
         socket.onmessage = event => {
@@ -31,8 +35,23 @@ export const socketMiddleware = (
           dispatch({ type: onMessage, payload: data })
         }
 
+        socket.onclose = event => {
+          if (event.code !== 1000) {
+            dispatch({ type: onError, error: event.code.toString() })
+          }
+          dispatch({ type: onClosed })
+
+          if (isConnected) {
+            reconnectTimer = window.setTimeout(() => {
+              dispatch({ type: wsInit, payload: wsUrl })
+            }, 3000)
+          }
+        }
+
         if (type === onClose) {
           socket.close()
+          clearTimeout(reconnectTimer)
+          isConnected = false
         }
       }
 

@@ -1,22 +1,22 @@
 import style from './feed-page.module.css'
-import { ReadyOrdersInfo } from '../../components/ReadyOrdersInfo/ReadyOrdersInfo'
-import { OrdersHistory } from '../../components/OrdersHistory/OrdersHistory'
+import { FeedOrders } from '../../components/FeedOrders/FeedOrders'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import {
-  WS_CONNECTION_CLOSE,
-  WS_CONNECTION_START
-} from '../../services/actions/orders-list'
+  FEED_CONNECTION_CLOSE,
+  FEED_CONNECTION_INIT
+} from '../../services/actions/feed-orders'
+import { FeedOrdersState } from '../../components/FeedOrdersState/FeedOrdersState'
 
 export const FeedPage = () => {
-  const isConnected = useSelector((state: any) => state.ordersList.wsConnected)
+  const isConnected = useSelector((state: any) => state.feedOrders.wsConnected)
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!isConnected) {
       dispatch({
-        type: WS_CONNECTION_START,
+        type: FEED_CONNECTION_INIT,
         payload: '/all'
       })
     }
@@ -24,7 +24,7 @@ export const FeedPage = () => {
     return () => {
       if (isConnected) {
         dispatch({
-          type: WS_CONNECTION_CLOSE
+          type: FEED_CONNECTION_CLOSE
         })
       }
     }
@@ -40,10 +40,10 @@ export const FeedPage = () => {
 
       {isConnected && (
         <div className={style.body}>
-          <OrdersHistory route="/feed" />
+          <FeedOrders route="/feed" />
 
           <section className={style['right-section']}>
-            <ReadyOrdersInfo />
+            <FeedOrdersState />
           </section>
         </div>
       )}

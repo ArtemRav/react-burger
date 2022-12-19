@@ -1,4 +1,5 @@
 import type { Middleware, MiddlewareAPI } from 'redux'
+import { refreshTokenRequest } from '../../utils/burger-api'
 import type { AppDispatch, RootState } from '../types'
 
 export const socketMiddleware = (
@@ -9,6 +10,7 @@ export const socketMiddleware = (
     let socket: WebSocket | null = null
     let isConnected: boolean = false
     let reconnectTimer: number = 0
+    let refreshTokenTimer: number = 0
 
     return next => action => {
       const { dispatch } = store
@@ -24,9 +26,14 @@ export const socketMiddleware = (
       if (socket) {
         socket.onopen = (event: Event) => {
           dispatch({ type: onOpen, payload: event })
+          clearTimeout(refreshTokenTimer)
         }
 
-        socket.onerror = error => {
+        socket.onerror = async error => {
+          if (action.error === 'jwt expired') {
+            await refreshTokenRequest()
+            dispatch({ type: wsInit })
+          }
           dispatch({ type: onError, error: error })
         }
 

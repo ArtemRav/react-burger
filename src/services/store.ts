@@ -30,7 +30,7 @@ declare global {
 const feedWsActions = {
   wsInit: FEED_CONNECTION_INIT,
   onOpen: FEED_CONNECTION_SUCCESS,
-  onClose: FEED_CONNECTION_CLOSE,
+  wsClose: FEED_CONNECTION_CLOSE,
   onError: FEED_CONNECTION_ERROR,
   onClosed: FEED_CONNECTION_CLOSED,
   onMessage: FEED_GET_MESSAGE
@@ -39,7 +39,7 @@ const feedWsActions = {
 const userWsActions = {
   wsInit: USER_CONNECTION_INIT,
   onOpen: USER_CONNECTION_SUCCESS,
-  onClose: USER_CONNECTION_CLOSE,
+  wsClose: USER_CONNECTION_CLOSE,
   onError: USER_CONNECTION_ERROR,
   onClosed: USER_CONNECTION_CLOSED,
   onMessage: USER_GET_MESSAGE

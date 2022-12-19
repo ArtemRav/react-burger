@@ -10,7 +10,7 @@ import {
 import { FeedOrdersState } from '../../components/FeedOrdersState/FeedOrdersState'
 
 export const FeedPage = () => {
-  const isConnected = useSelector((state: any) => state.feedOrders.wsConnected)
+  const isConnected = useSelector((state: any) => state.feedOrders.isOpen)
   const dispatch = useDispatch()
 
   useEffect(() => {

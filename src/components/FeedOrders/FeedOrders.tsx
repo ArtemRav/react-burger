@@ -17,7 +17,7 @@ type TOrdersHistory = {
 
 export const FeedOrders: FC<TOrdersHistory> = ({ route }) => {
   const orderItems = useSelector((state: TState) => state.feedOrders.orders)
-  const isConnected = useSelector((state: any) => state.feedOrders.wsConnected)
+  const isConnected = useSelector((state: any) => state.feedOrders.isOpen)
   const location = useLocation()
   const dispatch = useDispatch()
 

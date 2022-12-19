@@ -13,7 +13,7 @@ export const socketMiddleware = (
     return next => action => {
       const { dispatch } = store
       const { type, payload } = action
-      const { wsInit, onOpen, onClose, onError, onClosed, onMessage } =
+      const { wsInit, onOpen, wsClose, onError, onClosed, onMessage } =
         wsActions
 
       if (type === wsInit && payload) {
@@ -48,7 +48,7 @@ export const socketMiddleware = (
           }
         }
 
-        if (type === onClose) {
+        if (type === wsClose) {
           socket.close()
           clearTimeout(reconnectTimer)
           isConnected = false

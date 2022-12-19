@@ -8,8 +8,7 @@ import {
 import { TOrdersList } from '../types/data'
 
 const initialState: TOrdersList = {
-  wsConnected: false,
-  success: false,
+  isOpen: false,
   orders: [],
   total: 0,
   totalToday: 0,
@@ -22,19 +21,18 @@ export const userOrdersReducer = (
 ) => {
   switch (action.type) {
     case USER_CONNECTION_SUCCESS:
-      return { ...state, wsConnected: true, error: undefined }
+      return { ...state, isOpen: true, error: undefined }
 
     case USER_CONNECTION_ERROR:
-      return { ...state, wsConnected: false, error: action.error }
+      return { ...state, isOpen: false, error: action.error }
 
     case USER_CONNECTION_CLOSE:
-      return { ...state, wsConnected: false, error: undefined, orders: [] }
+      return { ...state, isOpen: false, error: undefined, orders: [] }
 
     case USER_GET_MESSAGE:
-      const { success, total, totalToday, orders } = JSON.parse(action.payload)
+      const { total, totalToday, orders } = JSON.parse(action.payload)
       return {
         ...state,
-        success,
         total,
         totalToday,
         orders: [...state.orders, ...orders]

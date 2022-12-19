@@ -1,6 +1,5 @@
 import {
   TFeedConnection,
-  FEED_CONNECTION_CLOSE,
   FEED_CONNECTION_ERROR,
   FEED_GET_MESSAGE,
   FEED_CONNECTION_SUCCESS,
@@ -9,12 +8,11 @@ import {
 import { TOrdersList } from '../types/data'
 
 const initialState: TOrdersList = {
-  wsConnected: false,
-  success: false,
   orders: [],
+  isOpen: false,
   total: 0,
   totalToday: 0,
-  error: undefined
+  error: null
 }
 
 export const feedOrdersReducer = (
@@ -23,26 +21,22 @@ export const feedOrdersReducer = (
 ) => {
   switch (action.type) {
     case FEED_CONNECTION_SUCCESS:
-      return { ...state, wsConnected: true, error: undefined }
+      return { ...state, isOpen: true, error: null }
 
     case FEED_CONNECTION_ERROR:
-      return { ...state, wsConnected: false, error: action.error }
-
-    case FEED_CONNECTION_CLOSE:
-      return { ...state, wsConnected: false, error: undefined, orders: [] }
+      return { ...state, error: action.error }
 
     case FEED_GET_MESSAGE:
-      const { success, total, totalToday, orders } = JSON.parse(action.payload)
+      const { total, totalToday, orders } = JSON.parse(action.payload)
       return {
         ...state,
-        success,
         total,
         totalToday,
         orders: [...state.orders, ...orders]
       }
 
     case FEED_CONNECTION_CLOSED:
-      return { ...state, wsConnected: false, error: undefined }
+      return { ...state, isOpen: false }
 
     default:
       return state

@@ -50,12 +50,11 @@ export type TOrdersListItem = {
 }
 
 export type TOrdersList = {
-  wsConnected?: boolean
-  error?: any
-  success: boolean
   orders: Array<TOrdersListItem>
+  isOpen?: boolean
   total: number
   totalToday: number
+  error?: any
 }
 
 export type TIngredientItem = {

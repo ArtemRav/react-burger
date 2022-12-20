@@ -12,17 +12,42 @@ import {
   useState
 } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logOut, patchData } from '../../utils/burger-api'
 import { TState } from '../../services/reducers'
 import { FeedOrders } from '../../components/FeedOrders/FeedOrders'
+import { getCookie } from '../../utils/cookie-helper'
+import {
+  USER_CONNECTION_CLOSE,
+  USER_CONNECTION_INIT
+} from '../../services/actions/user-orders'
 
 export const ProfilePage = () => {
   const history = useHistory()
   const [form, setValue] = useState({ name: '', email: '', password: '' })
   const [hasControls, setControls] = useState(false)
-
   const { email, name } = useSelector((state: TState) => state.user.userInfo)
+
+  const isConnected = useSelector((state: any) => state.userOrders.isOpen)
+  const userOrdersList = useSelector((state: TState) => state.userOrders.orders)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!isConnected) {
+      dispatch({
+        type: USER_CONNECTION_INIT,
+        payload: `?token=${getCookie('accessToken')}`
+      })
+    }
+
+    return () => {
+      if (isConnected) {
+        dispatch({
+          type: USER_CONNECTION_CLOSE
+        })
+      }
+    }
+  }, [dispatch, isConnected])
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })
@@ -166,7 +191,7 @@ export const ProfilePage = () => {
 
         <Switch>
           <Route path="/profile/orders" exact={true}>
-            <FeedOrders route="/profile/orders" />
+            <FeedOrders ordersList={userOrdersList} route="/profile/orders" />
           </Route>
         </Switch>
       </div>

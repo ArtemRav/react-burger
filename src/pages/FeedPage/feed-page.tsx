@@ -8,9 +8,11 @@ import {
   FEED_CONNECTION_INIT
 } from '../../services/actions/feed-orders'
 import { FeedOrdersState } from '../../components/FeedOrdersState/FeedOrdersState'
+import { TState } from '../../services/reducers'
 
 export const FeedPage = () => {
   const isConnected = useSelector((state: any) => state.feedOrders.isOpen)
+  const feedOrdersList = useSelector((state: TState) => state.feedOrders.orders)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export const FeedPage = () => {
 
       {isConnected && (
         <div className={style.body}>
-          <FeedOrders route="/feed" />
+          <FeedOrders ordersList={feedOrdersList} route="/feed" />
 
           <section className={style['right-section']}>
             <FeedOrdersState />

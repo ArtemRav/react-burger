@@ -2,11 +2,6 @@ export const BUN: string = 'bun'
 export const SAUCE: string = 'sauce'
 export const MAIN: string = 'main'
 
-export type TBaseIcon = {
-  image: string
-  name: string
-}
-
 export type TTab = {
   id: typeof BUN
   name: string

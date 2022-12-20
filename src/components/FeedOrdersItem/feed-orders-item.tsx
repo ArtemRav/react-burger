@@ -9,9 +9,9 @@ import {
 } from '../../services/types/data'
 import { BaseIcon } from '../BaseIcon/BaseIcon'
 import { BaseSum } from '../BaseSum/BaseSum'
-import style from './feed-order-item.module.css'
+import style from './feed-orders-item.module.css'
 
-export const FeedOrderItem: FC<TOrdersListItem> = ({
+export const FeedOrdersItem: FC<TOrdersListItem> = ({
   name,
   number,
   createdAt,
@@ -20,12 +20,19 @@ export const FeedOrderItem: FC<TOrdersListItem> = ({
   const storeIngredients = useSelector(
     (state: TState) => state.allIngredients.ingredientsList
   )
+  const limitIngredients = 6
 
   const orderIngredients = useMemo(
     () =>
       storeIngredients.filter((item: any) => ingredients.includes(item._id)),
     [storeIngredients, ingredients]
   )
+
+  const ingredientsVisible = orderIngredients.slice(0, limitIngredients)
+  const overLimitQnt =
+    orderIngredients.length > limitIngredients
+      ? orderIngredients.length - limitIngredients
+      : null
 
   const orderPrice = useMemo(() => {
     return orderIngredients.reduce(
@@ -51,9 +58,12 @@ export const FeedOrderItem: FC<TOrdersListItem> = ({
 
       <div className={style['row-details']}>
         <div className={`${style['ingredients-icon-list']} ml-4`}>
-          {orderIngredients.map((item: TIngredientItem) => (
+          {ingredientsVisible.map((item: TIngredientItem) => (
             <BaseIcon key={item._id} {...item} />
           ))}
+          {overLimitQnt && (
+            <div className={style['overlimit']}>{`+${overLimitQnt}`}</div>
+          )}
         </div>
 
         <BaseSum sum={orderPrice} />

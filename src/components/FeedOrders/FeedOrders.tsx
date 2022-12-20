@@ -8,7 +8,7 @@ import {
 import { TState } from '../../services/reducers'
 import { TOrdersListItem } from '../../services/types/data'
 import { getCookie } from '../../utils/cookie-helper'
-import { FeedOrderItem } from '../FeedOrderItem/feed-order-item'
+import { FeedOrdersItem } from '../FeedOrdersItem/feed-orders-item'
 import style from './feed-orders.module.css'
 
 type TOrdersHistory = {
@@ -16,7 +16,7 @@ type TOrdersHistory = {
 }
 
 export const FeedOrders: FC<TOrdersHistory> = ({ route }) => {
-  const orderItems = useSelector((state: TState) => state.feedOrders.orders)
+  const feedOrders = useSelector((state: TState) => state.feedOrders.orders)
   const isConnected = useSelector((state: any) => state.feedOrders.isOpen)
   const location = useLocation()
   const dispatch = useDispatch()
@@ -40,7 +40,7 @@ export const FeedOrders: FC<TOrdersHistory> = ({ route }) => {
 
   return (
     <section className={`${style['list-orders']} app-scroll pr-2`}>
-      {orderItems.map((item: TOrdersListItem, idx) => {
+      {feedOrders.map((item: TOrdersListItem, idx) => {
         return (
           <Link
             className="link"
@@ -50,7 +50,7 @@ export const FeedOrders: FC<TOrdersHistory> = ({ route }) => {
               state: { background: location }
             }}
           >
-            <FeedOrderItem {...item} />
+            <FeedOrdersItem {...item} />
           </Link>
         )
       })}

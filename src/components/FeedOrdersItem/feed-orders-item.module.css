@@ -29,7 +29,8 @@
 
 .ingredients-icon-list {
   display: flex;
-  width: calc(100% - 80px);
+  position: relative;
+  max-width: calc(100% - 80px);
 }
 
 .ingredient-price {
@@ -37,4 +38,18 @@
   width: 80px;
   align-items: center;
   justify-content: flex-end;
+}
+
+.overlimit {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 60px;
+  border-radius: 50%;
+  background: #1c1c21;
+  opacity: 0.6;
 }

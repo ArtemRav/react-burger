@@ -31,7 +31,7 @@ export type TIngredientDetailsActions =
   | TDelIngredientFromOrderAction
   | TUpdateIngredientsOrderAction
 
-export const addIngredient =
+export const addIngredient: any =
   (ingredient: TIngredientItem) => (dispatch: AppDispatch) => {
     dispatch({
       type: ADD_INGREDIENT_TO_ORDER,
@@ -53,7 +53,7 @@ export const addIngredient =
     })
   }
 
-export const delIngredient =
+export const delIngredient: any =
   (item: TIngredientItem) => (dispatch: AppDispatch) => {
     dispatch({
       type: DEL_INGREDIENT_FROM_ORDER,

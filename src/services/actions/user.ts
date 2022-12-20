@@ -30,7 +30,7 @@ export type TUserActions =
   | TGetUserFailedAction
   | TToggleUserAuthCheckedAction
 
-export const getUser = (data: TUser) => async (dispatch: AppDispatch) => {
+export const getUser: any = (data: TUser) => async (dispatch: AppDispatch) => {
   dispatch({ type: GET_USER_REQUEST })
   try {
     const res: any = await postData('auth/login', data)

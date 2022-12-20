@@ -9,25 +9,22 @@ import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { OrderIngredientList } from '../OrderIngredientList/OrderIngredientList'
 
-import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
 
 import useModal from '../../hooks/useModal'
-import { TState } from '../../services/reducers'
 import { BUN, TIngredientItem } from '../../services/types/data'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 
 export const BurgerConstructor = () => {
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
   const history = useHistory()
   const location = useLocation()
-  const orderIngredients = useSelector(
-    (state: TState) => state.orderIngredients.items
-  )
+  const orderIngredients = useAppSelector(state => state.orderIngredients.items)
   const { modalVisible: modalOpened, showModal, hideModal } = useModal()
-  const isAutorized = useSelector((state: TState) => state.user.loginSuccess)
+  const isAutorized = useAppSelector(state => state.user.loginSuccess)
 
   const countSum = useMemo(() => {
     return orderIngredients.reduce(

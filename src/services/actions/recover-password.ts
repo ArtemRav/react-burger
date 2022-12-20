@@ -24,7 +24,7 @@ export type TRecoverPasswordActions =
   | TRecoverPasswordSuccessAction
   | TRecoverPasswordFailedAction
 
-export const recoverPassword =
+export const recoverPassword: any =
   (data: TData) => async (dispatch: AppDispatch) => {
     dispatch({ type: RECOVER_PASSWORD_REQUEST })
     try {

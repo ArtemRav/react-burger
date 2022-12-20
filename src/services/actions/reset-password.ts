@@ -24,16 +24,17 @@ export type TResetPasswordActions =
   | TResetPasswordSuccessAction
   | TResetPasswordFailedAction
 
-export const resetPassword = (data: TData) => async (dispatch: AppDispatch) => {
-  dispatch({ type: RESET_PASSWORD_REQUEST })
-  try {
-    const response: any = await postData('password-reset/reset', data)
-    if (response.success) {
-      dispatch({ type: RESET_PASSWORD_SUCCESS, data: response })
-    } else {
-      throw new Error('Error')
+export const resetPassword: any =
+  (data: TData) => async (dispatch: AppDispatch) => {
+    dispatch({ type: RESET_PASSWORD_REQUEST })
+    try {
+      const response: any = await postData('password-reset/reset', data)
+      if (response.success) {
+        dispatch({ type: RESET_PASSWORD_SUCCESS, data: response })
+      } else {
+        throw new Error('Error')
+      }
+    } catch (e) {
+      dispatch({ type: RESET_PASSWORD_FAILED })
     }
-  } catch (e) {
-    dispatch({ type: RESET_PASSWORD_FAILED })
   }
-}

@@ -1,25 +1,24 @@
 import style from './feed-page.module.css'
 import { FeedOrders } from '../../components/FeedOrders/FeedOrders'
 import { Preloader } from '../../components/Preloader/Preloader'
-import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import {
   FEED_CONNECTION_CLOSE,
   FEED_CONNECTION_INIT
 } from '../../services/actions/feed-orders'
 import { FeedOrdersState } from '../../components/FeedOrdersState/FeedOrdersState'
-import { TState } from '../../services/reducers'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 
 export const FeedPage = () => {
-  const isConnected = useSelector((state: any) => state.feedOrders.isOpen)
-  const feedOrdersList = useSelector((state: TState) => state.feedOrders.orders)
-  const dispatch = useDispatch()
+  const isConnected = useAppSelector((state: any) => state.feedOrders.isOpen)
+  const feedOrdersList = useAppSelector(state => state.feedOrders.orders)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!isConnected) {
       dispatch({
         type: FEED_CONNECTION_INIT,
-        payload: '/all'
+        wsUrl: '/all'
       })
     }
 

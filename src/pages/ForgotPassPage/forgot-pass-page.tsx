@@ -3,23 +3,22 @@ import {
   EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { recoverPassword } from '../../services/actions/recover-password'
-import { TState } from '../../services/reducers'
 import style from './../LoginPage/login-page.module.css'
 
 export const ForgotPassPage = () => {
   const [email, setEmail] = useState('')
   const history = useHistory()
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
 
   const inputEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
-  const isPasswordRecovered = useSelector(
-    (state: TState) => state.recoverPassword.recoverPasswordSuccess
+  const isPasswordRecovered = useAppSelector(
+    state => state.recoverPassword.recoverPasswordSuccess
   )
 
   useEffect(() => {

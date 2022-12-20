@@ -1,11 +1,11 @@
 import style from './order-ingredient.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC, useCallback, useRef } from 'react'
-import { useDispatch } from 'react-redux'
 import { delIngredient } from '../../services/actions'
 import dragIcon from './../../images/constructor/Vector.png'
 import { useDrag, useDrop } from 'react-dnd'
 import { BUN, TIngredientItem } from '../../services/types/data'
+import { useAppDispatch } from '../../hooks'
 
 type TOrderIngredient = {
   item: TIngredientItem
@@ -20,7 +20,7 @@ export const OrderIngredient: FC<TOrderIngredient> = ({
 }) => {
   const { name, price, image } = item
 
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
 
   const deleteIngredient = useCallback(
     (item: any) => {

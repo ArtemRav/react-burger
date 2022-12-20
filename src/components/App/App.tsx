@@ -16,17 +16,16 @@ import { ProtectedRoute } from '../protected-route'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Modal } from '../Modal/Modal'
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
-import { useDispatch, useSelector } from 'react-redux'
-import { TState } from '../../services/reducers'
 import { fetchIngredients } from '../../services/actions/ingredients'
 import { FeedPage } from '../../pages/FeedPage/feed-page'
 import { OrderPage } from '../../pages/OrderPage/order-page'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 
 function App() {
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
 
-  const ingredientsList = useSelector(
-    (state: TState) => state.allIngredients.ingredientsList
+  const ingredientsList = useAppSelector(
+    state => state.allIngredients.ingredientsList
   )
 
   useEffect(() => {

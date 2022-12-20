@@ -2,10 +2,9 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerType } from './BurgerType/BurgerType'
 import burgerIngredientsCss from './burger-ingredients.module.css'
-import { useSelector } from 'react-redux'
 
-import { TState } from '../../services/reducers'
 import { BUN, MAIN, SAUCE, TIngredientItem } from '../../services/types/data'
+import { useAppSelector } from '../../hooks'
 
 export const BurgerIngredients = () => {
   type TTab = {
@@ -15,17 +14,15 @@ export const BurgerIngredients = () => {
 
   type TToggleTab = (tab: TTab) => void
 
-  const ingredientsList = useSelector(
-    (state: TState) => state.allIngredients.ingredientsList
+  const ingredientsList = useAppSelector(
+    state => state.allIngredients.ingredientsList
   )
   const [activeTab, setActiveTab] = useState<TTab | any>({
     id: BUN,
     name: 'Булки'
   })
 
-  const tabsList = useSelector(
-    (state: TState) => state.allIngredients.ingredientTabs
-  )
+  const tabsList = useAppSelector(state => state.allIngredients.ingredientTabs)
   const tabsRef = useRef<HTMLDivElement | any>(null)
 
   const burgersBun = useMemo(

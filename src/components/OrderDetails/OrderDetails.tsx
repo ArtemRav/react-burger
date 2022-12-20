@@ -1,7 +1,6 @@
 import orderDetailsCss from './order-details.module.css'
 import orderAccepted from '../../images/ingridients/order-accepted.jpg'
-import { useSelector } from 'react-redux'
-import { TState } from '../../services/reducers'
+import { useAppSelector } from '../../hooks'
 
 export const OrderDetails = () => {
   const {
@@ -11,7 +10,7 @@ export const OrderDetails = () => {
     titleInfo,
     titleOrderFailed,
     isLoading
-  } = useSelector((state: TState) => state.curOrder)
+  } = useAppSelector(state => state.curOrder)
 
   const getIsLoading = () => {
     return (

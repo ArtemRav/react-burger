@@ -2,10 +2,10 @@ import { FC, useCallback, useMemo } from 'react'
 import style from './order-ingredient-list.module.css'
 
 import { OrderIngredient } from '../OrderIngredient/OrderIngredient'
-import { useDispatch } from 'react-redux'
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BUN, TIngredientItem } from '../../services/types/data'
+import { useAppDispatch } from '../../hooks'
 
 type TOrderIngredients = {
   orderIngredients: Array<TIngredientItem>
@@ -16,7 +16,7 @@ export const OrderIngredientList: FC<TOrderIngredients> = ({
 }) => {
   type TMoveCard = (dragIndex: number, hoverIndex: number) => void
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const bun = useMemo(
     () =>

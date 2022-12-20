@@ -1,7 +1,6 @@
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC, useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { TState } from '../../services/reducers'
+import { useAppSelector } from '../../hooks'
 import {
   BUN,
   TOrdersListItem,
@@ -17,8 +16,8 @@ export const FeedOrdersItem: FC<TOrdersListItem> = ({
   createdAt,
   ingredients
 }) => {
-  const storeIngredients = useSelector(
-    (state: TState) => state.allIngredients.ingredientsList
+  const storeIngredients = useAppSelector(
+    state => state.allIngredients.ingredientsList
   )
   const limitIngredients = 6
 

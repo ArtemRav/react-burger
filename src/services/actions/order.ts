@@ -23,7 +23,7 @@ export type TOrderActions =
   | TGetOrderSuccessAction
   | TGetOrderFailedAction
 
-export const getOrder =
+export const getOrder: any =
   (data: { ingredients: (string | undefined)[] }) =>
   async (dispatch: AppDispatch) => {
     dispatch({ type: GET_ORDER_REQUEST })

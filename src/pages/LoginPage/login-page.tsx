@@ -5,14 +5,14 @@ import {
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useAppDispatch } from '../../hooks'
 import { getUser } from '../../services/actions/user'
 import style from './login-page.module.css'
 
 export const LoginPage = () => {
   const [form, setValue] = useState({ email: '', password: '' })
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })

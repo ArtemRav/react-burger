@@ -1,11 +1,10 @@
 import { useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { BaseSum } from '../../components/BaseSum/BaseSum'
 import { OrderItem } from '../../components/OrderItem/OrderItem'
 import { Preloader } from '../../components/Preloader/Preloader'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { getOrderMaked } from '../../services/actions/feed-orders-item'
-import { TState } from '../../services/reducers'
 import { BUN, TIngredientItem } from '../../services/types/data'
 import style from './order-page.module.css'
 
@@ -19,21 +18,19 @@ export type TOrderPage = {
 }
 
 export const OrderPage = () => {
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
   const { id } = useParams<{ id: string }>()
-  const orderMakedRequest = useSelector(
-    (state: TState) => state.feedOrdersItem.orderMakedRequest
+  const orderMakedRequest = useAppSelector(
+    state => state.feedOrdersItem.orderMakedRequest
   )
-  const orderData = useSelector(
-    (state: TState) => state.feedOrdersItem.orderContent
-  )
+  const orderData = useAppSelector(state => state.feedOrdersItem.orderContent)
 
   useEffect(() => {
     dispatch(getOrderMaked(id))
   }, [dispatch, id])
 
-  const storeIngredients = useSelector(
-    (state: TState) => state.allIngredients.ingredientsList
+  const storeIngredients = useAppSelector(
+    state => state.allIngredients.ingredientsList
   )
 
   const orderIngredients = useMemo(() => {
@@ -42,7 +39,7 @@ export const OrderPage = () => {
         orderData.ingredients.includes(item._id)
       )
       const setIngredients = new Set(ingredients)
-      return [...setIngredients].map((item: TIngredientItem) => {
+      return [...setIngredients].map(item => {
         const allCurIngredients = ingredients.filter(
           elem => elem._id === item._id
         )
@@ -59,8 +56,7 @@ export const OrderPage = () => {
   const orderPrice = useMemo(() => {
     if (orderIngredients.length) {
       return orderIngredients.reduce(
-        (acc, el: TIngredientItem) =>
-          el.type === BUN ? acc + el.price * 2 : acc + el.price,
+        (acc, el) => (el.type === BUN ? acc + el.price * 2 : acc + el.price),
         0
       )
     }

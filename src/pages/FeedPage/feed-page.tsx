@@ -10,12 +10,13 @@ import { FeedOrdersState } from '../../components/FeedOrdersState/FeedOrdersStat
 import { useAppDispatch, useAppSelector } from '../../hooks'
 
 export const FeedPage = () => {
-  const isConnected = useAppSelector((state: any) => state.feedOrders.isOpen)
+  const isCreated = useAppSelector(state => state.feedOrders.isCreated)
+  const isConnected = useAppSelector(state => state.feedOrders.isOpen)
   const feedOrdersList = useAppSelector(state => state.feedOrders.orders)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!isConnected) {
+    if (!isCreated && !isConnected) {
       dispatch({
         type: FEED_CONNECTION_INIT,
         wsUrl: '/all'
@@ -29,7 +30,7 @@ export const FeedPage = () => {
         })
       }
     }
-  }, [dispatch, isConnected])
+  }, [dispatch, isConnected, isCreated])
 
   return (
     <main className={`${style.main} pl-5 pr-5`}>

@@ -20,6 +20,7 @@ export const socketMiddleware = (
 
       if (type === wsInit && wsUrl) {
         socket = new WebSocket(`${wsUrlApi}${wsUrl}`)
+        dispatch({ type: wsInit })
         isConnected = true
       }
 
@@ -39,11 +40,7 @@ export const socketMiddleware = (
 
         socket.onmessage = event => {
           const { data } = event
-          if (!data.success) {
-            dispatch({ type: onError, error: data.message })
-          } else {
-            dispatch({ type: onMessage, payload: data })
-          }
+          dispatch({ type: onMessage, payload: data })
         }
 
         socket.onclose = event => {

@@ -3,7 +3,7 @@ import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { SyntheticEvent, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'

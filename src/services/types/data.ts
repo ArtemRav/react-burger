@@ -47,6 +47,7 @@ export type TOrdersListItem = {
 
 export type TOrdersList = {
   orders: Array<TOrdersListItem>
+  isCreated: boolean
   isOpen?: boolean
   total: number
   totalToday: number

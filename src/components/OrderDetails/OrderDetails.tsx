@@ -4,14 +4,9 @@ import { useAppSelector } from '../../hooks'
 import Spinner from '../spinner/spinner'
 
 export const OrderDetails = () => {
-  const {
-    number,
-    titleId,
-    titleState,
-    titleInfo,
-    titleOrderFailed,
-    isLoading
-  } = useAppSelector(state => state.curOrder)
+  const { number, titleId, titleState, titleInfo, isLoading } = useAppSelector(
+    state => state.curOrder
+  )
 
   const getTitleNumber = () => {
     return (
@@ -19,16 +14,6 @@ export const OrderDetails = () => {
         className={`text-center text-highlight text text_type_digits-large mb-8`}
       >
         {number}
-      </p>
-    )
-  }
-
-  const getTitleFailed = () => {
-    return (
-      <p
-        className={`text-center text-highlight text text_type_main-large mb-8`}
-      >
-        {titleOrderFailed}
       </p>
     )
   }

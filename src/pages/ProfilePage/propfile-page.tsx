@@ -27,12 +27,13 @@ export const ProfilePage = () => {
   const [hasControls, setControls] = useState(false)
   const { email, name } = useAppSelector(state => state.user.userInfo)
 
+  const isCreated = useAppSelector(state => state.feedOrders.isCreated)
   const isConnected = useAppSelector((state: any) => state.userOrders.isOpen)
   const userOrdersList = useAppSelector(state => state.userOrders.orders)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!isConnected) {
+    if (!isCreated && !isConnected) {
       dispatch({
         type: USER_CONNECTION_INIT,
         wsUrl: `?token=${getCookie('accessToken')}`
@@ -46,7 +47,7 @@ export const ProfilePage = () => {
         })
       }
     }
-  }, [dispatch, isConnected])
+  }, [dispatch, isConnected, isCreated])
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })

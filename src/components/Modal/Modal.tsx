@@ -35,7 +35,7 @@ export const Modal: FC<TModal> = ({ title, children, closeModal }) => {
       <ModalOverlay closeModal={closeModal} />
 
       <div className={`${modal}`}>
-        <div className={`${header} p-10`}>
+        <div className={`${header} pt-10 pr-10 pl-10`}>
           <span className="text text_type_main-large">{title || ''}</span>
           <CloseIcon onClick={closeModal} type="primary" />
         </div>

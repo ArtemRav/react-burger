@@ -8,22 +8,13 @@ import { getOrderMaked } from '../../services/actions/feed-orders-item'
 import { BUN, TIngredientItem } from '../../services/types/data'
 import style from './order-page.module.css'
 
-export type TOrderPage = {
-  number: string
-  name: string
-  state: string
-  orderItems: Array<TIngredientItem>
-  date: string
-  sum: number
-}
-
 export const OrderPage = () => {
   const dispatch = useAppDispatch()
   const { id } = useParams<{ id: string }>()
+  const orderData = useAppSelector(state => state.feedOrdersItem.orderContent)
   const orderMakedRequest = useAppSelector(
     state => state.feedOrdersItem.orderMakedRequest
   )
-  const orderData = useAppSelector(state => state.feedOrdersItem.orderContent)
 
   useEffect(() => {
     dispatch(getOrderMaked(id))

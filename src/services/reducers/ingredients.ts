@@ -9,7 +9,7 @@ import {
 } from '../actions/ingredients'
 import { BUN, MAIN, SAUCE, TIngredientsInfo } from '../types/data'
 
-const initialState = {
+const initialState: TIngredientsInfo = {
   ingredientsRequest: false,
   ingredientsFailed: false,
   ingredientsList: [],
@@ -21,7 +21,7 @@ const initialState = {
 }
 
 export const ingredientsReducer = (
-  state: TIngredientsInfo = initialState,
+  state = initialState,
   action: TIngredientsActions
 ) => {
   switch (action.type) {

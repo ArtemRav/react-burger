@@ -6,7 +6,7 @@ import {
 } from '../actions/order'
 import { TOrder } from '../types/data'
 
-const initialState = {
+const initialState: TOrder = {
   number: 0,
   titleId: 'идентификатор заказа',
   titleState: 'Ваш заказ начали готовить',
@@ -16,10 +16,7 @@ const initialState = {
   orderFailed: false
 }
 
-export const orderReducer = (
-  state: TOrder = initialState,
-  action: TOrderActions
-) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case GET_ORDER_REQUEST:
       return { ...state, orderRequest: true, orderFailed: false }

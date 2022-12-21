@@ -4,8 +4,9 @@ import {
   RECOVER_PASSWORD_SUCCESS,
   TRecoverPasswordActions
 } from '../actions/recover-password'
+import { TRecoverPassword } from '../types/data'
 
-const initialState = {
+const initialState: TRecoverPassword = {
   recoverPasswordRequest: false,
   recoverPasswordSuccess: false,
   recoverPasswordFailed: false

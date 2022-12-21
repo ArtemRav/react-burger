@@ -13,6 +13,14 @@ export type TUser = {
   password: string
 }
 
+export type TUserState = {
+  loginRequest: boolean
+  loginFailed: boolean
+  loginSuccess: boolean
+  isAuthChecked: boolean
+  userInfo: TUser | null
+}
+
 export type TIngredientsInfo = {
   ingredientsRequest: boolean
   ingredientsFailed: boolean
@@ -22,6 +30,18 @@ export type TIngredientsInfo = {
 
 export type TOrderIngredient = {
   items: Array<TIngredientItem>
+}
+
+export type TRecoverPassword = {
+  recoverPasswordRequest: boolean
+  recoverPasswordSuccess: boolean
+  recoverPasswordFailed: boolean
+}
+
+export type TResetPassword = {
+  resetPasswordRequest: boolean
+  resetPasswordSuccess: boolean
+  resetPasswordFailed: boolean
 }
 
 export type TOrder = {
@@ -42,6 +62,21 @@ export type TOrdersListItem = {
   createdAt: string
   updatedAt: string
   statusClass: string
+  ingredients: Array<string>
+}
+
+export type TOrdersItem = {
+  orderMakedRequest: boolean
+  orderMakedFailed: boolean
+  orderContent: TFeedOrdersItemData | any
+}
+
+export type TFeedOrdersItemData = {
+  _id: string
+  name: string
+  status: string
+  number: number
+  date: string
   ingredients: Array<string>
 }
 

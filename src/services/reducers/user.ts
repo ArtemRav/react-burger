@@ -5,8 +5,9 @@ import {
   TOGGLE_USER_AUTH_CHECKED,
   TUserActions
 } from '../actions/user'
+import { TUserState } from '../types/data'
 
-const initialState = {
+const initialState: TUserState = {
   loginRequest: false,
   loginFailed: false,
   loginSuccess: false,

@@ -4,21 +4,23 @@ import {
   FEED_ORDERS_ITEM_FAILED,
   TFeedOrdersItem
 } from '../actions/feed-orders-item'
+import { TOrdersItem } from '../types/data'
 
-const initialState = {
-  orderContent: {},
+const initialState: TOrdersItem = {
+  orderContent: {
+    _id: '',
+    name: '',
+    status: '',
+    number: 0,
+    date: '',
+    ingredients: []
+  },
   orderMakedRequest: false,
   orderMakedFailed: false
 }
 
-// type TInitState = {
-//   orderContent: Object,
-//   orderMakedRequest: false,
-//   orderMakedFailed: false
-// }
-
 export const feedOrdersItemReducer = (
-  state: any = initialState,
+  state = initialState,
   action: TFeedOrdersItem
 ) => {
   switch (action.type) {

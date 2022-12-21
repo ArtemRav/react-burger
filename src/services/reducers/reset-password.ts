@@ -4,8 +4,9 @@ import {
   RESET_PASSWORD_SUCCESS,
   TResetPasswordActions
 } from '../actions/reset-password'
+import { TResetPassword } from '../types/data'
 
-const initialState = {
+const initialState: TResetPassword = {
   resetPasswordRequest: false,
   resetPasswordSuccess: false,
   resetPasswordFailed: false

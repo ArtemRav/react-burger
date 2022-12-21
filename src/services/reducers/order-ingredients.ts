@@ -6,12 +6,12 @@ import {
 } from '../actions/index'
 import { BUN, TOrderIngredient } from '../types/data'
 
-const initialState = {
+const initialState: TOrderIngredient = {
   items: []
 }
 
 export const orderIngredientsReducer = (
-  state: TOrderIngredient = initialState,
+  state = initialState,
   action: TIngredientDetailsActions
 ) => {
   switch (action.type) {

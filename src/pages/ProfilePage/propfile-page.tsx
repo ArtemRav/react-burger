@@ -1,5 +1,5 @@
 import style from './profile-page.module.css'
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { NavLink, Route, Switch, useLocation } from 'react-router-dom'
 import {
   Button,
   Input
@@ -23,17 +23,23 @@ import { useAppDispatch, useAppSelector } from '../../hooks'
 
 export const ProfilePage = () => {
   const history = useHistory()
+  const dispatch = useAppDispatch()
+  const routeParams = useLocation()
+
   const [form, setValue] = useState({ name: '', email: '', password: '' })
   const [hasControls, setControls] = useState(false)
   const { email, name } = useAppSelector(state => state.user.userInfo)
 
-  const isCreated = useAppSelector(state => state.feedOrders.isCreated)
+  const isCreated = useAppSelector(state => state.userOrders.isCreated)
   const isConnected = useAppSelector((state: any) => state.userOrders.isOpen)
   const userOrdersList = useAppSelector(state => state.userOrders.orders)
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!isCreated && !isConnected) {
+    if (
+      routeParams.pathname === '/profile/orders' &&
+      !isCreated &&
+      !isConnected
+    ) {
       dispatch({
         type: USER_CONNECTION_INIT,
         wsUrl: `?token=${getCookie('accessToken')}`
@@ -47,7 +53,7 @@ export const ProfilePage = () => {
         })
       }
     }
-  }, [dispatch, isConnected, isCreated])
+  }, [dispatch, isConnected, isCreated, routeParams])
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })

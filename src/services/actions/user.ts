@@ -47,7 +47,7 @@ export const getUser: any = (data: TUser) => async (dispatch: AppDispatch) => {
   }
 }
 
-export const getUserWithToken = () => async (dispatch: AppDispatch) => {
+export const getUserWithToken: any = () => async (dispatch: AppDispatch) => {
   dispatch({ type: GET_USER_REQUEST })
   try {
     const res = await getDataWithToken('auth/user')

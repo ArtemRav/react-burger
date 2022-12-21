@@ -1,6 +1,7 @@
 import orderDetailsCss from './order-details.module.css'
 import orderAccepted from '../../images/ingridients/order-accepted.jpg'
 import { useAppSelector } from '../../hooks'
+import Spinner from '../spinner/spinner'
 
 export const OrderDetails = () => {
   const {
@@ -11,16 +12,6 @@ export const OrderDetails = () => {
     titleOrderFailed,
     isLoading
   } = useAppSelector(state => state.curOrder)
-
-  const getIsLoading = () => {
-    return (
-      <p
-        className={`text-center text-highlight text text_type_main-large mb-8`}
-      >
-        Идет загрузка ...
-      </p>
-    )
-  }
 
   const getTitleNumber = () => {
     return (
@@ -73,7 +64,7 @@ export const OrderDetails = () => {
     return (
       <>
         {!!number && getTitleNumber()}
-        {!number && getTitleFailed()}
+        {!number && <Spinner />}
         {!!number && getFullForm()}
       </>
     )
@@ -81,7 +72,7 @@ export const OrderDetails = () => {
 
   return (
     <div className={`${orderDetailsCss.wrapper} pb-30`}>
-      {isLoading && getIsLoading()}
+      {isLoading && <Spinner />}
       {!isLoading && getDetails()}
     </div>
   )

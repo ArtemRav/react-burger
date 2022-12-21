@@ -3,7 +3,7 @@ import { refreshTokenRequest } from '../../utils/burger-api'
 import type { AppDispatch, RootState } from '../types'
 
 export const socketMiddleware = (
-  wsUrl: string,
+  wsUrlApi: string,
   wsActions: { [key: string]: any }
 ): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -14,12 +14,12 @@ export const socketMiddleware = (
 
     return next => action => {
       const { dispatch } = store
-      const { type, payload } = action
+      const { type, wsUrl } = action
       const { wsInit, onOpen, wsClose, onError, onClosed, onMessage } =
         wsActions
 
-      if (type === wsInit && payload) {
-        socket = new WebSocket(`${wsUrl}${payload}`)
+      if (type === wsInit && wsUrl) {
+        socket = new WebSocket(`${wsUrlApi}${wsUrl}`)
         isConnected = true
       }
 
@@ -39,7 +39,11 @@ export const socketMiddleware = (
 
         socket.onmessage = event => {
           const { data } = event
-          dispatch({ type: onMessage, payload: data })
+          if (!data.success) {
+            dispatch({ type: onError, error: data.message })
+          } else {
+            dispatch({ type: onMessage, payload: data })
+          }
         }
 
         socket.onclose = event => {

@@ -11,6 +11,12 @@ const initialState = {
   orderMakedFailed: false
 }
 
+// type TInitState = {
+//   orderContent: Object,
+//   orderMakedRequest: false,
+//   orderMakedFailed: false
+// }
+
 export const feedOrdersItemReducer = (
   state: any = initialState,
   action: TFeedOrdersItem

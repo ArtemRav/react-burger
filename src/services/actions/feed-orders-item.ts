@@ -31,9 +31,7 @@ export const getOrderMaked: any =
     try {
       const { success, orders } = await getOrderByNumber(number)
       if (!success) {
-        throw new Error(
-          'Не удалось получить информацию по переданному номеру заказа.'
-        )
+        throw new Error(`Не удалось получить информацию по заказу №${number}`)
       }
       const status = orders[0].status === 'done' ? 'Выполнен' : 'Готовится'
       const statusClass = orders[0].status === 'done' ? 'font-ready' : ''

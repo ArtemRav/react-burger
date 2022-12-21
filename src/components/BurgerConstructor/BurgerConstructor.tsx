@@ -52,18 +52,16 @@ export const BurgerConstructor = () => {
     dispatch(addIngredient(ingredient))
   }
 
-  const openModal = useCallback(
-    (event: SyntheticEvent<Element, Event>) => {
-      if (isAutorized) {
-        const data = { ingredients: ingredientIds }
-        dispatch(getOrder(data))
-        showModal()
-      } else {
-        history.push({ pathname: '/login', state: { from: location } })
-      }
-    },
-    [dispatch, showModal, ingredientIds, history, location, isAutorized]
-  )
+  const openModal = useCallback(() => {
+    if (isAutorized) {
+      const data = { ingredients: ingredientIds }
+      dispatch(getOrder(data))
+      showModal()
+    } else {
+      showModal()
+      history.push({ pathname: '/login', state: { from: location } })
+    }
+  }, [dispatch, showModal, ingredientIds, history, location, isAutorized])
 
   const closeModal = useCallback(() => {
     hideModal()
@@ -82,14 +80,16 @@ export const BurgerConstructor = () => {
           <p className="mr-2 text text_type_digits-default">{countSum}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={openModal}
-        >
-          Оформить заказ
-        </Button>
+        {orderIngredients.length && (
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={openModal}
+          >
+            Оформить заказ
+          </Button>
+        )}
       </div>
 
       {modalOpened && (

@@ -14,7 +14,7 @@ export const FeedOrders: FC<TOrdersHistory> = ({ route, ordersList }) => {
 
   return (
     <section className={`${style['list-orders']} app-scroll pr-2`}>
-      {ordersList.map((item: TOrdersListItem, idx) => {
+      {ordersList.map((item, idx) => {
         return (
           <Link
             className="link"

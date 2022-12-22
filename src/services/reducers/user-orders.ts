@@ -40,7 +40,10 @@ export const userOrdersReducer = (
         ...state,
         total,
         totalToday,
-        orders: [...state.orders, ...orders]
+        orders: [...state.orders, ...orders].sort(
+          (a, b) =>
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+        )
       }
 
     default:

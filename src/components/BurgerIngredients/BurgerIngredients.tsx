@@ -3,7 +3,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerType } from './BurgerType/BurgerType'
 import burgerIngredientsCss from './burger-ingredients.module.css'
 
-import { BUN, MAIN, SAUCE, TIngredientItem } from '../../services/types/data'
+import { BUN, MAIN, SAUCE } from '../../services/types/data'
 import { useAppSelector } from '../../hooks'
 
 export const BurgerIngredients = () => {
@@ -26,16 +26,15 @@ export const BurgerIngredients = () => {
   const tabsRef = useRef<HTMLDivElement | any>(null)
 
   const burgersBun = useMemo(
-    () => ingredientsList.filter((item: TIngredientItem) => item.type === BUN),
+    () => ingredientsList.filter(item => item.type === BUN),
     [ingredientsList]
   )
   const burgersMain = useMemo(
-    () => ingredientsList.filter((item: TIngredientItem) => item.type === MAIN),
+    () => ingredientsList.filter(item => item.type === MAIN),
     [ingredientsList]
   )
   const burgersSauce = useMemo(
-    () =>
-      ingredientsList.filter((item: TIngredientItem) => item.type === SAUCE),
+    () => ingredientsList.filter(item => item.type === SAUCE),
     [ingredientsList]
   )
 

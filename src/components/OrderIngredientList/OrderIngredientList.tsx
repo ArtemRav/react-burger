@@ -23,15 +23,12 @@ export const OrderIngredientList: FC<TOrderIngredients> = ({
   const dispatch = useAppDispatch()
 
   const bun = useMemo(
-    () =>
-      orderIngredients.find(
-        (ingredient: TIngredientItem) => ingredient.type === BUN
-      ),
+    () => orderIngredients.find(ingredient => ingredient.type === BUN),
     [orderIngredients]
   )
 
   const bunIngredients = useMemo<Array<TIngredientItem>>(() => {
-    return orderIngredients.filter((item: TIngredientItem) => item.type !== BUN)
+    return orderIngredients.filter(item => item.type !== BUN)
   }, [orderIngredients])
 
   const moveCard = useCallback<TMoveCard>(

@@ -1,11 +1,7 @@
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC, useMemo } from 'react'
 import { useAppSelector } from '../../hooks'
-import {
-  BUN,
-  TOrdersListItem,
-  TIngredientItem
-} from '../../services/types/data'
+import { BUN, TOrdersListItem } from '../../services/types/data'
 import { BaseIcon } from '../BaseIcon/BaseIcon'
 import { BaseSum } from '../BaseSum/BaseSum'
 import style from './feed-orders-item.module.css'
@@ -59,7 +55,7 @@ export const FeedOrdersItem: FC<TOrdersListItem> = ({
 
       <div className={style['row-details']}>
         <div className={`${style['ingredients-icon-list']} ml-4`}>
-          {ingredientsVisible.map((item: TIngredientItem) => (
+          {ingredientsVisible.map(item => (
             <BaseIcon key={item._id} {...item} />
           ))}
           {overLimitQnt && (

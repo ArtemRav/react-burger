@@ -5,7 +5,7 @@ import { OrderItem } from '../../components/OrderItem/OrderItem'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { getOrderMaked } from '../../services/actions/feed-orders-item'
-import { BUN, TIngredientItem } from '../../services/types/data'
+import { BUN } from '../../services/types/data'
 import style from './order-page.module.css'
 
 export const OrderPage = () => {
@@ -77,7 +77,7 @@ export const OrderPage = () => {
           <div className={`text text_type_main-medium mb-6`}>Состав:</div>
 
           <ul className={`app-scroll mb-10 pr-24 ${style.order} `}>
-            {orderIngredients.map((item: TIngredientItem) => (
+            {orderIngredients.map(item => (
               <OrderItem key={item._id} {...item} />
             ))}
           </ul>

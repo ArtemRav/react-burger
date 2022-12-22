@@ -28,8 +28,7 @@ export const BurgerConstructor = () => {
 
   const countSum = useMemo(() => {
     return orderIngredients.reduce(
-      (acc, el: TIngredientItem) =>
-        el.type === BUN ? acc + el.price * 2 : acc + el.price,
+      (acc, el) => (el.type === BUN ? acc + el.price * 2 : acc + el.price),
       0
     )
   }, [orderIngredients])

@@ -31,7 +31,7 @@ export const ProfilePage = () => {
   const { email, name } = useAppSelector(state => state.user.userInfo)
 
   const isCreated = useAppSelector(state => state.userOrders.isCreated)
-  const isConnected = useAppSelector((state: any) => state.userOrders.isOpen)
+  const isConnected = useAppSelector(state => state.userOrders.isOpen)
   const userOrdersList = useAppSelector(state => state.userOrders.orders)
 
   useEffect(() => {

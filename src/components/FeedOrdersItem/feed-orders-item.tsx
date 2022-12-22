@@ -23,7 +23,10 @@ export const FeedOrdersItem: FC<TOrdersListItem> = ({
 
   const orderIngredients = useMemo(
     () =>
-      storeIngredients.filter((item: any) => ingredients.includes(item._id)),
+      storeIngredients.filter(item => {
+        const _id = item._id || ''
+        return ingredients.includes(_id)
+      }),
     [storeIngredients, ingredients]
   )
 
@@ -35,8 +38,7 @@ export const FeedOrdersItem: FC<TOrdersListItem> = ({
 
   const orderPrice = useMemo(() => {
     return orderIngredients.reduce(
-      (acc, el: TIngredientItem) =>
-        el.type === BUN ? acc + el.price * 2 : acc + el.price,
+      (acc, el) => (el.type === BUN ? acc + el.price * 2 : acc + el.price),
       0
     )
   }, [orderIngredients])

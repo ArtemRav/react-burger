@@ -12,7 +12,11 @@ const initialState: TUserState = {
   loginFailed: false,
   loginSuccess: false,
   isAuthChecked: false,
-  userInfo: null
+  userInfo: {
+    name: '',
+    email: '',
+    password: ''
+  }
 }
 
 export const userReducer = (state = initialState, action: TUserActions) => {
@@ -34,8 +38,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
         ...state,
         loginFailed: true,
         loginRequest: false,
-        loginSuccess: false,
-        userInfo: null
+        loginSuccess: false
       }
 
     case TOGGLE_USER_AUTH_CHECKED:

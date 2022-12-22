@@ -26,7 +26,7 @@ export const OrderPage = () => {
 
   const orderIngredients = useMemo(() => {
     if (storeIngredients.length && orderData?.ingredients?.length) {
-      const ingredients = storeIngredients.filter((item: any) =>
+      const ingredients = storeIngredients.filter(item =>
         orderData.ingredients.includes(item._id)
       )
       const setIngredients = new Set(ingredients)

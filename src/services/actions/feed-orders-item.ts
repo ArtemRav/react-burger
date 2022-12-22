@@ -24,7 +24,7 @@ export type TFeedOrdersItem =
   | TGetOrderMakedSuccessAction
   | TGetOrderMakedFailedAction
 
-export const getOrderMaked: any =
+export const getOrderMaked =
   (number: number | string) => async (dispatch: AppDispatch) => {
     dispatch({ type: FEED_ORDERS_ITEM_REQUEST })
 

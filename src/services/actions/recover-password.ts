@@ -24,11 +24,11 @@ export type TRecoverPasswordActions =
   | TRecoverPasswordSuccessAction
   | TRecoverPasswordFailedAction
 
-export const recoverPassword: any =
+export const recoverPassword =
   (data: TData) => async (dispatch: AppDispatch) => {
     dispatch({ type: RECOVER_PASSWORD_REQUEST })
     try {
-      const response: any = await postData('password-reset', data)
+      const response = await postData('password-reset', data)
       if (response.success) {
         dispatch({ type: RECOVER_PASSWORD_SUCCESS, data: response })
       } else {

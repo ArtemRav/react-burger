@@ -45,7 +45,7 @@ export type TIngredientsActions =
   | TIncreaseQntIngredientsAction
   | TDecreaseQntIngredientsAction
 
-export const fetchIngredients: any = () => async (dispatch: AppDispatch) => {
+export const fetchIngredients = () => async (dispatch: AppDispatch) => {
   dispatch({ type: GET_INGREDIENTS_REQUEST })
 
   try {

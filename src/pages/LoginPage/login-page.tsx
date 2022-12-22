@@ -11,7 +11,7 @@ import { getUser } from '../../services/actions/user'
 import style from './login-page.module.css'
 
 export const LoginPage = () => {
-  const [form, setValue] = useState({ email: '', password: '' })
+  const [form, setValue] = useState({ email: '', password: '', name: '' })
   const dispatch = useAppDispatch()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,9 +1,9 @@
 import styles from './nav-item.module.css'
 import { NavLink } from 'react-router-dom'
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 type TNavItem = {
-  children: any
+  children: ReactNode
   link: string
   name: string
 }

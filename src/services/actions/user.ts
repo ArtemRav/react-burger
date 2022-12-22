@@ -13,7 +13,7 @@ export type TGetUserRequestAction = {
 
 export type TGetUserSuccessAction = {
   readonly type: typeof GET_USER_SUCCESS
-  payload: any
+  payload: TUser
 }
 
 export type TGetUserFailedAction = {
@@ -30,10 +30,10 @@ export type TUserActions =
   | TGetUserFailedAction
   | TToggleUserAuthCheckedAction
 
-export const getUser: any = (data: TUser) => async (dispatch: AppDispatch) => {
+export const getUser = (data: TUser) => async (dispatch: AppDispatch) => {
   dispatch({ type: GET_USER_REQUEST })
   try {
-    const res: any = await postData('auth/login', data)
+    const res = await postData('auth/login', data)
     if (res.success) {
       const { refreshToken, accessToken, user } = res
 
@@ -47,7 +47,7 @@ export const getUser: any = (data: TUser) => async (dispatch: AppDispatch) => {
   }
 }
 
-export const getUserWithToken: any = () => async (dispatch: AppDispatch) => {
+export const getUserWithToken = () => async (dispatch: AppDispatch) => {
   dispatch({ type: GET_USER_REQUEST })
   try {
     const res = await getDataWithToken('auth/user')

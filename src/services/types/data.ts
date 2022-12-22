@@ -7,8 +7,10 @@ export type TTab = {
   name: string
 }
 
+export type TConstrElementType = 'top' | 'bottom' | undefined
+
 export type TUser = {
-  name?: string
+  name: string
   email: string
   password: string
 }
@@ -18,7 +20,7 @@ export type TUserState = {
   loginFailed: boolean
   loginSuccess: boolean
   isAuthChecked: boolean
-  userInfo: TUser | null
+  userInfo: TUser
 }
 
 export type TIngredientsInfo = {
@@ -86,7 +88,7 @@ export type TOrdersList = {
   isOpen?: boolean
   total: number
   totalToday: number
-  error?: any
+  error?: unknown
 }
 
 export type TIngredientItem = {

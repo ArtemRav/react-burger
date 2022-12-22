@@ -4,7 +4,11 @@ import style from './order-ingredient-list.module.css'
 import { OrderIngredient } from '../OrderIngredient/OrderIngredient'
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { BUN, TIngredientItem } from '../../services/types/data'
+import {
+  BUN,
+  TConstrElementType,
+  TIngredientItem
+} from '../../services/types/data'
 import { useAppDispatch } from '../../hooks'
 
 type TOrderIngredients = {
@@ -44,7 +48,7 @@ export const OrderIngredientList: FC<TOrderIngredients> = ({
     [bunIngredients, bun, dispatch]
   )
 
-  const getOrderBun = (type: any, title: string) => {
+  const getOrderBun = (type: TConstrElementType, title: string) => {
     return (
       bun && (
         <ConstructorElement

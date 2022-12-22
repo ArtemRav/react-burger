@@ -37,7 +37,7 @@ function App() {
 
   const ModalSwitch = () => {
     interface ILocation {
-      from?: any
+      from?: string
       background?: any
       pathname?: string
     }

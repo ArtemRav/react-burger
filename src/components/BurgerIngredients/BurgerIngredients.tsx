@@ -39,16 +39,22 @@ export const BurgerIngredients = () => {
     [ingredientsList]
   )
 
-  const bunNode: any = document.getElementById(BUN)
-  const sauceNode: any = document.getElementById(SAUCE)
-  const mainNode: any = document.getElementById(MAIN)
+  const bunNode: HTMLElement | null = document.getElementById(BUN)
+  const sauceNode: HTMLElement | null = document.getElementById(SAUCE)
+  const mainNode: HTMLElement | null = document.getElementById(MAIN)
 
   const scrollIngredients = useCallback(() => {
     const tabsNodeY = tabsRef.current.getBoundingClientRect().top + 40
 
-    const bunNodeY = bunNode.getBoundingClientRect().top - tabsNodeY
-    const sauceNodeY = sauceNode.getBoundingClientRect().top - tabsNodeY
-    const mainNodeY = mainNode.getBoundingClientRect().top - tabsNodeY
+    const bunNodeY = bunNode
+      ? bunNode.getBoundingClientRect().top - tabsNodeY
+      : 0
+    const sauceNodeY = sauceNode
+      ? sauceNode.getBoundingClientRect().top - tabsNodeY
+      : 0
+    const mainNodeY = mainNode
+      ? mainNode.getBoundingClientRect().top - tabsNodeY
+      : 0
 
     if (bunNodeY < 0 && sauceNodeY > 0 && mainNodeY > 0) {
       setActiveTab(tabsList.find(tab => tab.id === BUN))
@@ -68,7 +74,7 @@ export const BurgerIngredients = () => {
   }, [])
 
   useEffect(() => {
-    const tabsNode: any = tabsRef.current
+    const tabsNode: HTMLElement = tabsRef.current
     tabsNode.addEventListener('scroll', scrollIngredients)
 
     return () => {

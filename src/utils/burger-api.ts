@@ -24,7 +24,7 @@ export const refreshTokenRequest = () => {
 const checkAnswer = (res: Response) => {
   return res.ok
     ? res.json()
-    : res.json().then((err: any) => Promise.reject(err))
+    : res.json().then((err: unknown) => Promise.reject(err))
 }
 
 function sendRequest(url: string, options = {}) {
@@ -46,6 +46,15 @@ const checkToken: TCheckToken = async (err, url, options) => {
   } else {
     return Promise.reject(err)
   }
+}
+
+export const getOrderByNumber = (number: number | string) => {
+  return fetch(`${BURGER_API_URL}/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => checkAnswer(res))
 }
 
 const getHeaders = () => {

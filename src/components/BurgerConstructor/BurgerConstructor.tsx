@@ -3,36 +3,32 @@ import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { SyntheticEvent, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { Modal } from '../Modal/Modal'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { OrderIngredientList } from '../OrderIngredientList/OrderIngredientList'
 
-import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
 import { useDrop } from 'react-dnd'
 
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
 import useModal from '../../hooks/useModal'
-import { TState } from '../../services/reducers'
+import { BUN, TIngredientItem } from '../../services/types/data'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 
 export const BurgerConstructor = () => {
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
   const history = useHistory()
   const location = useLocation()
-  const orderIngredients = useSelector(
-    (state: TState) => state.orderIngredients.items
-  )
+  const orderIngredients = useAppSelector(state => state.orderIngredients.items)
   const { modalVisible: modalOpened, showModal, hideModal } = useModal()
-  const isAutorized = useSelector((state: TState) => state.user.loginSuccess)
+  const isAutorized = useAppSelector(state => state.user.loginSuccess)
 
   const countSum = useMemo(() => {
     return orderIngredients.reduce(
-      (acc, el: TIngredientItem) =>
-        el.type === BUN ? acc + el.price * 2 : acc + el.price,
+      (acc, el) => (el.type === BUN ? acc + el.price * 2 : acc + el.price),
       0
     )
   }, [orderIngredients])
@@ -55,18 +51,16 @@ export const BurgerConstructor = () => {
     dispatch(addIngredient(ingredient))
   }
 
-  const openModal = useCallback(
-    (event: SyntheticEvent<Element, Event>) => {
-      if (isAutorized) {
-        const data = { ingredients: ingredientIds }
-        dispatch(getOrder(data))
-        showModal()
-      } else {
-        history.push({ pathname: '/login', state: { from: location } })
-      }
-    },
-    [dispatch, showModal, ingredientIds, history, location, isAutorized]
-  )
+  const openModal = useCallback(() => {
+    if (isAutorized) {
+      const data = { ingredients: ingredientIds }
+      dispatch(getOrder(data))
+      showModal()
+    } else {
+      showModal()
+      history.push({ pathname: '/login', state: { from: location } })
+    }
+  }, [dispatch, showModal, ingredientIds, history, location, isAutorized])
 
   const closeModal = useCallback(() => {
     hideModal()
@@ -85,14 +79,16 @@ export const BurgerConstructor = () => {
           <p className="mr-2 text text_type_digits-default">{countSum}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={openModal}
-        >
-          Оформить заказ
-        </Button>
+        {orderIngredients.length && (
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={openModal}
+          >
+            Оформить заказ
+          </Button>
+        )}
       </div>
 
       {modalOpened && (

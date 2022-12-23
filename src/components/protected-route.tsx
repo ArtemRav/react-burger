@@ -1,17 +1,34 @@
-import { useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { FC, ReactNode, useCallback, useEffect } from 'react'
 import { Route, Redirect, useLocation } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../hooks'
 import {
   getUserWithToken,
   TOGGLE_USER_AUTH_CHECKED
 } from '../services/actions/user'
 import { Preloader } from './Preloader/Preloader'
 
-export const ProtectedRoute = ({ children, onlyUnAuth = false, ...rest }) => {
-  const isAuthChecked = useSelector(state => state.user.isAuthChecked)
-  const isAutorized = useSelector(state => state.user.loginSuccess)
-  const location = useLocation()
-  const dispatch = useDispatch()
+type TProtectedRoute = {
+  onlyUnAuth?: boolean
+  children: ReactNode
+  path: string
+  exact?: boolean
+}
+
+type LocationState = {
+  from: {
+    pathname: string
+  }
+}
+
+export const ProtectedRoute: FC<TProtectedRoute> = ({
+  children,
+  onlyUnAuth = false,
+  ...rest
+}) => {
+  const isAuthChecked = useAppSelector(state => state.user.isAuthChecked)
+  const isAutorized = useAppSelector(state => state.user.loginSuccess)
+  const location = useLocation<LocationState>()
+  const dispatch = useAppDispatch()
 
   const init = useCallback(async () => {
     await dispatch(getUserWithToken())

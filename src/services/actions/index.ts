@@ -1,33 +1,38 @@
-import { Dispatch } from 'react'
 import { v1 as uuidv1 } from 'uuid'
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
+import { AppDispatch } from '../types'
+import { BUN, TIngredientItem } from '../types/data'
 import {
   DECREASE_QNT_INGREDIENTS,
   DROP_QNT_ALL_BUNS,
   INCREASE_QNT_INGREDIENTS
 } from './ingredients'
+
 export const ADD_INGREDIENT_TO_ORDER = 'ADD_INGREDIENT_TO_ORDER'
 export const DEL_INGREDIENT_FROM_ORDER = 'DEL_INGREDIENT_FROM_ORDER'
 export const UPDATE_INGREDIENTS_ORDER = 'UPDATE_INGREDIENTS_ORDER'
 
-type TAddIngredient = {
-  type:
-    | typeof ADD_INGREDIENT_TO_ORDER
-    | typeof INCREASE_QNT_INGREDIENTS
-    | typeof DEL_INGREDIENT_FROM_ORDER
-    | typeof DROP_QNT_ALL_BUNS
-  item?: any
-  _id?: string
+export type TAddIngredientToOrderAction = {
+  readonly type: typeof ADD_INGREDIENT_TO_ORDER
+  item: TIngredientItem
 }
 
-type TDelIngredient = {
-  type: typeof DEL_INGREDIENT_FROM_ORDER | typeof DECREASE_QNT_INGREDIENTS
-  item?: any
-  _id?: string
+export type TDelIngredientFromOrderAction = {
+  readonly type: typeof DEL_INGREDIENT_FROM_ORDER
+  item: TIngredientItem
 }
+
+export type TUpdateIngredientsOrderAction = {
+  readonly type: typeof UPDATE_INGREDIENTS_ORDER
+  listItems: Array<TIngredientItem>
+}
+
+export type TIngredientDetailsActions =
+  | TAddIngredientToOrderAction
+  | TDelIngredientFromOrderAction
+  | TUpdateIngredientsOrderAction
 
 export const addIngredient =
-  (ingredient: TIngredientItem) => (dispatch: Dispatch<TAddIngredient>) => {
+  (ingredient: TIngredientItem) => (dispatch: AppDispatch) => {
     dispatch({
       type: ADD_INGREDIENT_TO_ORDER,
       item: {
@@ -49,7 +54,7 @@ export const addIngredient =
   }
 
 export const delIngredient =
-  (item: TIngredientItem) => (dispatch: Dispatch<TDelIngredient>) => {
+  (item: TIngredientItem) => (dispatch: AppDispatch) => {
     dispatch({
       type: DEL_INGREDIENT_FROM_ORDER,
       item

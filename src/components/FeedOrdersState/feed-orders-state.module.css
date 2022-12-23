@@ -1,0 +1,27 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 580px;
+}
+
+.main-list {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  max-height: 120px;
+  max-width: 216px;
+  justify-content: space-between;
+}
+
+.table {
+  display: flex;
+  width: 100%;
+}
+
+.ready,
+.process {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}

@@ -1,18 +1,24 @@
 import { combineReducers } from 'redux'
-import { ingredientsReducer } from './ingredients'
-import { orderReducer } from './order'
-import { orderIngredientsReducer } from './orderIngredients'
 import { userReducer } from './user'
+import { orderReducer } from './order'
+import { ingredientsReducer } from './ingredients'
+import { orderIngredientsReducer } from './order-ingredients'
 import { recoverPasswordReducer } from './recover-password'
 import { resetPasswordReducer } from './reset-password'
+import { feedOrdersItemReducer } from './feed-orders-item'
+import { feedOrdersReducer } from './feed-orders'
+import { userOrdersReducer } from './user-orders'
 
 export const rootReducer = combineReducers({
-  curOrder: orderReducer,
-  allIngredients: ingredientsReducer,
-  orderIngredients: orderIngredientsReducer,
   user: userReducer,
+  curOrder: orderReducer,
+  feedOrdersItem: feedOrdersItemReducer,
+  feedOrders: feedOrdersReducer,
+  userOrders: userOrdersReducer,
+  resetPassword: resetPasswordReducer,
+  allIngredients: ingredientsReducer,
   recoverPassword: recoverPasswordReducer,
-  resetPassword: resetPasswordReducer
+  orderIngredients: orderIngredientsReducer
 })
 
 export type TState = ReturnType<typeof rootReducer>

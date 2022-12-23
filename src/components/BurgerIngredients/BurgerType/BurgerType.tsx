@@ -1,7 +1,7 @@
 import { FC } from 'react'
+import { TIngredientItem } from '../../../services/types/data'
 import { BurgerItem } from '../Burgeritem/BurgerItem'
 import burgerType from './burger-type.module.css'
-import { TIngredientItem } from '../../../utils/ingredient-types'
 
 type TBurger = {
   title: string

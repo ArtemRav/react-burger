@@ -16,16 +16,16 @@ import { ProtectedRoute } from '../protected-route'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Modal } from '../Modal/Modal'
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails'
-import { OrderDetails } from '../OrderDetails/OrderDetails'
-import { useDispatch, useSelector } from 'react-redux'
-import { TState } from '../../services/reducers'
 import { fetchIngredients } from '../../services/actions/ingredients'
+import { FeedPage } from '../../pages/FeedPage/feed-page'
+import { OrderPage } from '../../pages/OrderPage/order-page'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 
 function App() {
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
 
-  const ingredientsList = useSelector(
-    (state: TState) => state.allIngredients.ingredientsList
+  const ingredientsList = useAppSelector(
+    state => state.allIngredients.ingredientsList
   )
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function App() {
 
   const ModalSwitch = () => {
     interface ILocation {
-      from?: any
+      from?: string
       background?: any
       pathname?: string
     }
@@ -55,43 +55,45 @@ function App() {
         <AppHeader />
 
         <Switch location={background || location}>
-          <ProtectedRoute onlyUnAuth={true} path="/login" exact={true}>
+          <Route path="/" exact>
+            <MainPage />
+          </Route>
+
+          <Route path="/feed" exact>
+            <FeedPage />
+          </Route>
+
+          <Route path="/feed/:id" exact>
+            <OrderPage />
+          </Route>
+
+          <Route path="/ingredients/:ingredientId" exact>
+            <IngredientDetails />
+          </Route>
+
+          <ProtectedRoute onlyUnAuth={true} path="/login" exact>
             <LoginPage />
           </ProtectedRoute>
 
-          <ProtectedRoute onlyUnAuth={true} path="/register" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/register" exact>
             <RegisterPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            onlyUnAuth={true}
-            path="/forgot-password"
-            exact={true}
-          >
+          <ProtectedRoute onlyUnAuth={true} path="/forgot-password" exact>
             <ForgotPassPage />
           </ProtectedRoute>
 
-          <ProtectedRoute onlyUnAuth={true} path="/reset-password" exact={true}>
+          <ProtectedRoute onlyUnAuth={true} path="/reset-password" exact>
             <ResetPassPage />
           </ProtectedRoute>
 
-          <Route path="/" exact={true}>
-            <MainPage />
-          </Route>
+          <ProtectedRoute path="/profile/orders/:id" exact>
+            <OrderPage />
+          </ProtectedRoute>
 
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
-
-          <ProtectedRoute
-            path="/profile/orders/:orderNumber"
-            children={<OrderDetails />}
-            exact={true}
-          />
-
-          <Route path="/ingredients/:ingredientId" exact={true}>
-            <IngredientDetails />
-          </Route>
 
           <Route>
             <NotFound404 />
@@ -108,15 +110,37 @@ function App() {
             }
           />
         )}
+
+        {background && (
+          <Route
+            path="/feed/:id"
+            children={
+              <Modal title="" closeModal={handleModalClose}>
+                <OrderPage />
+              </Modal>
+            }
+          />
+        )}
+
+        {background && (
+          <Route
+            path="/profile/orders/:id"
+            children={
+              <Modal title="" closeModal={handleModalClose}>
+                <OrderPage />
+              </Modal>
+            }
+          />
+        )}
       </>
     )
   }
 
   return (
     <BrowserRouter>
-      <StrictMode>
-        <ModalSwitch />
-      </StrictMode>
+      {/* <StrictMode> */}
+      <ModalSwitch />
+      {/* </StrictMode> */}
     </BrowserRouter>
   )
 }

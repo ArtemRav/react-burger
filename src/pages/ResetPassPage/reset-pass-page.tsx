@@ -4,17 +4,16 @@ import {
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { resetPassword } from '../../services/actions/reset-password'
-import { TState } from '../../services/reducers'
 import style from './../LoginPage/login-page.module.css'
 
 export const ResetPassPage = () => {
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
   const history = useHistory()
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
 
   const inputPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
@@ -24,8 +23,8 @@ export const ResetPassPage = () => {
     setToken(e.target.value)
   }
 
-  const isPasswordReseted = useSelector(
-    (state: TState) => state.resetPassword.resetPasswordSuccess
+  const isPasswordReseted = useAppSelector(
+    state => state.resetPassword.resetPasswordSuccess
   )
 
   useEffect(() => {

@@ -1,16 +1,16 @@
 import style from './order-ingredient.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { FC, useCallback, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { FC, SyntheticEvent, useCallback, useRef } from 'react'
 import { delIngredient } from '../../services/actions'
 import dragIcon from './../../images/constructor/Vector.png'
 import { useDrag, useDrop } from 'react-dnd'
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
+import { BUN, TIngredientItem } from '../../services/types/data'
+import { useAppDispatch } from '../../hooks'
 
 type TOrderIngredient = {
   item: TIngredientItem
   index: number
-  moveCard: any
+  moveCard: Function
 }
 
 export const OrderIngredient: FC<TOrderIngredient> = ({
@@ -20,10 +20,10 @@ export const OrderIngredient: FC<TOrderIngredient> = ({
 }) => {
   const { name, price, image } = item
 
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
 
   const deleteIngredient = useCallback(
-    (item: any) => {
+    (item: TIngredientItem) => {
       dispatch(delIngredient(item))
     },
     [dispatch]
@@ -52,8 +52,10 @@ export const OrderIngredient: FC<TOrderIngredient> = ({
       const hoverBoundingRect = ref.current?.getBoundingClientRect()
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-      const clientOffset: any = monitor.getClientOffset()
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      const clientOffset = monitor.getClientOffset()
+      const hoverClientY = clientOffset
+        ? clientOffset.y - hoverBoundingRect.top
+        : hoverBoundingRect.top
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
       }
@@ -77,7 +79,7 @@ export const OrderIngredient: FC<TOrderIngredient> = ({
 
   if (item.type !== BUN) drag(drop(ref))
 
-  const preventDefault = (e: any) => e.preventDefault()
+  const preventDefault = (e: SyntheticEvent) => e.preventDefault()
 
   return (
     <li

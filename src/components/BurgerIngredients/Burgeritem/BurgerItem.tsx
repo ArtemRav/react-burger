@@ -5,7 +5,7 @@ import {
 import style from './burger-item.module.css'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
-import { TIngredient } from '../../../utils/ingredient-types'
+import { TIngredient } from '../../../services/types/data'
 
 export const BurgerItem = ({ ingredient }: TIngredient) => {
   const location = useLocation()

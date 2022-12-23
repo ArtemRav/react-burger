@@ -2,10 +2,14 @@ import { FC, useCallback, useMemo } from 'react'
 import style from './order-ingredient-list.module.css'
 
 import { OrderIngredient } from '../OrderIngredient/OrderIngredient'
-import { useDispatch } from 'react-redux'
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { BUN, TIngredientItem } from '../../utils/ingredient-types'
+import {
+  BUN,
+  TConstrElementType,
+  TIngredientItem
+} from '../../services/types/data'
+import { useAppDispatch } from '../../hooks'
 
 type TOrderIngredients = {
   orderIngredients: Array<TIngredientItem>
@@ -16,18 +20,15 @@ export const OrderIngredientList: FC<TOrderIngredients> = ({
 }) => {
   type TMoveCard = (dragIndex: number, hoverIndex: number) => void
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const bun = useMemo(
-    () =>
-      orderIngredients.find(
-        (ingredient: TIngredientItem) => ingredient.type === BUN
-      ),
+    () => orderIngredients.find(ingredient => ingredient.type === BUN),
     [orderIngredients]
   )
 
   const bunIngredients = useMemo<Array<TIngredientItem>>(() => {
-    return orderIngredients.filter((item: TIngredientItem) => item.type !== BUN)
+    return orderIngredients.filter(item => item.type !== BUN)
   }, [orderIngredients])
 
   const moveCard = useCallback<TMoveCard>(
@@ -44,7 +45,7 @@ export const OrderIngredientList: FC<TOrderIngredients> = ({
     [bunIngredients, bun, dispatch]
   )
 
-  const getOrderBun = (type: any, title: string) => {
+  const getOrderBun = (type: TConstrElementType, title: string) => {
     return (
       bun && (
         <ConstructorElement

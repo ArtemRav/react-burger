@@ -1,18 +1,17 @@
 import detailsCss from './Ingredient-details.module.css'
-import { useSelector } from 'react-redux'
 import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { TState } from '../../services/reducers'
-import { TIngredientItem } from '../../utils/ingredient-types'
+import { TIngredientItem } from '../../services/types/data'
+import { useAppSelector } from '../../hooks'
 
 export const IngredientDetails = () => {
   const params = useParams<{ ingredientId: string }>()
 
-  const ingredientsList = useSelector(
-    (state: TState) => state.allIngredients.ingredientsList
+  const ingredientsList = useAppSelector(
+    state => state.allIngredients.ingredientsList
   )
 
-  const ingredient = useMemo<TIngredientItem>(
+  const ingredient = useMemo<TIngredientItem | any>(
     () =>
       ingredientsList.find(
         (item: TIngredientItem) => item._id === params.ingredientId

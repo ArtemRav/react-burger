@@ -1,5 +1,5 @@
 import style from './profile-page.module.css'
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { NavLink, Route, Switch, useLocation } from 'react-router-dom'
 import {
   Button,
   Input
@@ -12,17 +12,48 @@ import {
   useState
 } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { ProfileOrders } from '../ProfileOrders/profile-orders'
 import { logOut, patchData } from '../../utils/burger-api'
-import { TState } from '../../services/reducers'
+import { FeedOrders } from '../../components/FeedOrders/FeedOrders'
+import { getCookie } from '../../utils/cookie-helper'
+import {
+  USER_CONNECTION_CLOSE,
+  USER_CONNECTION_INIT
+} from '../../services/actions/user-orders'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 
 export const ProfilePage = () => {
   const history = useHistory()
+  const dispatch = useAppDispatch()
+  const routeParams = useLocation()
+
   const [form, setValue] = useState({ name: '', email: '', password: '' })
   const [hasControls, setControls] = useState(false)
+  const { email, name } = useAppSelector(state => state.user.userInfo)
 
-  const { email, name } = useSelector((state: TState) => state.user.userInfo)
+  const isCreated = useAppSelector(state => state.userOrders.isCreated)
+  const isConnected = useAppSelector(state => state.userOrders.isOpen)
+  const userOrdersList = useAppSelector(state => state.userOrders.orders)
+
+  useEffect(() => {
+    if (
+      routeParams.pathname === '/profile/orders' &&
+      !isCreated &&
+      !isConnected
+    ) {
+      dispatch({
+        type: USER_CONNECTION_INIT,
+        wsUrl: `?token=${getCookie('accessToken')}`
+      })
+    }
+
+    return () => {
+      if (isConnected) {
+        dispatch({
+          type: USER_CONNECTION_CLOSE
+        })
+      }
+    }
+  }, [dispatch, isConnected, isCreated, routeParams])
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value })
@@ -165,8 +196,8 @@ export const ProfilePage = () => {
         </Switch>
 
         <Switch>
-          <Route path="/profile/orders">
-            <ProfileOrders />
+          <Route path="/profile/orders" exact={true}>
+            <FeedOrders ordersList={userOrdersList} route="/profile/orders" />
           </Route>
         </Switch>
       </div>

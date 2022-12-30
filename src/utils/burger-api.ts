@@ -21,10 +21,9 @@ export const refreshTokenRequest = () => {
   })
 }
 
-const checkAnswer = (res: Response) => {
-  return res.ok
-    ? res.json()
-    : res.json().then((err: unknown) => Promise.reject(err))
+export const checkAnswer = (res: Response) => {
+  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+  // : res.json().then((err: unknown) => Promise.reject(err))
 }
 
 function sendRequest(url: string, options = {}) {

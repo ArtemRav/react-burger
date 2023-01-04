@@ -26,12 +26,12 @@ export const checkAnswer = (res: Response) => {
   // : res.json().then((err: unknown) => Promise.reject(err))
 }
 
-function sendRequest(url: string, options = {}) {
-  return fetch(url, options).then(res => checkAnswer(res))
+async function sendRequest(url: string, options = {}) {
+  return await fetch(url, options).then(res => checkAnswer(res))
 }
 
 export const getData = async (url: string) => {
-  return sendRequest(`${BURGER_API_URL}/${url}`)
+  return await sendRequest(`${BURGER_API_URL}/${url}`)
 }
 
 const checkToken: TCheckToken = async (err, url, options) => {

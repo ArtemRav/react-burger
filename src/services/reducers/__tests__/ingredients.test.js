@@ -5,10 +5,10 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   INCREASE_QNT_INGREDIENTS
-} from '../actions/ingredients'
-import { BUN, MAIN, SAUCE } from '../types/data'
-import { ingredientsReducer } from './ingredients'
-import { data } from './../../utils/data'
+} from '../../actions/ingredients'
+import { BUN, MAIN, SAUCE } from '../../types/data'
+import { ingredientsReducer } from '../ingredients'
+import { data } from '../../../utils/data'
 
 describe('Redux get ingredients', () => {
   beforeEach(() => {

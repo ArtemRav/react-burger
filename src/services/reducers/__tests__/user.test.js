@@ -1,4 +1,8 @@
+import thunk from 'redux-thunk'
+import configureMockStore from 'redux-mock-store'
 import {
+  getUser,
+  getUserWithToken,
   GET_USER_FAILED,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
@@ -55,5 +59,153 @@ describe('Redux auth reducer', () => {
       ...initialState,
       isAuthChecked: !initialState.isAuthChecked
     })
+  })
+})
+
+describe('USET thunks', () => {
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  test('Should successfully complete getUser', async () => {
+    // Arrange
+    const userStub = { name: 'pilot', email: 'pilot@gmail.com' }
+
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        success: true,
+        user: userStub,
+        refreshToken: 'ghsdfglkdjh234',
+        accessToken: 'nkbjsndflgkjn3435'
+      }),
+      ok: true
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_USER_REQUEST },
+      { type: GET_USER_SUCCESS, payload: userStub }
+    ]
+    const store = mockStore({
+      loginRequest: false,
+      loginFailed: false,
+      loginSuccess: false,
+      isAuthChecked: false,
+      userInfo: {
+        name: '',
+        email: '',
+        password: ''
+      }
+    })
+
+    // Act
+    await store.dispatch(getUser())
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
+  })
+
+  test('Should unsuccessfully complete getUser', async () => {
+    // Arrange
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        success: false,
+        error: 'Error auth'
+      }),
+      ok: false,
+      status: 401
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_USER_REQUEST },
+      { type: GET_USER_FAILED }
+    ]
+    const store = mockStore({
+      loginRequest: false,
+      loginFailed: false,
+      loginSuccess: false,
+      isAuthChecked: false
+    })
+
+    // Act
+    await store.dispatch(getUser())
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
+  })
+
+  test('Should successfully complete getUserWithToken', async () => {
+    // Arrange
+    const userStub = { name: 'pilot', email: 'pilot@gmail.com' }
+
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        success: true,
+        user: userStub
+      }),
+      ok: true
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_USER_REQUEST },
+      { type: GET_USER_SUCCESS, payload: userStub }
+    ]
+    const store = mockStore({
+      loginRequest: false,
+      loginFailed: false,
+      loginSuccess: false,
+      isAuthChecked: false,
+      userInfo: {
+        name: '',
+        email: '',
+        password: ''
+      }
+    })
+
+    // Act
+    await store.dispatch(getUserWithToken())
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
+  })
+
+  test('Should unsuccessfully complete getUserWithToken', async () => {
+    // Arrange
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        success: false,
+        error: 'Error auth'
+      }),
+      ok: false,
+      status: 401
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_USER_REQUEST },
+      { type: GET_USER_FAILED }
+    ]
+    const store = mockStore({
+      loginRequest: false,
+      loginFailed: false,
+      loginSuccess: false,
+      isAuthChecked: false
+    })
+
+    // Act
+    await store.dispatch(getUserWithToken())
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
   })
 })

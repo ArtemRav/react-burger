@@ -38,6 +38,5 @@ export const getOrder =
       })
     } catch (error) {
       dispatch({ type: GET_ORDER_FAILED })
-      console.error(error)
     }
   }

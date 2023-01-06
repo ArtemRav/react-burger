@@ -1,6 +1,7 @@
 /* eslint-disable jest/valid-expect */
 import {
   DROP_QNT_ALL_BUNS,
+  fetchIngredients,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -9,6 +10,8 @@ import {
 import { BUN, MAIN, SAUCE } from '../../types/data'
 import { ingredientsReducer } from '../ingredients'
 import { data } from '../../../utils/data'
+import thunk from 'redux-thunk'
+import configureMockStore from 'redux-mock-store'
 
 describe('Redux get ingredients', () => {
   beforeEach(() => {
@@ -119,5 +122,74 @@ describe('Redux get ingredients', () => {
         return item
       })
     })
+  })
+})
+
+describe('INGREDIENTS thunks', () => {
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  test('Should successfully complete fetchIngredients', async () => {
+    // Arrange
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue({ success: true, data }),
+      ok: true
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_INGREDIENTS_REQUEST },
+      {
+        type: GET_INGREDIENTS_SUCCESS,
+        data: data.map(ingredient => ({
+          ...ingredient,
+          qnt: 0
+        }))
+      }
+    ]
+    const store = mockStore({
+      ingredientsList: [],
+      ingredientsRequest: false,
+      ingredientsFailed: false
+    })
+
+    // Act
+    await store.dispatch(fetchIngredients())
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
+  })
+
+  test('should unsuccessfully complete fetchIngredients', async () => {
+    // Arrange
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest
+        .fn()
+        .mockResolvedValue({ success: false, message: 'Fetch error' }),
+      ok: false,
+      status: 500
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_INGREDIENTS_REQUEST },
+      { type: GET_INGREDIENTS_FAILED }
+    ]
+    const store = mockStore({
+      ingredientsList: [],
+      ingredientsRequest: false,
+      ingredientsFailed: false
+    })
+
+    // Act
+    await store.dispatch(fetchIngredients())
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
   })
 })

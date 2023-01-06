@@ -1,4 +1,7 @@
+import thunk from 'redux-thunk'
+import configureMockStore from 'redux-mock-store'
 import {
+  getOrder,
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS
@@ -44,5 +47,77 @@ describe('Redux order test', () => {
       orderFailed: true,
       orderRequest: false
     })
+  })
+})
+
+describe('ORDER thunks', () => {
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  test('Should successfully complete getOrder', async () => {
+    // Arrange
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        success: true,
+        order: {
+          number: 42
+        }
+      }),
+      ok: true
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_ORDER_REQUEST },
+      {
+        type: GET_ORDER_SUCCESS,
+        orderNum: 42
+      }
+    ]
+    const store = mockStore({
+      number: 0,
+      orderRequest: false,
+      orderFailed: false
+    })
+
+    // Act
+    await store.dispatch(getOrder(['id_1', 'id_2']))
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
+  })
+
+  test('Should unsuccessfully complete getOrder', async () => {
+    // Arrange
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        success: false,
+        message: 'Fetch error'
+      }),
+      ok: false,
+      status: 500
+    })
+
+    const middllewares = [thunk]
+    const mockStore = configureMockStore(middllewares)
+    const expectedActions = [
+      { type: GET_ORDER_REQUEST },
+      { type: GET_ORDER_FAILED }
+    ]
+    const store = mockStore({
+      number: 0,
+      orderRequest: false,
+      orderFailed: false
+    })
+
+    // Act
+    await store.dispatch(getOrder(['id_1', 'id_2']))
+    const evaluatedActions = store.getActions()
+
+    // Assert
+    expect(evaluatedActions).toEqual(expectedActions)
   })
 })

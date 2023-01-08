@@ -38,10 +38,12 @@ export const ProtectedRoute: FC<TProtectedRoute> = ({
   }, [dispatch, isAuthChecked])
 
   useEffect(() => {
-    init()
-  }, [init])
+    if (!onlyUnAuth) {
+      init()
+    }
+  }, [onlyUnAuth, init])
 
-  if (!isAuthChecked) {
+  if (!isAuthChecked && !onlyUnAuth) {
     return <Preloader />
   }
 

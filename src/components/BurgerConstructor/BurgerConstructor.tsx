@@ -71,6 +71,7 @@ export const BurgerConstructor = () => {
       ref={dropForAllRef}
       className={`${isHover ? burgerConstructorCss.onHover : ''} 
       ${burgerConstructorCss.wrapper}`}
+      data-test-id="drop-ingredient"
     >
       <OrderIngredientList orderIngredients={orderIngredients} />
 

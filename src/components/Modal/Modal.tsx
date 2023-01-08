@@ -37,9 +37,14 @@ export const Modal: FC<TModal> = ({ title, children, closeModal }) => {
       <div className={`${modal}`}>
         <div className={`${header} pt-10 pr-10 pl-10`}>
           <span className="text text_type_main-large">{title || ''}</span>
-          <CloseIcon onClick={closeModal} type="primary" />
+          <div
+            className="crsr-pointer"
+            onClick={closeModal}
+            data-test-id="modal-close-button"
+          >
+            <CloseIcon type="primary" />
+          </div>
         </div>
-
         <div className={body}>{children}</div>
       </div>
     </div>,

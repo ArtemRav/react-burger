@@ -28,6 +28,7 @@ export const ForgotPassPage = () => {
   }, [isPasswordRecovered, history])
 
   const updatePassword = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     dispatch(recoverPassword({ email }))
   }
 
@@ -43,7 +44,7 @@ export const ForgotPassPage = () => {
         </div>
 
         <div className={`mt-6 ${style.submit}`}>
-          <Button htmlType="button" type="primary" size="medium">
+          <Button htmlType="submit" type="primary" size="medium">
             Восстановить
           </Button>
         </div>
@@ -53,7 +54,7 @@ export const ForgotPassPage = () => {
         Восстановить пароль{' '}
         <Link
           className={`text text_type_main-default ${style.link}`}
-          to="/register"
+          to="/login"
         >
           Войти
         </Link>

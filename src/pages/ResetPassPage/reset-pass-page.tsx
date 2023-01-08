@@ -41,7 +41,7 @@ export const ResetPassPage = () => {
     <div className={style.wrapper}>
       <form className={style['auth-form']} onSubmit={dropPassword}>
         <h1 className={`text text_type_main-medium ${style.title}`}>
-          Восстановление пароля
+          Сброс пароля
         </h1>
 
         <div className="mt-6">

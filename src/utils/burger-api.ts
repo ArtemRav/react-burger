@@ -27,7 +27,8 @@ export const checkAnswer = (res: Response) => {
 }
 
 async function sendRequest(url: string, options = {}) {
-  return await fetch(url, options).then(res => checkAnswer(res))
+  const response = await fetch(url, options)
+  return checkAnswer(response)
 }
 
 export const getData = async (url: string) => {

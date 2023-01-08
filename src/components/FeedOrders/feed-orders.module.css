@@ -1,7 +1,0 @@
-.list-orders {
-  flex-direction: column;
-  max-width: 600px;
-  max-height: calc(100vh - 172px);
-  overflow-y: scroll;
-  overflow-x: hidden;
-}

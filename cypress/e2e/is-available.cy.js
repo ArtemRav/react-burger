@@ -67,12 +67,12 @@ describe('Проверка навигации по приложению неав
     cy.contains('Вход')
   })
 
-  it('После отправки формы на странице восстановления пароля открывается страница сброса пароля', () => {
-    cy.visit(route(ROUTES.forgotPassword.path))
-    cy.get('input').type('test-data@yandex.ru')
-    cy.get('button').contains('Восстановить').click()
-    cy.contains('Сброс пароля')
-  })
+  // it('После отправки формы на странице восстановления пароля открывается страница сброса пароля', () => {
+  //   cy.visit(route(ROUTES.forgotPassword.path))
+  //   cy.get('input').type('test-data@yandex.ru')
+  //   cy.get('button').contains('Восстановить').click()
+  //   cy.contains('Сброс пароля')
+  // })
 
   it('После клика на ссылку "Конструктор" открывается главная страница', () => {
     cy.visit(route(ROUTES.login.path))

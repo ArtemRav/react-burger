@@ -104,7 +104,7 @@ function App() {
           <Route
             path="/ingredients/:ingredientId"
             children={
-              <Modal title="Детали ингридиента" closeModal={handleModalClose}>
+              <Modal title="Детали ингредиента" closeModal={handleModalClose}>
                 <IngredientDetails />
               </Modal>
             }

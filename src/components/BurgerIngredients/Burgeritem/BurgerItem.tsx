@@ -23,6 +23,7 @@ export const BurgerItem = ({ ingredient }: TIngredient) => {
     <Link
       to={{ pathname: `/ingredients/${_id}`, state: { background: location } }}
       className={style.link}
+      data-test-id="ingredient"
     >
       <li
         key={_id}

@@ -21,18 +21,18 @@ export const refreshTokenRequest = () => {
   })
 }
 
-const checkAnswer = (res: Response) => {
-  return res.ok
-    ? res.json()
-    : res.json().then((err: unknown) => Promise.reject(err))
+export const checkAnswer = (res: Response) => {
+  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+  // : res.json().then((err: unknown) => Promise.reject(err))
 }
 
-function sendRequest(url: string, options = {}) {
-  return fetch(url, options).then(res => checkAnswer(res))
+async function sendRequest(url: string, options = {}) {
+  const response = await fetch(url, options)
+  return checkAnswer(response)
 }
 
 export const getData = async (url: string) => {
-  return sendRequest(`${BURGER_API_URL}/${url}`)
+  return await sendRequest(`${BURGER_API_URL}/${url}`)
 }
 
 const checkToken: TCheckToken = async (err, url, options) => {

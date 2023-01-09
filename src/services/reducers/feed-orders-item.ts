@@ -35,7 +35,7 @@ export const feedOrdersItemReducer = (
       }
 
     case FEED_ORDERS_ITEM_FAILED:
-      return { ...state, orderMakedFailed: true, orderMakedRequest: false }
+      return { ...state, orderMakedRequest: false, orderMakedFailed: true }
 
     default:
       return state

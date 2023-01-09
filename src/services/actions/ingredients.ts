@@ -59,6 +59,5 @@ export const fetchIngredients = () => async (dispatch: AppDispatch) => {
     })
   } catch (error) {
     dispatch({ type: GET_INGREDIENTS_FAILED })
-    console.error(error)
   }
 }

@@ -16,16 +16,18 @@ export const FeedOrders: FC<TOrdersHistory> = ({ route, ordersList }) => {
     <section className={`${style['list-orders']} app-scroll pr-2`}>
       {ordersList.map((item, idx) => {
         return (
-          <Link
-            className="link"
-            key={idx}
-            to={{
-              pathname: `${route}/${item.number}`,
-              state: { background: location }
-            }}
-          >
-            <FeedOrdersItem {...item} />
-          </Link>
+          <div data-test-id="feed-item">
+            <Link
+              className="link"
+              key={idx}
+              to={{
+                pathname: `${route}/${item.number}`,
+                state: { background: location }
+              }}
+            >
+              <FeedOrdersItem {...item} />
+            </Link>
+          </div>
         )
       })}
     </section>

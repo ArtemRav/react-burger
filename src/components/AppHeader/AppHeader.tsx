@@ -14,7 +14,7 @@ export const AppHeader = () => {
         <ul>
           <li className="pt-4 pb-4 pr-5 mr-2">
             <NavItem name="Конструктор" link="/">
-              <BurgerIcon type="primary" />
+              <BurgerIcon type="secondary" />
             </NavItem>
           </li>
           <li className="pt-4 pb-4 pr-5 pl-5">

@@ -13,14 +13,14 @@ export const NavItem: FC<TNavItem> = props => {
 
   return (
     <div className={styles.item}>
-      <div className="icon-wrapper mr-2">{children}</div>
       <NavLink
         to={link}
         exact
-        className={`link flex-wrap text_color_inactive`}
-        activeClassName={'font-white'}
+        className={`${styles['nav-link']} link flex-wrap text_color_inactive`}
+        activeClassName={'app_header__nav_link__active'}
       >
-        {name}
+        <div className={`${styles['icon']} icon`}>{children}</div>
+        <div className="text ml-2">{name}</div>
       </NavLink>
     </div>
   )

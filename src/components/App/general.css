@@ -50,6 +50,13 @@ ul {
   white-space: nowrap;
 }
 
+.app_header__nav_link__active .icon svg {
+  fill: white;
+}
+.app_header__nav_link__active .text {
+  color: white;
+}
+
 /* Cusrom scrollbar */
 .app-scroll::-webkit-scrollbar {
   width: 8px;

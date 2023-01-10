@@ -8,3 +8,7 @@
 .left-part {
   max-width: 600px;
 }
+
+.right-part {
+  padding-left: 94px;
+}

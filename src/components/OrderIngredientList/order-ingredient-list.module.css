@@ -1,3 +1,9 @@
+:root {
+  --bun-top__raduis-top: 56px;
+  --bun-top__raduis-bottom: 24px;
+  --inactive-color: #2f2f37;
+}
+
 .list {
   display: flex;
   flex-direction: column;
@@ -10,7 +16,36 @@
 .bun {
   display: flex;
   justify-content: flex-end;
-  height: 80px;
-  margin-right: 10px;
-  padding-right: 8px;
+  flex-shrink: 0;
+  height: 90px;
+  box-sizing: border-box;
+}
+
+.bun-label {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--inactive-color);
+}
+
+.mockup-top,
+.mockup-bottom,
+.mockup-list {
+  border: 5px dashed var(--inactive-color);
+}
+
+.mockup-top {
+  border-top-left-radius: var(--bun-top__raduis-top);
+  border-top-right-radius: var(--bun-top__raduis-top);
+  border-bottom-left-radius: var(--bun-top__raduis-bottom);
+  border-bottom-right-radius: var(--bun-top__raduis-bottom);
+}
+
+.mockup-bottom {
+  border-top-left-radius: var(--bun-top__raduis-bottom);
+  border-top-right-radius: var(--bun-top__raduis-bottom);
+  border-bottom-left-radius: var(--bun-top__raduis-top);
+  border-bottom-right-radius: var(--bun-top__raduis-top);
 }

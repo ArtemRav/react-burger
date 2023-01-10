@@ -75,13 +75,26 @@ export const OrderIngredientList: FC<TOrderIngredients> = ({
 
   return (
     <>
-      <div className={`mb-4 ${style.bun}`}>{getOrderBun('top', 'верх')}</div>
-      <ul className={`app-scroll ${style.list}`}>
+      <div className={`mb-4 ${style.bun} ${style['mockup-top']}`}>
+        <p className={`${style['bun-label']} text text_type_main-medium`}>
+          Добавьте булку
+        </p>
+        {getOrderBun('top', 'верх')}
+      </div>
+      <ul className={`app-scroll ${style.list} ${style['mockup-list']}`}>
+        <li className={`${style['bun-label']} text text_type_main-medium`}>
+          Добавьте ингредиент
+        </li>
         {bunIngredients.map((item, index) => {
           return getOrderIngredient(item, index)
         })}
       </ul>
-      <div className={`mt-4 ${style.bun}`}>{getOrderBun('bottom', 'низ')}</div>
+      <div className={`mt-4 ${style.bun} ${style['mockup-bottom']}`}>
+        <p className={`${style['bun-label']} text text_type_main-medium`}>
+          Добавьте булку
+        </p>
+        {getOrderBun('bottom', 'низ')}
+      </div>
     </>
   )
 }

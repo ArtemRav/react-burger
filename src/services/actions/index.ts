@@ -33,6 +33,16 @@ export type TIngredientDetailsActions =
 
 export const addIngredient =
   (ingredient: TIngredientItem) => (dispatch: AppDispatch) => {
+    if (ingredient.type === BUN) {
+      dispatch({
+        type: DROP_QNT_ALL_BUNS
+      })
+      dispatch({
+        type: DEL_INGREDIENT_FROM_ORDER,
+        item: ingredient
+      })
+    }
+
     dispatch({
       type: ADD_INGREDIENT_TO_ORDER,
       item: {
@@ -40,12 +50,6 @@ export const addIngredient =
         dragId: uuidv1()
       }
     })
-
-    if (ingredient.type === BUN) {
-      dispatch({
-        type: DROP_QNT_ALL_BUNS
-      })
-    }
 
     dispatch({
       type: INCREASE_QNT_INGREDIENTS,

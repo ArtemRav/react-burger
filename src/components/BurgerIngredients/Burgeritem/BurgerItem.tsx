@@ -6,13 +6,14 @@ import style from './burger-item.module.css'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
 import { TIngredient } from '../../../services/types/data'
+import { BUN } from '../../../services/types/data'
 
 export const BurgerItem = ({ ingredient }: TIngredient) => {
   const location = useLocation()
   const { _id, name, image, price, qnt } = ingredient
 
   const [{ opacity }, dragRef] = useDrag({
-    type: 'ingredients',
+    type: ingredient.type !== BUN ? 'ingredient' : 'bun',
     item: ingredient,
     collect: monitor => ({
       opacity: monitor.isDragging() ? 0.5 : 1

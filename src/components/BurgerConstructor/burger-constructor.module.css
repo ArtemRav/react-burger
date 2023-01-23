@@ -5,10 +5,6 @@
   margin-top: 80px;
 }
 
-.onHover {
-  outline: 2px solid blue;
-}
-
 .sum {
   display: flex;
   width: 100%;

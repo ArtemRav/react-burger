@@ -10,12 +10,10 @@ import { OrderDetails } from '../OrderDetails/OrderDetails'
 import { OrderIngredientList } from '../OrderIngredientList/OrderIngredientList'
 
 import { useHistory, useLocation } from 'react-router-dom'
-import { addIngredient } from '../../services/actions'
 import { getOrder } from '../../services/actions/order'
-import { useDrop } from 'react-dnd'
 
 import useModal from '../../hooks/useModal'
-import { BUN, TIngredientItem } from '../../services/types/data'
+import { BUN } from '../../services/types/data'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 
 export const BurgerConstructor = () => {
@@ -37,20 +35,6 @@ export const BurgerConstructor = () => {
     return orderIngredients.map(item => item._id)
   }, [orderIngredients])
 
-  const [{ isHover }, dropForAllRef] = useDrop({
-    accept: 'ingredients',
-    collect: monitor => ({
-      isHover: monitor.isOver()
-    }),
-    drop(item: any) {
-      handleDrop(item)
-    }
-  })
-
-  const handleDrop = (ingredient: TIngredientItem) => {
-    dispatch(addIngredient(ingredient))
-  }
-
   const openModal = useCallback(() => {
     if (isAutorized) {
       const data = { ingredients: ingredientIds }
@@ -68,9 +52,7 @@ export const BurgerConstructor = () => {
 
   return (
     <div
-      ref={dropForAllRef}
-      className={`${isHover ? burgerConstructorCss.onHover : ''} 
-      ${burgerConstructorCss.wrapper}`}
+      className={`${burgerConstructorCss.wrapper}`}
       data-test-id="drop-ingredient"
     >
       <OrderIngredientList orderIngredients={orderIngredients} />

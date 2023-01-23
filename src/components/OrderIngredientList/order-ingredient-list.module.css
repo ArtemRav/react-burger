@@ -2,6 +2,7 @@
   --bun-top__raduis-top: 56px;
   --bun-top__raduis-bottom: 24px;
   --inactive-color: #2f2f37;
+  --hover-color: #00cccc;
 }
 
 .list {
@@ -11,6 +12,8 @@
   height: calc(100% - 64px);
   max-height: 36vh;
   overflow-y: auto;
+  border: 5px solid transparent;
+  padding: 0 0 0 5px;
 }
 
 .bun {
@@ -19,6 +22,7 @@
   flex-shrink: 0;
   height: 90px;
   box-sizing: border-box;
+  border: 5px solid transparent;
 }
 
 .bun-label {
@@ -34,6 +38,14 @@
 .mockup-bottom,
 .mockup-list {
   border: 5px dashed var(--inactive-color);
+}
+
+.mockup-top.onHover,
+.mockup-bottom.onHover,
+.mockup-list.onHover {
+  border-color: var(--hover-color);
+  opacity: 0.8;
+  transition: 0.1s ease-in-out;
 }
 
 .mockup-top {

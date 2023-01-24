@@ -1,11 +1,10 @@
-# Веб-приложение "Космическая бургерная"
+# Web-application "Stellar burger"
 
-Учебный проект от Яндекс-практикум, разработанный в рамках курса "React-разработчик".
-Позволяет пользователю собирать космический бургер с помощью конструктора.
+![Uploading Снимок экрана 2023-01-24 в 1.49.27 PM.png…]()
 
-[Ссылка на приложение](https://artemrav.github.io/react-burger)
+[Link to app](https://artemrav.github.io/react-burger)
 
-## Стек технологий:
+## Stack:
 
 - React
 - Redux
@@ -14,21 +13,21 @@
 - Jest
 - Cypress
 
-## Команды для работы с проектом
+## Commands for work with project
 
 ```bash
-// Установка зависимостей
+// Setup dependenses
 $ npm install
 
-// Запуск проекта в режиме разработки
+// Launch project in dev-mode
 $ npm run start
 
-// Сборка проекта в папку `build`
+// Build project to folder 'build'
 $ npm run build
 
-// Запуск jest тестов
+// Fire jest tests
 $ npm run test
 
-// Запуск cypress тестов
+// Fire cypress tests
 $ npm run cypress:open
 ```

@@ -1,6 +1,6 @@
 # Web-application "Stellar burger"
 
-![Uploading Снимок экрана 2023-01-24 в 1.49.27 PM.png…]()
+![image](https://user-images.githubusercontent.com/103883054/214284555-755eacc8-2252-4ba7-b5c6-b700478f93f6.png)
 
 [Link to app](https://artemrav.github.io/react-burger)
 
@@ -19,7 +19,7 @@
 // Setup dependenses
 $ npm install
 
-// Launch project in dev-mode
+// Start project (dev-mode)
 $ npm run start
 
 // Build project to folder 'build'
